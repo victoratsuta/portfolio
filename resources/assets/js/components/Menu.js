@@ -150,7 +150,7 @@ class Menu extends Component {
             {/* initial header */}
             <div className="ip-header" id="preloader_container">
                 <h1 className="ip-logo">
-                    <img className="ip-inner " id="img_loader" src={'../imgs/darkd_bl.png'} style={{maxWidth: 350,minWidth: 180, width: '30%'}} />
+                    <img className="ip-inner " id="img_loader" src={'../imgs/darkd_bl.png'} style={{maxWidth: 350,minWidth: 180, width: '20%'}} />
                 </h1>
                 <div className="ip-loader">
                     <svg className="ip-inner" width="60px" height="60px" viewBox="0 0 80 80">
