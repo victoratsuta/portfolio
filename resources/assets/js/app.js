@@ -7,7 +7,7 @@ import Home from './components/Home';
 import Skills from './components/Skills';
 import ContactMe from './components/ContactMe';
 import Portfolio from './components/Portfolio';
-console.log('change');
+
 render(
         <Router history={browserHistory}>
             <Route path="/" component={Home}/>

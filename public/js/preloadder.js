@@ -430,6 +430,7 @@ function Loading(hide_logo = '') {
 
     function startLoading() {
         // simulate loading something..
+        console.log('change');
         var simulationFn = function (instance) {
             var progress = 0,
             // var progress = 1,
