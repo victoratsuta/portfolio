@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#ffffff">
 
     <link href="{{asset('css/css_pack.css')}}" rel="stylesheet" type="text/css">
-    <script src="{{asset('js/preloadder.js')}}" ></script>
+    <script src="http://www.atsuta.ru/js/preloadder.js" ></script>
 
 </head>
 <body>
