@@ -21,7 +21,7 @@
 <body>
     <div id="portfolio">
     </div>
-    <script src="{{asset('js/js_pack.js')}}" ></script>
+    <script src="http://www.atsuta.ru/js/js_pack.js" ></script>
 
 </body>
 
