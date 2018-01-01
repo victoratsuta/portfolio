@@ -1,6 +1,8 @@
 // vue compiler module for transforming `<tag>:<attribute>` to `require`
 
 const defaultOptions = {
+  video: ['src', 'poster'],
+  source: 'src',
   img: 'src',
   image: 'xlink:href'
 }
@@ -19,7 +21,7 @@ module.exports = userOptions => {
 
 function transform (node, options) {
   for (const tag in options) {
-    if (node.tag === tag && node.attrs) {
+    if ((tag === '*' || node.tag === tag) && node.attrs) {
       const attributes = options[tag]
       if (typeof attributes === 'string') {
         node.attrs.some(attr => rewrite(attr, attributes))

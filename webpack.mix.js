@@ -18,24 +18,21 @@ mix.webpackConfig({
     }
 });
 mix.react('resources/assets/js/app.js', 'public/js')
+
+    .babel([
+        'public/js/libreris/leaflet.js',
+        'public/js/app.js',
+        'public/js/libreris/snap.svg-min.js',
+        'public/js/libreris/sliderFx.js',
+        'public/js/libreris/server.rendering.helper.js',
+        'public/js/libreris/main.js',
+    ], 'public/js/js_pack.js')
+
     .sass('resources/assets/sass/app.scss', 'public/css').options({
     postCss: [
         require('postcss-css-variables')()
     ]
 })
-    .babel([
-    'public/js/libreris/snap.svg-min.js',
-    'public/js/libreris/sliderFx.js',
-    'public/js/libreris/server.rendering.helper.js',
-    'public/js/libreris/main.js',
-], 'public/js/libreris.js')
-    .babel([
-        'public/js/libreris/leaflet.js',
-        'public/js/app.js',
-        'public/js/libreris.js',
-    ], 'public/js/js_pack.js')
-
-
     .sass('resources/assets/sass/pack/effect1.scss', 'public/css/pack').options({
     postCss: [
         require('postcss-css-variables')()
@@ -97,6 +94,7 @@ mix.react('resources/assets/js/app.js', 'public/js')
     ]
 })
     .styles([
+        'public/css/app.css',
         'public/css/pack/History24.css',
         'public/css/pack/Factoring.css',
         'public/css/pack/Smoke_Zone.css',
@@ -113,10 +111,6 @@ mix.react('resources/assets/js/app.js', 'public/js')
         'public/css/pack/font-awesome.min.css',
         'public/css/pack/fonts.css',
         'public/css/pack/leaflet.css',
-    ], 'public/css/all.css')
-    .styles([
-        'public/css/app.css',
-        'public/css/all.css',
     ], 'public/css/css_pack.css');
 
 //

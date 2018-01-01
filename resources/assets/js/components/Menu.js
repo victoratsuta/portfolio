@@ -5,6 +5,9 @@ var $ = require('jquery');
 class Menu extends Component {
 
     clickHandler(type) {
+        
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+
         $('#img_loader').removeClass('Icon_shadow_show');
         $('#img_loader').removeClass('Icon_shadow_hide');
         $('#ip-container').addClass('unloaded');

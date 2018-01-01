@@ -155,6 +155,9 @@ function SVGMenu(contactForm=null) {
                 document.getElementById('mycontact_form_container').style.opacity=1;
                 document.getElementById('mapid').style.opacity=1;
             }
+            if(path[0] == 'portfolio'){
+                $(".morph-shape").removeClass('Smoke_Zone__stroke History24__stroke WellHome__stroke Factoring__stroke');
+            }
             classie.remove( self.el, 'menu--anim' );
             setTimeout( function() { classie.remove( self.el, 'menu--open' );	}, 250 );
 
@@ -192,6 +195,7 @@ function SVGMenu(contactForm=null) {
             }
             classie.remove( self.el, 'menu--anim' );
             setTimeout( function() { classie.remove( self.el, 'menu--open' );	}, 250 );
+
         }
         else {
 

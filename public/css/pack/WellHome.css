@@ -1,1 +1,289 @@
-.WellHome__inner{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100vh}.WellHome__arrow{display:block;background-position:50%;background-size:80px;width:80px;height:80px;margin:auto;cursor:pointer;position:relative;-webkit-filter:drop-shadow(0 0 15px #000);filter:drop-shadow(0 0 15px black)}.WellHome__arrow_show{background-image:url("/imgs/down-arrow.svg")}.WellHome__arrow_hide{background-image:url("/imgs/cancel.svg")}.WellHome__header{font-family:Open Sans,Condensed;text-transform:uppercase;color:#000;font-size:50px;font-weight:600;z-index:100;text-shadow:rgba(0,0,0,.5) 5px 5px 8px}.WellHome__paragraph{font-family:Roboto;font-size:20px;color:#000;letter-spacing:.62px;line-height:30px;font-weight:300;text-align:center;z-index:100}.WellHome__logo{width:400px}.WellHome__logo_container{display:-webkit-box;display:-ms-flexbox;display:flex}.WellHome__logo_container,.WellHome__technologis{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.WellHome__technologis{z-index:100;display:none}.WellHome__technologis_container,.WellHome__technologis_container div{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.WellHome__technologis_container div div{display:block;background-position:50%;background-repeat:no-repeat;background-size:100px;width:100px;height:100px;margin-left:20px;margin-right:20px;margin-top:20px}.WellHome__sugar{background-image:url("/imgs/welhome/sugar.png")}.WellHome__php{background-image:url("/imgs/welhome/php_w.png")}.WellHome__zend{background-image:url("/imgs/welhome/zend_w.png")}.WellHome__mysql{background-image:url("/imgs/welhome/mysql_w.png")}.WellHome__nginx{background-image:url("/imgs/welhome/nginx_w.png")}.WellHome__js{background-image:url("/imgs/welhome/js_w.png")}.WellHome__jquery{background-image:url("/imgs/welhome/jquery_w.png");background-size:150px!important;width:150px!important;height:150px!important}.WellHome__Description{font-family:Roboto;max-width:600px;font-size:18px;margin-top:50px;margin-bottom:50px;padding-left:20px;padding-right:20px;color:#000;text-align:center}@media (max-height:500px){.WellHome__logo{max-width:150px}.WellHome__arrow{background-size:40px;width:40px;height:40px}.WellHome__Description{margin-top:0;margin-bottom:20px}.WellHome__header{font-size:35px!important}.WellHome__paragraph{font-size:16px!important}.WellHome__technologis_container{margin-bottom:10px!important}}@media (max-width:1150px){.WellHome__technologis_container{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;margin-bottom:50px}.WellHome__technologis_container div div{background-size:50px!important;width:50px!important;height:50px!important}.WellHome__technologis div{-webkit-box-pack:justify!important;-ms-flex-pack:justify!important;justify-content:space-between!important}}@media (max-width:850px){.WellHome__jquery,.WellHome__js,.WellHome__mysql,.WellHome__nginx,.WellHome__php,.WellHome__sugar,.WellHome__zend{background-size:50px!important}}@media (max-width:500px){.WellHome__logo{width:160px!important}.WellHome__header{font-size:35px!important}.WellHome__paragraph{font-size:16px!important}.WellHome__Description{margin-top:0;margin-bottom:20px}}
+.WellHome__inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+}
+
+.WellHome__arrow {
+  display: block;
+  background-position: center;
+  background-size: 80px;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  cursor: pointer;
+  position: relative;
+  -webkit-filter: drop-shadow(0px 0px 15px black);
+  filter: drop-shadow(0px 0px 15px black);
+}
+
+.WellHome__arrow_show {
+  background-image: url("/imgs/down-arrow.svg");
+}
+
+.WellHome__arrow_hide {
+  background-image: url("/imgs/cancel.svg");
+}
+
+.WellHome__header {
+  font-family: 'Open Sans', 'Condensed';
+  text-transform: uppercase;
+  color: black;
+  font-size: 50px;
+  font-weight: 600;
+  z-index: 100;
+  text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px;
+}
+
+.WellHome__paragraph {
+  font-family: 'Roboto';
+  font-size: 20px;
+  color: black;
+  letter-spacing: 0.62px;
+  line-height: 30px;
+  font-weight: 300;
+  text-align: center;
+  z-index: 100;
+}
+
+.WellHome__logo {
+  width: 400px;
+}
+
+.WellHome__logo_container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.WellHome__technologis {
+  z-index: 100;
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.WellHome__technologis_container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.WellHome__technologis_container div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.WellHome__technologis_container div div {
+  display: block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100px;
+  width: 100px;
+  height: 100px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.WellHome__sugar {
+  background-image: url("/imgs/welhome/sugar.png");
+}
+
+.WellHome__php {
+  background-image: url("/imgs/welhome/php_w.png");
+}
+
+.WellHome__zend {
+  background-image: url("/imgs/welhome/zend_w.png");
+}
+
+.WellHome__mysql {
+  background-image: url("/imgs/welhome/mysql_w.png");
+}
+
+.WellHome__nginx {
+  background-image: url("/imgs/welhome/nginx_w.png");
+}
+
+.WellHome__js {
+  background-image: url("/imgs/welhome/js_w.png");
+}
+
+.WellHome__jquery {
+  background-image: url("/imgs/welhome/jquery_w.png");
+  background-size: 150px !important;
+  width: 150px !important;
+  height: 150px !important;
+}
+
+.WellHome__Description {
+  font-family: 'Roboto';
+  max-width: 600px;
+  font-size: 18px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: black;
+  text-align: center;
+}
+
+@media (max-height: 500px) {
+  .WellHome__logo {
+    max-width: 150px;
+  }
+
+  .WellHome__arrow {
+    background-size: 40px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .WellHome__Description {
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+
+  .WellHome__header {
+    font-size: 35px !important;
+  }
+
+  .WellHome__paragraph {
+    font-size: 16px !important;
+  }
+
+  .WellHome__technologis_container {
+    margin-bottom: 10px !important;
+  }
+}
+
+@media (max-width: 1150px) {
+  .WellHome__technologis_container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-bottom: 50px;
+  }
+
+  .WellHome__technologis_container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-bottom: 50px;
+  }
+
+  .WellHome__technologis_container div div {
+    background-size: 50px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .WellHome__technologis div {
+    -webkit-box-pack: justify !important;
+        -ms-flex-pack: justify !important;
+            justify-content: space-between !important;
+  }
+}
+
+@media (max-width: 850px) {
+  .WellHome__sugar {
+    background-size: 50px !important;
+  }
+
+  .WellHome__php {
+    background-size: 50px !important;
+  }
+
+  .WellHome__zend {
+    background-size: 50px !important;
+  }
+
+  .WellHome__mysql {
+    background-size: 50px !important;
+  }
+
+  .WellHome__nginx {
+    background-size: 50px !important;
+  }
+
+  .WellHome__js {
+    background-size: 50px !important;
+  }
+
+  .WellHome__jquery {
+    background-size: 50px !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .WellHome__logo {
+    width: 160px !important;
+  }
+
+  .WellHome__header {
+    font-size: 35px !important;
+  }
+
+  .WellHome__paragraph {
+    font-size: 16px !important;
+  }
+
+  .WellHome__Description {
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+}
+
