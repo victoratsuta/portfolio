@@ -15,13 +15,13 @@
     <meta name="theme-color" content="#ffffff">
 
     <link href="{{asset('css/css_pack.css')}}" rel="stylesheet" type="text/css">
-    <script src="http://www.atsuta.ru/js/preloadder.js" ></script>
+    <script src="//www.atsuta.ru/js/preloadder.js"></script>
 
 </head>
 <body>
-    <div id="portfolio">
-    </div>
-    <script src="http://www.atsuta.ru/js/js_pack.js" ></script>
+<div id="portfolio">
+</div>
+<script src="//www.atsuta.ru/js/js_pack.js"></script>
 
 </body>
 
