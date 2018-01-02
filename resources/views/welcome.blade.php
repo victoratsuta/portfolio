@@ -16,17 +16,17 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Wire+One" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="http://res.cloudinary.com/atsuta/raw/upload/v1514917417/css_pack_dw20h6.css" rel="stylesheet"
+    <link href="https://res.cloudinary.com/atsuta/raw/upload/v1514917417/css_pack_dw20h6.css" rel="stylesheet"
           type="text/css">
 
-    <script src="http://res.cloudinary.com/atsuta/raw/upload/v1514917407/preloadder_f3sjvy.js"></script>
+    <script src="https://res.cloudinary.com/atsuta/raw/upload/v1514917407/preloadder_f3sjvy.js"></script>
 
 
 </head>
 <body>
     <div id="portfolio">
     </div>
-    <script src="http://res.cloudinary.com/atsuta/raw/upload/v1514917408/js_pack_y3jtyz.js"></script>
+    <script src="https://res.cloudinary.com/atsuta/raw/upload/v1514917408/js_pack_y3jtyz.js"></script>
 </body>
 
 </html>
