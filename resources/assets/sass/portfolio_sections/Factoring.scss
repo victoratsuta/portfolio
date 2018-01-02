@@ -7,7 +7,7 @@
 }
 .Factoring__arrow{
   display: block;
-  background-image: url('/imgs/down-arrow_white.svg');
+  background-image: url(#{$img-path}/down-arrow_white.svg);
   background-position: center;
   background-size: 80px;
   width: 80px;
@@ -18,10 +18,10 @@
   filter: drop-shadow(0px 0px 15px black);
 }
 .Factoring__arrow_show{
-  background-image: url('/imgs/down-arrow_white.svg');
+  background-image: url(#{$img-path}/down-arrow_white.svg);
 }
 .Factoring__arrow_hide{
-  background-image: url('/imgs/cancel_white.svg');
+  background-image: url(#{$img-path}/cancel_white.svg);
 }
 //------------------------
 .Factoring__header {
@@ -86,28 +86,28 @@
   margin-top: 20px;
 }
 .Factoring__yii2{
-  background-image: url('/imgs/factoring/yii2.png');
+  background-image: url(#{$img-path}/factoring/yii2.png);
 }
 .Factoring__wordpress{
-  background-image: url('/imgs/factoring/wordpress.svg');
+  background-image: url(#{$img-path}/factoring/wordpress.svg);
 }
 .Factoring__js{
-  background-image: url('/imgs/factoring/js.svg');
+  background-image: url(#{$img-path}/factoring/js.svg);
 }
 .Factoring__php{
-  background-image: url('/imgs/factoring/php.svg');
+  background-image: url(#{$img-path}/factoring/php.svg);
 }
 .Factoring__jq{
-  background-image: url('/imgs/factoring/jq.svg');
+  background-image: url(#{$img-path}/factoring/jq.svg);
 }
 .Factoring__bootstrap{
-  background-image: url('/imgs/factoring/Bootstrap.png');
+  background-image: url(#{$img-path}/factoring/Bootstrap.png);
 }
 .Factoring__mysql{
-  background-image: url('/imgs/factoring/mysql.svg');
+  background-image: url(#{$img-path}/factoring/mysql.svg);
 }
 .Factoring__nginx{
-  background-image: url('/imgs/factoring/nginx.png');
+  background-image: url(#{$img-path}/factoring/nginx.png);
 }
 .Factoring__Description{
   font-family: 'Roboto';

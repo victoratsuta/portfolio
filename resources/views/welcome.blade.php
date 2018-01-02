@@ -15,18 +15,23 @@
     <meta name="theme-color" content="#ffffff">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Wire+One" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://res.cloudinary.com/atsuta/raw/upload/v1514917417/css_pack_dw20h6.css" rel="stylesheet"
+
+    <link href="https://res.cloudinary.com/atsuta/raw/upload/v1514923222/css_pack_daovny.css" rel="stylesheet"
           type="text/css">
-
-    <script src="https://res.cloudinary.com/atsuta/raw/upload/v1514917407/preloadder_f3sjvy.js"></script>
-
 
 </head>
 <body>
     <div id="portfolio">
     </div>
-    <script src="https://res.cloudinary.com/atsuta/raw/upload/v1514917408/js_pack_y3jtyz.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+          integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+          crossorigin=""/>
+    <script src="https://use.fontawesome.com/f9d7c29ada.js"></script>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+            integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+            crossorigin=""></script>
+    <script src="http://res.cloudinary.com/atsuta/raw/upload/v1514928277/js_pack_evxspq.js"></script>
+
 </body>
 
 </html>

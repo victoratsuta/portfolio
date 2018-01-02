@@ -7,7 +7,7 @@
 }
 .Smoke_Zone__arrow {
   display: block;
-  background-image: url('/imgs/down-arrow_white.svg');
+  background-image: url(#{$img-path}/down-arrow_white.svg);
   background-position: center;
   background-size: 80px;
   width: 80px;
@@ -18,10 +18,10 @@
   filter: drop-shadow(0px 0px 15px #9937AC);
 }
 .Smoke_Zone__arrow_show{
-  background-image: url('/imgs/down-arrow_white.svg');
+  background-image: url(#{$img-path}/down-arrow_white.svg);
 }
 .Smoke_Zone__arrow_hide{
-  background-image: url('/imgs/cancel_white.svg');
+  background-image: url(#{$img-path}/cancel_white.svg);
 }
 //---------------
 .Smoke_Zone__header{
@@ -88,25 +88,25 @@
 }
 
 .Smoke_Zone__apache{
-  background-image: url('/imgs/smoke-zone/apache.png');
+  background-image: url(#{$img-path}/smoke-zone/apache.png);
   background-size: 150px ;
   width: 150px ;
   height: 150px ;
 }
 .Smoke_Zone__javascript{
-  background-image: url('/imgs/smoke-zone/javascript.svg');
+  background-image: url(#{$img-path}/smoke-zone/javascript.svg);
 }
 .Smoke_Zone__jq{
-  background-image: url('/imgs/smoke-zone/jq.svg');
+  background-image: url(#{$img-path}/smoke-zone/jq.svg);
 }
 .Smoke_Zone__mvc{
-  background-image: url('/imgs/smoke-zone/mvc.svg');
+  background-image: url(#{$img-path}/smoke-zone/mvc.svg);
 }
 .Smoke_Zone__mysql{
-  background-image: url('/imgs/smoke-zone/mysql.svg');
+  background-image: url(#{$img-path}/smoke-zone/mysql.svg);
 }
 .Smoke_Zone__php{
-  background-image: url('/imgs/smoke-zone/php.svg');
+  background-image: url(#{$img-path}/smoke-zone/php.svg);
 }
 
 .Smoke_Zone__Description {

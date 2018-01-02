@@ -4,6 +4,7 @@ var $ = require('jquery');
 
 class Menu extends Component {
 
+
     clickHandler(type) {
 
         $("html, body").animate({scrollTop: 0}, "slow");
@@ -131,6 +132,18 @@ class Menu extends Component {
             })
         }
     }
+
+    componentDidMount() {
+        window.onpopstate = this.onBackButtonEvent.bind(this);
+    };
+
+    onBackButtonEvent(e) {
+        e.preventDefault();
+        this.context.router.push('/');
+        Loading();
+        SVGMenu();
+
+    };
 
     render() {
         return (
