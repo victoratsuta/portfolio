@@ -174,7 +174,7 @@ class Menu extends Component {
                 <div className="ip-header" id="preloader_container">
                     <h1 className="ip-logo">
                         <img className="ip-inner " id="img_loader"
-                             src={'http://res.cloudinary.com/atsuta/image/upload/v1514915334/darkd_bl_b8apy8.png'}
+                             src={'https://res.cloudinary.com/atsuta/image/upload/v1514915334/darkd_bl_b8apy8.png'}
                              style={{maxWidth: 350, minWidth: 180, width: '20%'}}/>
                     </h1>
                     <div className="ip-loader">
