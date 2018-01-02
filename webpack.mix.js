@@ -108,8 +108,6 @@ mix.react('resources/assets/js/app.js', 'public/js')
         'public/css/pack/slideshow.css',
         'public/css/pack/tech.css',
         'public/css/pack/animate.min.css',
-        'public/css/pack/font-awesome.min.css',
-        'public/css/pack/fonts.css',
         'public/css/pack/leaflet.css',
     ], 'public/css/css_pack.css');
 
