@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Wire+One" rel="stylesheet">
 
-    <link href="https://res.cloudinary.com/atsuta/raw/upload/v1514923222/css_pack_daovny.css" rel="stylesheet"
+    <link href="http://res.cloudinary.com/atsuta/raw/upload/v1514929210/css_pack_icqs9w.css" rel="stylesheet"
           type="text/css">
 
 </head>
