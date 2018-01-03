@@ -5,9 +5,12 @@ var $ = require('jquery');
 class Menu extends Component {
 
 
+
     clickHandler(type) {
 
         $("html, body").animate({scrollTop: 0}, "slow");
+
+        this.prevPage = type;
 
         $('#img_loader').removeClass('Icon_shadow_show');
         $('#img_loader').removeClass('Icon_shadow_hide');
@@ -134,15 +137,19 @@ class Menu extends Component {
     }
 
     componentDidMount() {
+        let path = window.location.href.split('/')[3].split('#');
+        this.page = path[1];
         window.onpopstate = this.onBackButtonEvent.bind(this);
     };
 
     onBackButtonEvent(e) {
         e.preventDefault();
+        if(this.page != window.location.href.split('/')[3].split('#')[1]){
+            return false;
+        }
         this.context.router.push('/');
         Loading();
         SVGMenu();
-
     };
 
     render() {
