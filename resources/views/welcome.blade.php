@@ -13,6 +13,7 @@
     <link rel="manifest" href="{{asset('/favicons/manifest.json')}}">
     <link rel="mask-icon" href="{{asset('/favicons/safari-pinned-tab.svg')}}" color="#65afc4">
     <meta name="theme-color" content="#ffffff">
+
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Wire+One" rel="stylesheet">
 

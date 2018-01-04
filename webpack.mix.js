@@ -45,7 +45,6 @@ mix.react('resources/assets/js/app.js', 'public/js')
 
     ], 'public/css/css_pack.css');
 
-//
 // const ImageminPlugin = require('imagemin-webpack-plugin').default;
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 // const imageminMozjpeg = require('imagemin-mozjpeg');
