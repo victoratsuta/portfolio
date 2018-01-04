@@ -19,7 +19,7 @@
 
     <link href="{{asset('css/css_pack.css')}}" rel="stylesheet"
           type="text/css">
-
+    <script src="{{asset('js/js_pack.js')}}"></script>
 </head>
 <body>
 <div id="portfolio">
@@ -31,7 +31,6 @@
 <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
         integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
         crossorigin=""></script>
-<script src="{{asset('js/js_pack.js')}}"></script>
 
 </body>
 
