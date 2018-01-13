@@ -310,12 +310,12 @@
 }
 
 .Icon_shadow_show {
-  filter: drop-shadow(0px 5px 10px #00c8fa);
+  filter: drop-shadow(0px 5px 5px #00c8fa);
   transition-duration: 3s;
 }
 
 .Icon_shadow_hide {
-  filter: drop-shadow(0px 5px 10px transparent);
+  filter: drop-shadow(0px 5px 5px transparent);
   transition-duration: 2s;
 }
 
