@@ -12,7 +12,7 @@
         gtag('config', 'UA-112254789-1');
     </script>
 
-    
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,14 +29,15 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Wire+One" rel="stylesheet">
 
-    <link href="{{asset('css/css_pack.css')}}" rel="stylesheet"
+    <link href="{{asset('css/bundle.css')}}" rel="stylesheet"
           type="text/css">
 
 </head>
 <body>
 <div id="portfolio">
 </div>
-<script src="{{asset('js/js_pack.js')}}"></script>
+<script src="{{asset('js/bundle.js')}}"></script>
+<script src="{{asset('js/libraries.js')}}"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
       integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
       crossorigin=""/>

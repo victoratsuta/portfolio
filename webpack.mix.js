@@ -22,11 +22,13 @@ mix.react('resources/assets/js/app.js', 'public/js')
     .babel([
         'public/js/libreris/preloadder.js',
         'public/js/app.js',
+    ], 'public/js/bundle.js')
+    .babel([
         'public/js/libreris/snap.svg-min.js',
         'public/js/libreris/sliderFx.js',
         'public/js/libreris/server.rendering.helper.js',
         'public/js/libreris/main.js',
-    ], 'public/js/js_pack.js')
+    ], 'public/js/libraries.js')
 
     .sass('resources/assets/sass/app.scss', 'public/css').options({
     postCss: [
@@ -43,7 +45,7 @@ mix.react('resources/assets/js/app.js', 'public/js')
         'public/css/app.css',
         'public/css/libreris.css',
 
-    ], 'public/css/css_pack.css');
+    ], 'public/css/bundle.css');
 
 // const ImageminPlugin = require('imagemin-webpack-plugin').default;
 // const CopyWebpackPlugin = require('copy-webpack-plugin');

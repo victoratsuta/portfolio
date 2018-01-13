@@ -1,11 +1,12 @@
 // Variables
 @import "variables";
 
-@import "portfolio_sections/Factoring";
-@import "portfolio_sections/History24";
-@import "portfolio_sections/Smoke_Zone";
-@import "portfolio_sections/WellHome";
+@import "components/portfolio_sections/Factoring";
+@import "components/portfolio_sections/History24";
+@import "components/portfolio_sections/Smoke_Zone";
+@import "components/portfolio_sections/WellHome";
 
+@import "components/Skills";
 .container {
   padding: 0 0 0 0;
 
