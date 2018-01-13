@@ -445,8 +445,6 @@ function Loading(hide_logo = '') {
                             $('#img_loader').animate({
                                 opacity: 0,
                             }, 500);
-                        } else {
-                            $('#img_loader').addClass('Icon_shadow_show');
                         }
                         classie.remove(container, 'loading');
                         classie.add(container, 'loaded');

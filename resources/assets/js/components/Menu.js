@@ -12,8 +12,6 @@ class Menu extends Component {
 
         this.prevPage = type;
 
-        $('#img_loader').removeClass('Icon_shadow_show');
-        $('#img_loader').removeClass('Icon_shadow_hide');
         $('#ip-container').addClass('unloaded');
 
         this.startLoading = () => {
