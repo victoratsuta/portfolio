@@ -36,8 +36,12 @@
 <body>
 <div id="portfolio">
 </div>
+<script src="{{asset('js/libraries/snap.svg.js')}}"></script>
+<script src="{{asset('js/libraries/Modernizr.js')}}"></script>
 <script src="{{asset('js/bundle.js')}}"></script>
-<script src="{{asset('js/libraries.js')}}"></script>
+
+
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
       integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
       crossorigin=""/>

@@ -1,17 +1,69 @@
 import React, {Component} from 'react';
+import SVGMenu from './SVGMenu';
+import Loading from './Loading';
 
 var $ = require('jquery');
 
 class Menu extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            svgMenu : null,
+            loading : null
+        };
+        this.path = window.location.href.split('/')[3].split('#');
+    }
 
+    setSvgProp(prop){
+        this.setState({svgMenu : this.state.svgMenu = new SVGMenu(prop)});
+    }
+    setLoading(prop){
+        this.setState({loading : this.state.loading = new Loading(prop)});
+    }
 
-    clickHandler(type) {
+    initialStart(){
+
+        if(typeof  this.path[1] != 'undefined'){
+            history.replaceState('', "page 3", "portfolio");
+        }
+        if (this.path[0]=='contacts'){
+            this.setLoading('hide_logo');
+            this.setSvgProp('contact');
+            let mymap = L.map('mapid',{ zoomControl:false }).setView([44.58, 33.49], 13);
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidmljdG9yYXRzdXRhIiwiYSI6ImNqOW9iNnJjczJnaW8zM3MyeDdrcXBuN3oifQ.gIWOmeqEuCRHKmWb_AMXFQ', {
+                maxZoom: 18,
+                id: 'mapbox.dark',
+                accessToken: 'your.mapbox.access.token',
+            }).addTo(mymap);
+            let greenIcon = L.icon({
+                iconUrl: '../imgs/location-pin.png',
+                shadowUrl: '',
+
+                iconSize:     [38, 40], // size of the icon
+                iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            });
+            L.marker([44.58, 33.49], {icon: greenIcon}).addTo(mymap);
+        }
+        if (this.path[0]=='skills'){
+            this.setLoading('hide_logo');
+            this.setSvgProp(null);
+        }
+        if (this.path[0]=='portfolio'){
+            this.setLoading('hide_logo');
+            this.setSvgProp(null);
+        }
+        if (this.path[0]==''){
+            this.setLoading('');
+            this.setSvgProp(null);
+        }
+        this.state.loading.init();
+        this.state.svgMenu.init();
+    }
+    clickHandler(type){
 
         $("html, body").animate({scrollTop: 0}, "slow");
-
-        this.prevPage = type;
-
         $('#ip-container').addClass('unloaded');
 
         this.startLoading = () => {
@@ -24,52 +76,41 @@ class Menu extends Component {
             switch (type) {
 
                 case '':
-                    path = window.location.href.split('/');
-                    path = path[3].split('#');
                     this.context.router.push('/');
-                    Loading();
-                    SVGMenu();
-
-                    if (path[0] == 'skills' || path[0] == 'contacts' || path[0] == 'portfolio') {
-                        printSkills();
-                    }
+                    this.setSvgProp(null);
+                    this.setLoading();
                     break;
 
                 case 'skills':
                     this.context.router.push('/skills');
-                    Loading('hide_logo');
-                    SVGMenu();
-                    (function () {
-                        new SliderFx(document.getElementById('slideshow'), {
-                            easing: 'cubic-bezier(.8,0,.2,1)'
-                        });
-                    })();
+                    this.setLoading('hide_logo');
+                    this.setSvgProp(null);
                     break;
 
                 case 'contacts':
                     this.context.router.push('/contacts');
-                    Loading('hide_logo');
-                    SVGMenu('contact');
+                    this.setLoading('hide_logo');
+                    this.setSvgProp('contact');
                     break;
 
                 case 'portfolio':
                     this.context.router.push('/portfolio');
-                    Loading('hide_logo');
-                    SVGMenu();
-
+                    this.setLoading('hide_logo');
+                    this.setSvgProp(null);
                     break;
             }
-
+            this.state.loading.init();
+            this.state.svgMenu.init();
         };
         setTimeout(this.startLoading, 1000);
     }
 
     handleMenuStyle() {
-        let path = window.location.href.split('/')[3].split('#');
-        let pathMain = path;
 
 
-        if (path[1] == 'smoke-zone' || (path[0] == 'portfolio' && typeof path[1] == 'undefined')) {
+        this.path = window.location.href.split('/')[3].split('#');
+
+        if (this.path[1] == 'smoke-zone' || (this.path[0] == 'portfolio' && typeof this.path[1] == 'undefined')) {
             $('.menu__ul').find('span').css('cssText', 'color : #D40080 !important');
             $('.menu__ul').find('i').mouseenter(function () {
                 $(this).css('cssText', 'color : #D40080 !important');
@@ -78,7 +119,7 @@ class Menu extends Component {
                 $(this).css('cssText', 'color : #5f656f !important');
             })
         }
-        if (path[1] == 'history24') {
+        if (this.path[1] == 'history24') {
 
             $('.menu__ul').find('span').css('cssText', 'color : #E6E6E6 !important');
             $('.menu__ul').find('i').mouseenter(function () {
@@ -88,7 +129,7 @@ class Menu extends Component {
                 $(this).css('cssText', 'color : #5f656f !important');
             })
         }
-        if (path[1] == 'welhome') {
+        if (this.path[1] == 'welhome') {
 
             $('.menu__ul').find('span').css('cssText', 'color : #E6E6E6 !important');
             $('.menu__ul').find('i').mouseenter(function () {
@@ -98,7 +139,7 @@ class Menu extends Component {
                 $(this).css('cssText', 'color : #5f656f !important');
             })
         }
-        if (path[1] == 'factoring') {
+        if (this.path[1] == 'factoring') {
             $('.menu__ul').find('span').css('cssText', 'color : #38925E !important');
             $('.menu__ul').find('i').mouseenter(function () {
                 $(this).css('cssText', 'color : #38925E !important');
@@ -107,7 +148,7 @@ class Menu extends Component {
                 $(this).css('cssText', 'color : #5f656f !important');
             })
         }
-        if (pathMain[0] == '' || pathMain[0] != 'portfolio') {
+        if (this.path[0] == '' || this.path[0] != 'portfolio') {
             $('.menu__ul').find('span').css('cssText', 'color : deepskyblue !important');
             $('.menu__ul').find('i').mouseenter(function () {
                 $(this).css('cssText', 'color : deepskyblue !important');
@@ -119,8 +160,7 @@ class Menu extends Component {
     }
 
     componentDidMount() {
-        let path = window.location.href.split('/')[3].split('#');
-        this.page = path[1];
+        this.page = this.path[1];
         window.onpopstate = this.onBackButtonEvent.bind(this);
     };
 
@@ -130,13 +170,16 @@ class Menu extends Component {
             return false;
         }
         this.context.router.push('/');
-        Loading();
-        SVGMenu();
+        this.setSvgProp(null);
+        this.setLoading('hide_logo');
+        this.state.loading.init();
+        this.state.svgMenu.init();
+
     };
 
     render() {
         return (
-            <div>
+            <div onLoad={this.initialStart.bind(this)}>
                 <nav id="menu" className="menu">
                     <button className="menu__handle" onClick={this.handleMenuStyle.bind(this)}><span>Menu</span>
                     </button>

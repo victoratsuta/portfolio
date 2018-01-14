@@ -1,11 +1,27 @@
 import React , {Component} from 'react';
 import Menu from './Menu';
+import TxtRotate from './TxtRotate';
 
 class Home extends Component {
 
+    printSkills(){
+        var elements = document.getElementsByClassName('txt-rotate');
+        for (var i = 0; i < elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-rotate');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+                new TxtRotate(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
+        document.body.appendChild(css);
+    }
     render(){
         return(
-            <div className="demo-1">
+            <div className="demo-1" onLoad={this.printSkills.bind(this)}>
                 <div id="ip-container" className="ip-container">
                     <Menu/>
                     <div id="main_container">

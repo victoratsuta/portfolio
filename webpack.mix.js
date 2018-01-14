@@ -10,6 +10,7 @@ let mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+
 mix.webpackConfig({
     module: {
         rules: [{
@@ -20,15 +21,12 @@ mix.webpackConfig({
 mix.react('resources/assets/js/app.js', 'public/js')
 
     .babel([
-        'public/js/libreris/preloadder.js',
+        'public/js/libraries/preloadder.js',
         'public/js/app.js',
     ], 'public/js/bundle.js')
-    .babel([
-        'public/js/libreris/snap.svg-min.js',
-        'public/js/libreris/sliderFx.js',
-        'public/js/libreris/server.rendering.helper.js',
-        'public/js/libreris/main.js',
-    ], 'public/js/libraries.js')
+    // .babel([
+    //     'public/js/libreris/snap.svg.js',
+    // ], 'public/js/libraries.js')
 
     .sass('resources/assets/sass/app.scss', 'public/css').options({
     postCss: [
