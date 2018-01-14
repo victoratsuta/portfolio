@@ -12,15 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('main');
 });
 Route::get('/portfolio', function () {
-    return view('welcome');
+    return view('main');
 });
 Route::get('/skills', function () {
-    return view('welcome');
+    return view('main');
 });
 Route::get('/contacts', function () {
-    return view('welcome');
+    return view('contact');
 });
+
 Route::post('mail', 'MailController@index');
