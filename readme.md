@@ -3,7 +3,7 @@
 ## Portfolio
 
 Laravel Framework 5.5.20
-React 15.6.2
+React 16.2.0
 
 Projects:
 

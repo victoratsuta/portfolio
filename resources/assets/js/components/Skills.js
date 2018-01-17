@@ -4,7 +4,8 @@ import SliderFx from './SliderFx';
 
 class Skills extends Component {
 
-    createSlideShow(){
+    componentDidMount(){
+        console.log('skill');
         this.SliderFx = new SliderFx(document.getElementById('slideshow'), {
             easing: 'cubic-bezier(.8,0,.2,1)'
         });
@@ -17,7 +18,7 @@ class Skills extends Component {
                     <Menu/>
                     <div id="main_container">
                         {/* main content */}
-                        <div id="slideshow" className="slideshow for_fade" style={{height: '100vh !important'}} onLoad={this.createSlideShow.bind(this)}>
+                        <div id="slideshow" className="slideshow for_fade" style={{height: '100vh !important'}}>
                             <ul>
                                 <li>
                                     <div className="slide">

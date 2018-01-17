@@ -2,15 +2,9 @@ import React , {Component} from 'react';
 import Menu from './Menu';
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
-
-// optional - you can choose the effect you want
-import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import 'react-s-alert/dist/s-alert-css-effects/scale.css';
-import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
-import 'react-s-alert/dist/s-alert-css-effects/flip.css';
-import 'react-s-alert/dist/s-alert-css-effects/genie.css';
-import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
-import 'react-s-alert/dist/s-alert-css-effects/stackslide.css';
+import 'leaflet';
+
 
 
 class ContactMe extends Component {
@@ -189,7 +183,7 @@ class ContactMe extends Component {
                                     <input placeholder="Subject" type="text" name="subject" ref="subject" value={this.state.subject} onInput={this._onKeyUp.bind(this)}/>
                                 </div>
                                 <div className="body_container">
-                                    <textarea placeholder="Message" name="body" defaultValue={""} ref="body" value={this.state.body} onInput={this._onKeyUp.bind(this)}/>
+                                    <textarea placeholder="Message" name="body"  ref="body" value={this.state.body} onInput={this._onKeyUp.bind(this)}/>
                                 </div>
                                 <div className="submit_container">
                                     <input type="submit" defaultValue="Send" />

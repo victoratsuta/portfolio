@@ -39,7 +39,7 @@ class Smoke_Zone extends Component {
 
     render() {
         return (
-            <ParallaxMousemove containerStyle={style.Smoke_Zone__outter} fullHeight={true}>
+            <ParallaxMousemove containerStyle={style.Smoke_Zone__outter} >
                 <ParallaxMousemove.Layer layerStyle={style.Smoke_Zone__bgLayerStyle} config={{
                     xFactor: 0.05,
                     yFactor: 0.05,
@@ -82,7 +82,7 @@ class Smoke_Zone extends Component {
                         <img src={'../imgs/hookah3.svg'}  className={'Smoke_Zone__logo'}></img>
                         <h1 className={'Smoke_Zone__header'}>SMOKE-ZONE</h1>
                         <p className={'Smoke_Zone__paragraph'}>online store selling tobacco for shisha</p>
-                        <div className={'Smoke_Zone__arrow Smoke_Zone__arrow_show'} onClick={this.animateSmoke.bind(this)}></div>
+                        <div className={'Smoke_Zone__arrow Smoke_Zone__arrow_show general__arrow'} onClick={this.animateSmoke.bind(this)}></div>
                     </div>
 
                 </div>

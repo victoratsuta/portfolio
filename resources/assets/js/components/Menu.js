@@ -1,67 +1,31 @@
 import React, {Component} from 'react';
 import SVGMenu from './SVGMenu';
 import Loading from './Loading';
+import {withRouter} from 'react-router-dom'
 
-var $ = require('jquery');
+const $ = require('jquery');
+
 
 class Menu extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            svgMenu : null,
-            loading : null
+            svgMenu: null,
+            loading: null
         };
         this.path = window.location.href.split('/')[3].split('#');
     }
 
-    setSvgProp(prop){
-        this.setState({svgMenu : this.state.svgMenu = new SVGMenu(prop)});
-    }
-    setLoading(prop){
-        this.setState({loading : this.state.loading = new Loading(prop)});
+    setSvgProp(prop) {
+        this.setState({svgMenu: this.state.svgMenu = new SVGMenu(prop)});
     }
 
-    initialStart(){
-
-        if(typeof  this.path[1] != 'undefined'){
-            history.replaceState('', "page 3", "portfolio");
-        }
-        if (this.path[0]=='contacts'){
-            this.setLoading('hide_logo');
-            this.setSvgProp('contact');
-            let mymap = L.map('mapid',{ zoomControl:false }).setView([44.58, 33.49], 13);
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidmljdG9yYXRzdXRhIiwiYSI6ImNqOW9iNnJjczJnaW8zM3MyeDdrcXBuN3oifQ.gIWOmeqEuCRHKmWb_AMXFQ', {
-                maxZoom: 18,
-                id: 'mapbox.dark',
-                accessToken: 'your.mapbox.access.token',
-            }).addTo(mymap);
-            let greenIcon = L.icon({
-                iconUrl: '../imgs/location-pin.png',
-                shadowUrl: '',
-
-                iconSize:     [38, 40], // size of the icon
-                iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
-            L.marker([44.58, 33.49], {icon: greenIcon}).addTo(mymap);
-        }
-        if (this.path[0]=='skills'){
-            this.setLoading('hide_logo');
-            this.setSvgProp(null);
-        }
-        if (this.path[0]=='portfolio'){
-            this.setLoading('hide_logo');
-            this.setSvgProp(null);
-        }
-        if (this.path[0]==''){
-            this.setLoading('');
-            this.setSvgProp(null);
-        }
-        this.state.loading.init();
-        this.state.svgMenu.init();
+    setLoading(prop) {
+        this.setState({loading: this.state.loading = new Loading(prop)});
     }
-    clickHandler(type){
+
+    clickHandler(type) {
 
         $("html, body").animate({scrollTop: 0}, "slow");
         $('#ip-container').addClass('unloaded');
@@ -76,25 +40,25 @@ class Menu extends Component {
             switch (type) {
 
                 case '':
-                    this.context.router.push('/');
+                    this.props.history.push('/');
                     this.setSvgProp(null);
                     this.setLoading();
                     break;
 
                 case 'skills':
-                    this.context.router.push('/skills');
+                    this.props.history.push('/skills');
                     this.setLoading('hide_logo');
                     this.setSvgProp(null);
                     break;
 
                 case 'contacts':
-                    this.context.router.push('/contacts');
+                    this.props.history.push('/contacts');
                     this.setLoading('hide_logo');
                     this.setSvgProp('contact');
                     break;
 
                 case 'portfolio':
-                    this.context.router.push('/portfolio');
+                    this.props.history.push('/portfolio');
                     this.setLoading('hide_logo');
                     this.setSvgProp(null);
                     break;
@@ -162,14 +126,38 @@ class Menu extends Component {
     componentDidMount() {
         this.page = this.path[1];
         window.onpopstate = this.onBackButtonEvent.bind(this);
+
+        if (typeof  this.path[1] != 'undefined') {
+            // history.replaceState('', "page 3", "portfolio");
+        }
+        if (this.path[0] == 'contacts') {
+            this.setLoading('hide_logo');
+            this.setSvgProp('contact');
+        }
+        if (this.path[0] == 'skills') {
+            this.setLoading('hide_logo');
+            this.setSvgProp(null);
+        }
+        if (this.path[0] == 'portfolio') {
+            this.setLoading('hide_logo');
+            this.setSvgProp(null);
+        }
+        if (this.path[0] == '') {
+            this.setLoading('');
+            this.setSvgProp(null);
+        }
+        this.state.loading.init();
+        this.state.svgMenu.init();
+
     };
+
 
     onBackButtonEvent(e) {
         e.preventDefault();
-        if(this.page != window.location.href.split('/')[3].split('#')[1]){
+        if (this.page != window.location.href.split('/')[3].split('#')[1]) {
             return false;
         }
-        this.context.router.push('/');
+        this.props.history.push('/');
         this.setSvgProp(null);
         this.setLoading('hide_logo');
         this.state.loading.init();
@@ -179,20 +167,21 @@ class Menu extends Component {
 
     render() {
         return (
-            <div onLoad={this.initialStart.bind(this)}>
+            <div>
                 <nav id="menu" className="menu">
                     <button className="menu__handle" onClick={this.handleMenuStyle.bind(this)}><span>Menu</span>
                     </button>
                     <div className="menu__inner">
                         <ul className="menu__ul">
-                            <li onClick={this.clickHandler.bind(this, '')}><a><i className="fa fa-fw fa-home"/><span>Home<span/></span></a>
+                            <li onClick={this.clickHandler.bind(this, '')}><a>
+                                <i className="icon">&#xe802;</i><span>Home</span></a>
                             </li>
-                            <li onClick={this.clickHandler.bind(this, 'portfolio')}><a><i
-                                className="fa fa-fw fa-desktop"/><span>Portfolio<span/></span></a></li>
-                            <li onClick={this.clickHandler.bind(this, 'skills')}><a><i
-                                className="fa fa-fw fa-code"/><span>Skills<span/></span></a></li>
-                            <li onClick={this.clickHandler.bind(this, 'contacts')}><a><i
-                                className="fa fa-fw fa-envelope-open"/><span>Contact me<span/></span></a></li>
+                            <li onClick={this.clickHandler.bind(this, 'portfolio')}><a>
+                                <i className="icon">&#xf108;</i><span>Portfolio</span></a></li>
+                            <li onClick={this.clickHandler.bind(this, 'skills')}><a>
+                                <i className="icon">&#xf1b3;</i><span>Skills</span></a></li>
+                            <li onClick={this.clickHandler.bind(this, 'contacts')}><a>
+                                <i className="icon">&#xf2b6;</i><span>Contact me</span></a></li>
                         </ul>
                     </div>
                     <div className="morph-shape" data-morph-open="M300-10c0,0,295,164,295,410c0,232-295,410-295,410"
@@ -205,6 +194,7 @@ class Menu extends Component {
                 {/* initial header */}
                 <div className="ip-header" id="preloader_container">
                     <h1 className="ip-logo">
+
                         <img className="ip-inner " id="img_loader"
                              src={'../imgs/darkd_bl.png'}
                              style={{maxWidth: 350, minWidth: 180, width: '20%'}}/>
@@ -223,8 +213,4 @@ class Menu extends Component {
     }
 }
 
-Menu.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
-
-export default Menu;
+export default withRouter(Menu);

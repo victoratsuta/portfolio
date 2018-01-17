@@ -49,7 +49,7 @@ class Factoring extends Component {
     {
         return (
 
-            <ParallaxMousemove containerStyle={style.outter} fullHeight={true}>
+            <ParallaxMousemove containerStyle={style.outter}>
                 <ParallaxMousemove.Layer layerStyle={style.bgLayerStyle} config={{
                     xFactor: 0.05,
                     yFactor: 0.05,
@@ -96,7 +96,7 @@ class Factoring extends Component {
                         <h1 className={'Factoring__header'}>FACTORING</h1>
                         <p className={'Factoring__paragraph'}>
                             The international company for the provision of factoring services.</p>
-                        <div className={'Factoring__arrow Factoring__arrow_show'}
+                        <div className={'Factoring__arrow Factoring__arrow_show general__arrow'}
                              onClick={this.animateFactoring.bind(this)}/>
                     </div>
 

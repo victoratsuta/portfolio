@@ -20,30 +20,12 @@ mix.webpackConfig({
 });
 mix.react('resources/assets/js/app.js', 'public/js')
 
-    .babel([
-        'public/js/libraries/preloadder.js',
-        'public/js/app.js',
-    ], 'public/js/bundle.js')
-    // .babel([
-    //     'public/js/libreris/snap.svg.js',
-    // ], 'public/js/libraries.js')
-
     .sass('resources/assets/sass/app.scss', 'public/css').options({
     postCss: [
         require('postcss-css-variables')()
     ]
 })
-    .sass('resources/assets/sass/libreris.scss', 'public/css').options({
-    postCss: [
-        require('postcss-css-variables')()
-    ]
-})
 
-    .styles([
-        'public/css/app.css',
-        'public/css/libreris.css',
-
-    ], 'public/css/bundle.css');
 
 // const ImageminPlugin = require('imagemin-webpack-plugin').default;
 // const CopyWebpackPlugin = require('copy-webpack-plugin');

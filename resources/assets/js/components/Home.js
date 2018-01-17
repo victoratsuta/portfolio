@@ -2,6 +2,8 @@ import React , {Component} from 'react';
 import Menu from './Menu';
 import TxtRotate from './TxtRotate';
 
+window.loadingFast = false;
+
 class Home extends Component {
 
     printSkills(){

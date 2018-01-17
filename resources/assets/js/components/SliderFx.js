@@ -1,3 +1,4 @@
+// import classie from 'classie';
 
 class SliderFx {
     _morphSVGs (callback) {

@@ -45,7 +45,7 @@ class History24 extends Component {
     render() {
         return (
 
-            <ParallaxMousemove containerStyle={style.History24__outter} fullHeight={true}>
+            <ParallaxMousemove containerStyle={style.History24__outter}>
                 <ParallaxMousemove.Layer layerStyle={style.History24__bgLayerStyle} config={{
                     xFactor: 0.05,
                     yFactor: 0.05,
@@ -94,7 +94,7 @@ class History24 extends Component {
                         <h1 className={'History24__header'}>HISTORY.RF</h1>
                         <p className={'History24__paragraph'}>All-Russian portal of online preparation for the unified
                             state exam on history</p>
-                        <div className={'History24__arrow History24__arrow_show'} onClick={this.animateHistory.bind(this)}/>
+                        <div className={'History24__arrow History24__arrow_show general__arrow'} onClick={this.animateHistory.bind(this)}/>
                     </div>
 
                 </div>

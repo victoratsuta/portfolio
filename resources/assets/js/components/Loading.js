@@ -1,6 +1,5 @@
 import PathLoader from './PathLoader';
 
-
 class Loading {
     constructor(prop = '') {
 
@@ -17,16 +16,23 @@ class Loading {
         this.animEndEventName = this.animEndEventNames[window.Modernizr.prefixed('animation')]
         this.header = this.container.querySelector('div.ip-header')
         this.loader = new PathLoader(document.getElementById('ip-loader-circle'))
+        this.loadingStarted = false;
 
     }
 
     init() {
-        let onEndInitialAnimation = () => {
-            if (this.support.animations) {
-                window.removeEventListener(this.animEndEventName, onEndInitialAnimation);
-            }
+
+        let self = this;
+        function onEndInitialAnimation (){
+            // if (self.support.animations) {
+            //     console.log('simulate456');
+            //     window.removeEventListener(self.animEndEventName, onEndInitialAnimation);
+            // }
+            if(self.loadingStarted) return;
             $('.for_fade').css('visibility', 'hidden');
-            this.startLoading();
+
+
+            self.startLoading();
 
              function showmain() {
                 $('.for_fade').css('visibility', 'visible');
@@ -43,54 +49,61 @@ class Loading {
         classie.add(this.container, 'loading');
 
         if (this.support.animations) {
+
             this.container.addEventListener(this.animEndEventName, onEndInitialAnimation);
         }
         else {
+
             onEndInitialAnimation();
         }
     }
 
     startLoading() {
         // simulate loading something..
-        let simulationFn = (instance) => {
-            let progress = 0,
-                // var progress = 1,
-                interval = setInterval(() => {
-                    progress = Math.min(progress + Math.random() * 0.1, 1);
 
-                    instance.setProgress(progress);
+        this.loadingStarted = true;
+
+        let self = this;
+        function simulationFn(instance) {
+
+            window.loadingFast ? self.progress = 1 : self.progress = 0;
+
+                var interval = setInterval(function () {
+                    self.progress = Math.min(self.progress + Math.random() * 0.1, 1);
+
+                    instance.setProgress(self.progress);
 
                     // reached the end
-                    if (progress === 1) {
-
-                        if (this.prop == 'hide_logo' || $(window).height() < 500) {
+                    if (self.progress === 1) {
+                        window.loadingFast = true;
+                        if (self.prop == 'hide_logo' || $(window).height() < 500) {
                             $('#img_loader').animate({
                                 opacity: 0,
                             }, 500);
                         }
-                        classie.remove(this.container, 'loading');
-                        classie.add(this.container, 'loaded');
+                        classie.remove(self.container, 'loading');
+                        classie.add(self.container, 'loaded');
                         clearInterval(interval);
 
                         let onEndHeaderAnimation = (ev) => {
 
-                            if (this.support.animations) {
-                                if (ev.target !== this.header) return;
-                                window.removeEventListener(this.animEndEventName, onEndHeaderAnimation);
+                            if (self.support.animations) {
+                                if (ev.target !== self.header) return;
+                                window.removeEventListener(self.animEndEventName, onEndHeaderAnimation);
                             }
 
                             classie.add(document.body, 'layout-switch');
-                            window.removeEventListener('scroll', this.noscroll);
+                            window.removeEventListener('scroll', self.noscroll);
                         };
 
-                        if (this.support.animations) {
-                            this.header.addEventListener(this.animEndEventName, onEndHeaderAnimation);
+                        if (self.support.animations) {
+                            self.header.addEventListener(self.animEndEventName, onEndHeaderAnimation);
                         }
                         else {
                             onEndHeaderAnimation();
                         }
                     }
-                }, 160);
+                }, 80);
         };
 
         this.loader.setProgressFn(simulationFn);

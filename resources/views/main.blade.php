@@ -29,26 +29,19 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Wire+One" rel="stylesheet">
 
-    <link href="{{asset('css/bundle.css')}}" rel="stylesheet"
+    <link href="{{asset('css/app.css')}}" rel="stylesheet"
           type="text/css">
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+          integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+          crossorigin=""/>
 </head>
 <body>
 <div id="portfolio">
 </div>
 <script src="{{asset('js/libraries/snap.svg.js')}}"></script>
 <script src="{{asset('js/libraries/Modernizr.js')}}"></script>
-<script src="{{asset('js/bundle.js')}}"></script>
-
-
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
-      integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
-      crossorigin=""/>
-<script src="https://use.fontawesome.com/f9d7c29ada.js"></script>
-<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
-        integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
-        crossorigin=""></script>
+<script src="{{asset('js/libraries/classie.js')}}"></script>
+<script src="{{asset('js/app.js')}}"></script>
 
 </body>
 
