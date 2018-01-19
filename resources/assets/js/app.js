@@ -1,4 +1,5 @@
 require('./bootstrap');
+
 import React from 'react';
 import {render} from 'react-dom';
 import {
@@ -10,6 +11,14 @@ import Home from './components/Home';
 import Skills from './components/Skills';
 import ContactMe from './components/ContactMe';
 import Portfolio from './components/Portfolio';
+
+
+import config from 'react-global-configuration';
+
+config.set({
+    smokeZone: 'http://smoke-zone.info',
+    history: 'http://historypro.ru',
+    factoring: 'http://factoringvergelijken.nl'});
 
 render(
     <Router>

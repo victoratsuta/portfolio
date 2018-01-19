@@ -31,20 +31,21 @@ class SVGMenu {
 
     toggleBody() {
 
-        this.enableScroll();
-        $('#main_container').animate({opacity: 1}, 500);
+
+
         this.path = window.location.href.split('/')[3].split('#');
 
         if (this.isOpen) {
-            document.getElementById('main_container').style.opacity = 1;
+            this.enableScroll();
+            $('#main_container').animate({opacity: 1}, 500);
 
             if (document.getElementById('img_loader').style.opacity != 0) {
-                document.getElementById('img_loader').style.opacity = 1;
+                $('#img_loader').animate({opacity: 1}, 500);
             }
 
             if (this.path[0] == 'contacts') {
-                document.getElementById('mycontact_form_container').style.opacity = 1;
-                document.getElementById('mapid').style.opacity = 1;
+                $('#mycontact_form_container').animate({opacity: 1}, 500);
+                $('#mapid').animate({opacity: 1}, 500);
             }
             if (this.path[0] == 'portfolio') {
                 $(".morph-shape").removeClass('Smoke_Zone__stroke History24__stroke WellHome__stroke Factoring__stroke');

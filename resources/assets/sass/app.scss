@@ -242,6 +242,9 @@
   .label_tech {
     display: none !important;
   }
+  .toTopAnchor{
+    display: none !important;
+  }
 }
 
 @media (max-width: 400px) {
@@ -310,6 +313,9 @@
     width: 60px !important;
     height: 60px !important;
   }
+  .toTopAnchor{
+    display: none !important;
+  }
 }
 
 .Smoke_Zone__stroke svg path {
@@ -330,7 +336,19 @@
   stroke: #38925E !important;
 
 }
-
+.toTopAnchor{
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: block;
+  background-image: url(/imgs/totop.svg);
+  background-position: center;
+  background-size: 40px;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  cursor: pointer;
+}
 
 
 

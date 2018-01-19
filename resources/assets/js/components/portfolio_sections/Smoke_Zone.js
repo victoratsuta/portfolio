@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ParallaxMousemove from 'react-parallax-mousemove';
+import config from "react-global-configuration";
 
 const  style = {
     Smoke_Zone__outter: {
@@ -68,7 +69,7 @@ class Smoke_Zone extends Component {
                             Full development of an online store, the sale of tobacco products based on a unique MVC core.
                             Promotion and Support. Development of a flexible administrative system and a subsystem of content management.
                         </div>
-                        <a href={'http://smoke-zone.pro/list'} target={'blank'}>
+                        <a href={config.get('smokeZone')} target={'blank'}>
                             <figure className={'Smoke_Zone__rotate_button'}>
                                 <div>
                                     <span>View</span>

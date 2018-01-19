@@ -4,8 +4,8 @@ import Smoke_Zone from './portfolio_sections/Smoke_Zone';
 import History24 from './portfolio_sections/History24';
 import WellHome from './portfolio_sections/WellHome';
 import Factoring from './portfolio_sections/Factoring';
-
-import {SectionsContainer, Section} from 'react-fullpage';
+import ScrollButton from './ScrollButton';
+import {ScrollToTopOnMount, SectionsContainer, Section} from 'react-fullpage';
 
 
 let options = {
@@ -36,6 +36,7 @@ class Portfolio extends Component {
                     <Menu/>
                     <div  id="main_container">
                         <div>
+                            <ScrollToTopOnMount />
                             <SectionsContainer className="container" {...options}>
                                 <Section className="custom-section" verticalAlign="true">
                                     <Smoke_Zone/>
@@ -52,7 +53,8 @@ class Portfolio extends Component {
                             </SectionsContainer>
                         </div>
                     </div>
-                </div>{/* /container */}
+                    <ScrollButton/>
+                </div>
             </div>
         )
     }

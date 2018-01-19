@@ -124,11 +124,12 @@ class Menu extends Component {
     }
 
     componentDidMount() {
-        this.page = this.path[1];
-        window.onpopstate = this.onBackButtonEvent.bind(this);
+        // console.log('componentDidMount');
+        // this.page = this.path[1];
+        // window.onpopstate = this.onBackButtonEvent.bind(this);
 
         if (typeof  this.path[1] != 'undefined') {
-            // history.replaceState('', "page 3", "portfolio");
+            history.replaceState('', "", "portfolio");
         }
         if (this.path[0] == 'contacts') {
             this.setLoading('hide_logo');
@@ -152,18 +153,18 @@ class Menu extends Component {
     };
 
 
-    onBackButtonEvent(e) {
-        e.preventDefault();
-        if (this.page != window.location.href.split('/')[3].split('#')[1]) {
-            return false;
-        }
-        this.props.history.push('/');
-        this.setSvgProp(null);
-        this.setLoading('hide_logo');
-        this.state.loading.init();
-        this.state.svgMenu.init();
-
-    };
+    // onBackButtonEvent(e) {
+    //     e.preventDefault();
+    //     if (this.page != window.location.href.split('/')[3].split('#')[1]) {
+    //         return false;
+    //     }
+    //     this.props.history.push('/');
+    //     this.setSvgProp(null);
+    //     this.setLoading('hide_logo');
+    //     this.state.loading.init();
+    //     this.state.svgMenu.init();
+    //
+    // };
 
     render() {
         return (

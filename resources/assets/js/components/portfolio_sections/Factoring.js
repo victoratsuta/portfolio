@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ParallaxMousemove from 'react-parallax-mousemove';
-
+import config from 'react-global-configuration';
 const style = {
     outter: {
         backgroundPosition: 'center',
@@ -80,7 +80,7 @@ class Factoring extends Component {
                             Partial development of backend based on Yii 2 framework, admin panel, adaptive optimization
                             of front-end elements. Add support for new languages.
                         </div>
-                        <a href={'http://factoringvergelijken.nl/'} target={'blank'}>
+                        <a href={config.get('factoring')} target={'blank'}>
                             <figure className={'Factoring__rotate_button'}>
                                 <div>
                                     <span>View</span>

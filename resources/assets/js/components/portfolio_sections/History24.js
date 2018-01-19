@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ParallaxMousemove from 'react-parallax-mousemove';
+import config from "react-global-configuration";
 
 const style = {
     History24__outter: {
@@ -79,7 +80,7 @@ class History24 extends Component {
                             Designing the architecture of the system, writing the frontend
                             using Bootstrap, Gulp, Jquery and many different libraries.
                         </div>
-                        <a href={'http://xn--24-vlca3amfi4j.xn--p1ai/'} target={'blank'}>
+                        <a href={config.get('history')} target={'blank'}>
                             <figure className={'History24__rotate_button'}>
                                 <div>
                                     <span>View</span>
@@ -96,7 +97,6 @@ class History24 extends Component {
                             state exam on history</p>
                         <div className={'History24__arrow History24__arrow_show general__arrow'} onClick={this.animateHistory.bind(this)}/>
                     </div>
-
                 </div>
             </ParallaxMousemove>
         )
