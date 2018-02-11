@@ -195,8 +195,8 @@ class Menu extends Component {
                     <h1 className="ip-logo">
 
                         <img className="ip-inner " id="img_loader"
-                             src={'../imgs/darkd_bl.png'}
-                             style={{maxWidth: 350, minWidth: 180, width: '20%'}}/>
+                             src={'../imgs/lion222.png'}
+                             />
                     </h1>
                     <div className="ip-loader">
                         <svg className="ip-inner" width="60px" height="60px" viewBox="0 0 80 80">

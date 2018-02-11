@@ -22,6 +22,7 @@ class Home extends Component {
         document.body.appendChild(css);
     }
 
+
     render(){
         return(
             <div className="demo-1">
@@ -38,14 +39,17 @@ class Home extends Component {
                                 </p>
                             </div>
                             <div className="icon_container">
-                                <a href="https://github.com/victoratsuta" target="_blank"><div className="git">
-                                </div>
+                                <a href="https://github.com/victoratsuta" target="_blank">
+                                    <div id={'git'} className="git"
+                                    />
                                 </a>
-                                <a href="https://www.codewars.com/users/victoratsuta" target="_blank"><div className="codewars">
-                                </div>
+                                <a href="https://www.codewars.com/users/victoratsuta" target="_blank">
+                                    <div id={'codewars'} className="codewars"
+                                    />
                                 </a>
-                                <a href="https://vk.com/atsuta_victor" target="_blank"><div className="vk">
-                                </div>
+                                <a href="https://vk.com/atsuta_victor" target="_blank">
+                                    <div id={'vk'} className="vk"
+                                    />
                                 </a>
                             </div>
                         </div>
