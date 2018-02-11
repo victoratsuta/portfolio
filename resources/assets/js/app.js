@@ -15,9 +15,11 @@ import Portfolio from './components/Portfolio';
 
 import config from 'react-global-configuration';
 
+// Жить было бы проще если бы у жизни был исходный код ...
+
 config.set({
     smokeZone: 'http://smoke-zone.info',
-    history: 'http://historypro.ru',
+    history: 'https://historypro.ru',
     factoring: 'http://factoringvergelijken.nl'});
 
 render(

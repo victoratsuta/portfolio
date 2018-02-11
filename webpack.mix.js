@@ -15,7 +15,7 @@ mix.webpackConfig({
     module: {
         rules: [{
             exclude: /node_modules/,
-        }]
+        }],
     }
 });
 
@@ -42,9 +42,8 @@ mix.webpackConfig({
             test: /\.(jpe?g|png|gif|svg)$/i,
             plugins: [
                 imageminMozjpeg({
-                    quality: 80,
+                    quality: 50,
                 })
-
             ]
         })
     ]
