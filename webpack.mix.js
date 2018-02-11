@@ -18,6 +18,7 @@ mix.webpackConfig({
         }]
     }
 });
+
 mix.react('resources/assets/js/app.js', 'public/js')
 
     .sass('resources/assets/sass/app.scss', 'public/css').options({
@@ -26,11 +27,11 @@ mix.react('resources/assets/js/app.js', 'public/js')
     ]
 })
 
-
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const imageminMozjpeg = require('imagemin-mozjpeg');
-
+//
+// const ImageminPlugin = require('imagemin-webpack-plugin').default;
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const imageminMozjpeg = require('imagemin-mozjpeg');
+//
 // mix.webpackConfig({
 //     plugins: [
 //         new CopyWebpackPlugin([{

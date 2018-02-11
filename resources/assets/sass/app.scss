@@ -293,6 +293,9 @@
   #menu {
     pointer-events: none !important;
   }
+  .menu__ul li {
+    pointer-events: all !important;
+  }
   .neon {
     font-size: 70px !important;
   }
@@ -306,7 +309,7 @@
     margin-top: 30px !important;
   }
   .icon{
-    font-size: 2em !important;
+    font-size: 1.6em !important;
   }
   .general__arrow{
     background-size: 60px !important;
@@ -314,6 +317,12 @@
     height: 60px !important;
   }
   .toTopAnchor{
+    display: none !important;
+  }
+  #ip-loader-circle{
+    display: none !important;
+  }
+  .ip-loader{
     display: none !important;
   }
 }

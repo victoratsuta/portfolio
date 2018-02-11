@@ -4,13 +4,14 @@ import SliderFx from './SliderFx';
 
 class Skills extends Component {
 
-    componentDidMount(){
+    componentDidMount() {
         console.log('skill');
         this.SliderFx = new SliderFx(document.getElementById('slideshow'), {
             easing: 'cubic-bezier(.8,0,.2,1)'
         });
         this.SliderFx.init();
     }
+
     render() {
         return (
             <div className="demo-1">
@@ -24,28 +25,28 @@ class Skills extends Component {
                                     <div className="slide">
                                         <div className="backend_container">
                                             <div className="backend_section">
-                                                <img src={'../imgs/skills/backand/apache.png'}/>
-                                                <img src={'../imgs/skills/backand/nginx.png'}/>
+                                                <img src={'../imgs/skills/backand/python1.png'}/>
                                                 <img src={'../imgs/skills/backand/nodejs.png'}/>
-                                                <img src={'../imgs/skills/backand/php.svg'}/>
+                                                <img src={'../imgs/skills/backand/php1.png'}/>
+                                                <img src={'../imgs/skills/backand/nginx1.png'}/>
                                             </div>
                                             <div className="backend_section">
                                                 <img src={'../imgs/skills/backand/composer.png'}/>
                                                 <img src={'../imgs/skills/backand/mongo.png'}/>
-                                                <img src={'../imgs/skills/backand/mysql.png'}/>
-                                                <img src={'../imgs/skills/backand/Oracle_Database.png'}/>
+                                                <img src={'../imgs/skills/backand/mysql1.png'}/>
+                                                <img src={'../imgs/skills/backand/bash.png'}/>
                                             </div>
                                             <div className="backend_section">
-                                                <img src={'../imgs/skills/backand/zend.png'}/>
-                                                <img src={'../imgs/skills/backand/yii.png'}/>
-                                                <img src={'../imgs/skills/backand/yii2.png'}/>
-                                                <img src={'../imgs/skills/backand/laravel.png'}/>
+                                                <img src={'../imgs/skills/backand/laravel3.png'}/>
+                                                <img src={'../imgs/skills/backand/yii22.png'}/>
+                                                <img src={'../imgs/skills/backand/zend2.png'}/>
+                                                <img src={'../imgs/skills/backand/express1.png'}/>
                                             </div>
                                             <div className="backend_section">
-                                                <img src={'../imgs/skills/backand/suit.svg'}/>
-                                                <img src={'../imgs/skills/backand/sugarcrm.png'}/>
-                                                <img src={'../imgs/skills/backand/npm.png'}/>
-                                                <img src={'../imgs/skills/backand/express.png'}/>
+                                                <img src={'../imgs/skills/backand/git1.png'}/>
+                                                <img src={'../imgs/skills/other/ubuntu.png'}/>
+                                                <img src={'../imgs/skills/other/docker.svg'}/>
+                                                <img src={'../imgs/skills/backand/apache.png'}/>
                                             </div>
                                         </div>
                                     </div>
@@ -54,40 +55,29 @@ class Skills extends Component {
                                     <div className="slide">
                                         <div className="backend_container">
                                             <div className="backend_section">
+                                                <img src={'../imgs/skills/frontend/html2.png'}/>
+                                                <img src={'../imgs/skills/frontend/css2.png'}/>
+                                                <img src={'../imgs/skills/frontend/js1.png'}/>
+                                                <img src={'../imgs/skills/frontend/jquery1.png'}/>
+                                            </div>
+                                            <div className="backend_section">
                                                 <img src={'../imgs/skills/frontend/angular.png'}/>
-                                                <img src={'../imgs/skills/frontend/html.png'}/>
-                                                <img className="lowe_heihgt" src={'../imgs/skills/frontend/css.png'}/>
-                                                <img className="lowe_heihgt" src={'../imgs/skills/frontend/js.png'}/>
-                                            </div>
-                                            <div className="backend_section">
-                                                <img src={'../imgs/skills/frontend/react.png'}/>
-                                                <img src={'../imgs/skills/frontend/doundation.png'}/>
+                                                <img src={'../imgs/skills/frontend/react2.png'}/>
+                                                <img src={'../imgs/skills/frontend/bootstrap1.png'}/>
                                                 <img src={'../imgs/skills/frontend/materialize.svg'}/>
-                                                <img src={'../imgs/skills/frontend/bootstrap.png'}/>
                                             </div>
                                             <div className="backend_section">
+
                                                 <img className="lowe_heihgt" src={'../imgs/skills/frontend/gulp.svg'}/>
-                                                <img src={'../imgs/skills/frontend/Webpack.png'}/>
+                                                <img src={'../imgs/skills/frontend/webpack2.gif'}/>
                                                 <img src={'../imgs/skills/frontend/yarn.png'}/>
                                                 <img src={'../imgs/skills/frontend/npm.png'}/>
                                             </div>
                                             <div className="backend_section">
                                                 <img src={'../imgs/skills/frontend/sass.png'}/>
                                                 <img src={'../imgs/skills/frontend/less.png'}/>
-                                                <img src={'../imgs/skills/frontend/jquery.gif'}/>
+                                                <img src={'../imgs/skills/frontend/stylus.png'}/>
                                                 <img src={'../imgs/skills/frontend/mocha.png'}/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="slide">
-                                        <div className="backend_container">
-                                            <div className="backend_section">
-                                                <img src={'../imgs/skills/other/docker.svg'}/>
-                                                <img src={'../imgs/skills/other/git.png'}/>
-                                                <img src={'../imgs/skills/other/ubuntu.png'}/>
-                                                <img src={'../imgs/skills/other/ph.png'}/>
                                             </div>
                                         </div>
                                     </div>

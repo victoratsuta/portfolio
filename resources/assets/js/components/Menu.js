@@ -3,9 +3,6 @@ import SVGMenu from './SVGMenu';
 import Loading from './Loading';
 import {withRouter} from 'react-router-dom'
 
-const $ = require('jquery');
-
-
 class Menu extends Component {
 
     constructor(props) {
@@ -115,10 +112,10 @@ class Menu extends Component {
         if (this.path[0] == '' || this.path[0] != 'portfolio') {
             $('.menu__ul').find('span').css('cssText', 'color : deepskyblue !important');
             $('.menu__ul').find('i').mouseenter(function () {
-                $(this).css('cssText', 'color : deepskyblue !important');
+                $(this).css('cssText', 'color : deepskyblue');
             });
             $('.menu__ul').find('i').mouseleave(function () {
-                $(this).css('cssText', 'color : #5f656f !important');
+                $(this).css('cssText', 'color : #5f656f');
             })
         }
     }
@@ -152,20 +149,6 @@ class Menu extends Component {
 
     };
 
-
-    // onBackButtonEvent(e) {
-    //     e.preventDefault();
-    //     if (this.page != window.location.href.split('/')[3].split('#')[1]) {
-    //         return false;
-    //     }
-    //     this.props.history.push('/');
-    //     this.setSvgProp(null);
-    //     this.setLoading('hide_logo');
-    //     this.state.loading.init();
-    //     this.state.svgMenu.init();
-    //
-    // };
-
     render() {
         return (
             <div>
@@ -174,15 +157,30 @@ class Menu extends Component {
                     </button>
                     <div className="menu__inner">
                         <ul className="menu__ul">
-                            <li onClick={this.clickHandler.bind(this, '')}><a>
-                                <i className="icon">&#xe802;</i><span>Home</span></a>
+                            <li onClick={this.clickHandler.bind(this, '')}>
+                                <a>
+                                    <i className={'icon ra ra-crown'}></i>
+                                    <span>Home</span>
+                                </a>
                             </li>
-                            <li onClick={this.clickHandler.bind(this, 'portfolio')}><a>
-                                <i className="icon">&#xf108;</i><span>Portfolio</span></a></li>
-                            <li onClick={this.clickHandler.bind(this, 'skills')}><a>
-                                <i className="icon">&#xf1b3;</i><span>Skills</span></a></li>
-                            <li onClick={this.clickHandler.bind(this, 'contacts')}><a>
-                                <i className="icon">&#xf2b6;</i><span>Contact me</span></a></li>
+                            <li onClick={this.clickHandler.bind(this, 'portfolio')}>
+                                <a>
+                                    <i className={'icon ra ra-trophy'}></i>
+                                    <span>Portfolio</span>
+                                </a>
+                            </li>
+                            <li onClick={this.clickHandler.bind(this, 'skills')}>
+                                <a>
+                                    <i className={'icon ra ra-crossed-sabres'}></i>
+                                    <span>Skills</span>
+                                </a>
+                            </li>
+                            <li onClick={this.clickHandler.bind(this, 'contacts')}>
+                                <a>
+                                    <i className={'icon ra  ra-bell'}></i>
+                                    <span>Contact me</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div className="morph-shape" data-morph-open="M300-10c0,0,295,164,295,410c0,232-295,410-295,410"

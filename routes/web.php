@@ -23,5 +23,8 @@ Route::get('/skills', function () {
 Route::get('/contacts', function () {
     return view('main');
 });
+Route::get('/admin', function () {
+    return view('admin');
+});
 
 Route::post('mail', 'MailController@index');

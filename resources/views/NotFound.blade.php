@@ -18,7 +18,7 @@
 <body>
 <div class="container">
     <form class="four-oh-four-form">
-        <input type="text" class="404-input">
+        <input type="text" class="404-input" autofocus>
     </form>
 
     <div class="terminal">

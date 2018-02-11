@@ -1,4 +1,4 @@
-    class PathLoader {
+class PathLoader {
     constructor(el) {
         this.el = el;
         // clear stroke
