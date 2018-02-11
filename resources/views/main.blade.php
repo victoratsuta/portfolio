@@ -17,9 +17,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#0E0D10">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#0E0D10">
+    <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name=apple-mobile-web-app-status-bar-style content=#0E0D10>
-    <meta name="theme-color" content="#0E0D10" />
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Atsuta Victor | Web Master</title>
