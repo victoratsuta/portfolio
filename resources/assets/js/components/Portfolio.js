@@ -39,10 +39,10 @@ class Portfolio extends Component {
                         <div>
                             <ScrollToTopOnMount/>
                             <SectionsContainer className="container" {...options}>
-                                <Section className="custom-section" verticalAlign="true">
+                                <Section>
                                     <Yandex/>
                                 </Section>
-                                <Section className="custom-section" verticalAlign="true">
+                                <Section>
                                     <Smoke_Zone/>
                                 </Section>
                                 <Section>
