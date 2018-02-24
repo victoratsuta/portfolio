@@ -1559,8 +1559,25 @@ var Menu = function (_Component) {
 
             this.path = window.location.href.split('/')[3].split('#');
 
-            if (this.path[1] == 'smoke-zone' || this.path[0] == 'portfolio' && typeof this.path[1] == 'undefined') {
+            if (this.path[1] == 'yandex' || this.path[0] == 'portfolio' && typeof this.path[1] == 'undefined') {
+                $('.menu__ul').find('span').css('cssText', 'color : white !important');
+
+                $('.menu__ul').find('i').css('cssText', 'color : white !important');
+
+                $('.menu__ul').find('i').mouseenter(function () {
+                    $(this).css('cssText', 'color : #ED2025 !important');
+                });
+                $('.menu__ul').find('i').mouseleave(function () {
+                    $(this).css('cssText', 'color : white !important');
+                });
+            }
+
+            if (this.path[1] == 'smoke-zone') {
+
                 $('.menu__ul').find('span').css('cssText', 'color : #D40080 !important');
+
+                $('.menu__ul').find('i').css('cssText', 'color : #5f656f !important');
+
                 $('.menu__ul').find('i').mouseenter(function () {
                     $(this).css('cssText', 'color : #D40080 !important');
                 });
@@ -1568,9 +1585,13 @@ var Menu = function (_Component) {
                     $(this).css('cssText', 'color : #5f656f !important');
                 });
             }
+
             if (this.path[1] == 'history24') {
 
                 $('.menu__ul').find('span').css('cssText', 'color : #E6E6E6 !important');
+
+                $('.menu__ul').find('i').css('cssText', 'color : #5f656f !important');
+
                 $('.menu__ul').find('i').mouseenter(function () {
                     $(this).css('cssText', 'color : #936229 !important');
                 });
@@ -1581,6 +1602,9 @@ var Menu = function (_Component) {
             if (this.path[1] == 'welhome') {
 
                 $('.menu__ul').find('span').css('cssText', 'color : #E6E6E6 !important');
+
+                $('.menu__ul').find('i').css('cssText', 'color : #5f656f !important');
+
                 $('.menu__ul').find('i').mouseenter(function () {
                     $(this).css('cssText', 'color : #E6E6E6 !important');
                 });
@@ -1590,6 +1614,9 @@ var Menu = function (_Component) {
             }
             if (this.path[1] == 'factoring') {
                 $('.menu__ul').find('span').css('cssText', 'color : #38925E !important');
+
+                $('.menu__ul').find('i').css('cssText', 'color : #5f656f !important');
+
                 $('.menu__ul').find('i').mouseenter(function () {
                     $(this).css('cssText', 'color : #38925E !important');
                 });
@@ -1599,6 +1626,9 @@ var Menu = function (_Component) {
             }
             if (this.path[0] == '' || this.path[0] != 'portfolio') {
                 $('.menu__ul').find('span').css('cssText', 'color : deepskyblue !important');
+
+                $('.menu__ul').find('i').css('cssText', 'color : #5f656f !important');
+
                 $('.menu__ul').find('i').mouseenter(function () {
                     $(this).css('cssText', 'color : deepskyblue');
                 });
@@ -15834,7 +15864,9 @@ __webpack_require__(62);
 __WEBPACK_IMPORTED_MODULE_7_react_global_configuration___default.a.set({
     smokeZone: 'http://smoke-zone.info',
     history: 'https://historypro.ru',
-    factoring: 'http://factoringvergelijken.nl' });
+    factoring: 'http://factoringvergelijken.nl',
+    yandex: 'http://yandex.atsuta.ru/'
+});
 
 Object(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
     __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["a" /* BrowserRouter */],
@@ -57371,7 +57403,7 @@ var SVGMenu = function () {
                     $('#mapid').animate({ opacity: 1 }, 500);
                 }
                 if (this.path[0] == 'portfolio') {
-                    $(".morph-shape").removeClass('Smoke_Zone__stroke History24__stroke WellHome__stroke Factoring__stroke');
+                    $(".morph-shape").removeClass('Smoke_Zone__stroke History24__stroke WellHome__stroke Factoring__stroke Yandex__stroke');
                 }
                 classie.remove(this.el, 'menu--anim');
                 setTimeout(function () {
@@ -57407,7 +57439,7 @@ var SVGMenu = function () {
                     $('#mapid').animate({ opacity: 1 }, 500);
                 }
                 if (this.path[0] == 'portfolio') {
-                    $(".morph-shape").removeClass('Smoke_Zone__stroke History24__stroke WellHome__stroke Factoring__stroke');
+                    $(".morph-shape").removeClass('Smoke_Zone__stroke History24__stroke WellHome__stroke Factoring__stroke Yandex__stroke');
                 }
                 classie.remove(this.el, 'menu--anim');
                 setTimeout(function () {
@@ -57420,7 +57452,7 @@ var SVGMenu = function () {
                 if (document.getElementById('img_loader').style.opacity == '' || document.getElementById('img_loader').style.opacity == 1) {
                     $('#img_loader').animate({ opacity: 0.3 }, 500);
                 }
-                if (this.path[1] !== 'welhome') {
+                if (this.path[1] !== 'welhome' && this.path[1] !== 'yandex') {
                     $('#main_container').animate({ opacity: 0.3 }, 500);
                 } else {
                     $('#main_container').animate({ opacity: 0.1 }, 500);
@@ -57430,7 +57462,10 @@ var SVGMenu = function () {
                     $('#mapid').animate({ opacity: 0.3 }, 500);
                 }
 
-                if (this.path[1] == 'smoke-zone' || this.path[0] == 'portfolio' && typeof this.path[1] == 'undefined') {
+                if (this.path[1] == 'yandex' || this.path[0] == 'portfolio' && typeof this.path[1] == 'undefined') {
+                    $(".morph-shape").addClass('Yandex__stroke');
+                }
+                if (this.path[1] == 'smoke-zone') {
                     $(".morph-shape").addClass('Smoke_Zone__stroke');
                 }
                 if (this.path[1] == 'history24') {
@@ -57439,9 +57474,9 @@ var SVGMenu = function () {
                 if (this.path[1] == 'welhome') {
                     $(".morph-shape").addClass('WellHome__stroke');
                 }
-                if (this.path[1] == 'factoring') {
-                    $(".morph-shape").addClass('Factoring__stroke');
-                }
+                // if (this.path[1] == 'factoring') {
+                //     $(".morph-shape").addClass('Factoring__stroke');
+                // }
                 classie.add(this.el, 'menu--anim');
                 setTimeout(function () {
                     classie.add(_this2.el, 'menu--open');
@@ -57578,8 +57613,8 @@ var Loading = function () {
                 window.loadingFast ? self.progress = 1 : self.progress = 0;
 
                 var interval = setInterval(function () {
-                    self.progress = Math.min(self.progress + Math.random() * 0.1, 1);
-
+                    // self.progress = Math.min(self.progress + Math.random() * 0.1, 1);
+                    self.progress = 1;
                     instance.setProgress(self.progress);
 
                     // reached the end
@@ -57650,7 +57685,6 @@ var PathLoader = function () {
         key: '_draw',
         value: function _draw(val) {
             this.el.style.strokeDashoffset = this.el.getTotalLength() * (1 - val);
-            // this.el.style.strokeDashoffset =0;
         }
     }, {
         key: 'setProgress',
@@ -57659,7 +57693,6 @@ var PathLoader = function () {
             if (callback && typeof callback === 'function') {
                 // give it a time (ideally the same like the transition time) so that the last progress increment animation is still visible.
                 setTimeout(callback, 200);
-                // setTimeout( callback, 0 );
             }
         }
     }, {
@@ -73084,7 +73117,7 @@ exports.map = createMap;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__portfolio_sections_Smoke_Zone__ = __webpack_require__(146);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__portfolio_sections_History24__ = __webpack_require__(150);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__portfolio_sections_WellHome__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__portfolio_sections_Factoring__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__portfolio_sections_Yandex__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ScrollButton__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_fullpage__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_fullpage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react_fullpage__);
@@ -73103,13 +73136,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+// import Factoring from './portfolio_sections/Factoring';
 
 
 
 
 var options = {
     sectionClassName: 'section',
-    anchors: ['smoke-zone', 'history24', 'welhome', 'factoring'],
+    anchors: ['yandex', 'smoke-zone', 'history24', 'welhome'],
     scrollBar: false,
     navigation: true,
     verticalAlign: false,
@@ -73150,6 +73184,11 @@ var Portfolio = function (_Component) {
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     __WEBPACK_IMPORTED_MODULE_7_react_fullpage__["Section"],
                                     { className: 'custom-section', verticalAlign: 'true' },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__portfolio_sections_Yandex__["a" /* default */], null)
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    __WEBPACK_IMPORTED_MODULE_7_react_fullpage__["Section"],
+                                    { className: 'custom-section', verticalAlign: 'true' },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__portfolio_sections_Smoke_Zone__["a" /* default */], null)
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -73161,11 +73200,6 @@ var Portfolio = function (_Component) {
                                     __WEBPACK_IMPORTED_MODULE_7_react_fullpage__["Section"],
                                     null,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__portfolio_sections_WellHome__["a" /* default */], null)
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    __WEBPACK_IMPORTED_MODULE_7_react_fullpage__["Section"],
-                                    null,
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__portfolio_sections_Factoring__["a" /* default */], null)
                                 )
                             )
                         )
@@ -73235,12 +73269,24 @@ var Smoke_Zone = function (_Component) {
         key: 'animateSmoke',
         value: function animateSmoke() {
             if (this.clickState == 0) {
-                $('.Smoke_Zone__technologis').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-                $('.Smoke_Zone__logo_container').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+                $('.Smoke_Zone__technologis').removeClass('animated flipInX').addClass('animated flipOutX');
+
+                setTimeout(function () {
+
+                    $('.Smoke_Zone__technologis').css('display', 'none');
+
+                    $('.Smoke_Zone__logo_container').removeClass('animated flipOutX').addClass('animated flipInX').css('display', 'flex');
+                }, 500);
             }
             if (this.clickState == 1) {
-                $('.Smoke_Zone__logo_container').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-                $('.Smoke_Zone__technologis').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+                $('.Smoke_Zone__logo_container').removeClass('animated flipInX').addClass('animated flipOutX');
+
+                setTimeout(function () {
+
+                    $('.Smoke_Zone__logo_container').css('display', 'none');
+
+                    $('.Smoke_Zone__technologis').removeClass('animated flipOutX').addClass('animated flipInX').css('display', 'flex');
+                }, 500);
             }
             this.clickState = this.clickState ? 0 : 1;
         }
@@ -73659,12 +73705,24 @@ var History24 = function (_Component) {
         key: 'animateHistory',
         value: function animateHistory() {
             if (this.clickState == 0) {
-                $('.History24__technologis').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-                $('.History24__logo_container').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+                $('.History24__technologis').removeClass('animated zoomIn').addClass('animated zoomOut');
+
+                setTimeout(function () {
+
+                    $('.History24__technologis').css('display', 'none');
+
+                    $('.History24__logo_container').removeClass('animated zoomOut').addClass('animated zoomIn').css('display', 'flex');
+                }, 500);
             }
             if (this.clickState == 1) {
-                $('.History24__logo_container').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-                $('.History24__technologis').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+                $('.History24__logo_container').removeClass('animated zoomIn').addClass('animated zoomOut');
+
+                setTimeout(function () {
+
+                    $('.History24__logo_container').css('display', 'none');
+
+                    $('.History24__technologis').removeClass('animated zoomOut').addClass('animated zoomIn').css('display', 'flex');
+                }, 500);
             }
             this.clickState = this.clickState ? 0 : 1;
         }
@@ -73822,12 +73880,24 @@ var WellHome = function (_Component) {
         key: 'animateWellhome',
         value: function animateWellhome() {
             if (this.clickState == 0) {
-                $('.WellHome__technologis').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-                $('.WellHome__logo_container').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+                $('.WellHome__technologis').removeClass('animated lightSpeedIn').addClass('animated lightSpeedOut');
+
+                setTimeout(function () {
+
+                    $('.WellHome__technologis').css('display', 'none');
+
+                    $('.WellHome__logo_container').removeClass('animated lightSpeedOut').addClass('animated lightSpeedIn').css('display', 'flex');
+                }, 500);
             }
             if (this.clickState == 1) {
-                $('.WellHome__logo_container').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-                $('.WellHome__technologis').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+                $('.WellHome__logo_container').removeClass('animated lightSpeedIn').addClass('animated lightSpeedOut');
+
+                setTimeout(function () {
+
+                    $('.WellHome__logo_container').css('display', 'none');
+
+                    $('.WellHome__technologis').removeClass('animated lightSpeedOut').addClass('animated lightSpeedIn').css('display', 'flex');
+                }, 500);
             }
             this.clickState = this.clickState ? 0 : 1;
         }
@@ -73942,51 +74012,51 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var style = {
-    outter: {
+    Yandex__outter: {
         backgroundPosition: 'center',
+        background: 'white',
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
-        height: '100vh',
-        background: 'black'
-    },
-    bgLayerStyle: {
-        backgroundImage: 'url(../imgs/chameleon.jpg)',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        width: '105vw',
-        position: 'absolute',
-        overflow: 'hidden',
-        minHeight: '105vh',
-        marginLeft: '-5%',
-        marginBottom: '-2%'
-
+        height: '100vh'
     }
 };
 
-var Factoring = function (_Component) {
-    _inherits(Factoring, _Component);
+var Yandex = function (_Component) {
+    _inherits(Yandex, _Component);
 
-    function Factoring(props) {
-        _classCallCheck(this, Factoring);
+    function Yandex(props) {
+        _classCallCheck(this, Yandex);
 
-        var _this = _possibleConstructorReturn(this, (Factoring.__proto__ || Object.getPrototypeOf(Factoring)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Yandex.__proto__ || Object.getPrototypeOf(Yandex)).call(this, props));
 
         _this.clickState = 1;
         return _this;
     }
 
-    _createClass(Factoring, [{
-        key: 'animateFactoring',
-        value: function animateFactoring() {
+    _createClass(Yandex, [{
+        key: 'animateHistory',
+        value: function animateHistory() {
             if (this.clickState == 0) {
-                $('.Factoring__technologis').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-                $('.Factoring__logo_container').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+                $('.Yandex__technologis').removeClass('animated bounceIn').addClass('animated bounceOut');
+
+                setTimeout(function () {
+
+                    $('.Yandex__technologis').css('display', 'none');
+
+                    $('.Yandex__logo_container').removeClass('animated bounceOut').addClass('animated bounceIn').css('display', 'flex');
+                }, 500);
             }
             if (this.clickState == 1) {
-                $('.Factoring__logo_container').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-                $('.Factoring__technologis').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+                $('.Yandex__logo_container').removeClass('animated bounceIn').addClass('animated bounceOut');
+                setTimeout(function () {
+
+                    $('.Yandex__logo_container').css('display', 'none');
+
+                    $('.Yandex__technologis').removeClass('animated bounceOut').addClass('animated bounceIn').css('display', 'flex');
+                }, 500);
             }
             this.clickState = this.clickState ? 0 : 1;
         }
@@ -73995,97 +74065,105 @@ var Factoring = function (_Component) {
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_1_react_parallax_mousemove___default.a,
-                { containerStyle: style.outter },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_parallax_mousemove___default.a.Layer, { layerStyle: style.bgLayerStyle, config: {
-                        xFactor: 0.05,
-                        yFactor: 0.05,
-                        springSettings: {
-                            stiffness: 50,
-                            damping: 30
-                        }
-                    } }),
+                { containerStyle: style.Yandex__outter },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'Factoring__inner' },
+                    { className: 'Yandex__inner' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'Factoring__technologis' },
+                        { className: 'Yandex__technologis' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
-                            { className: 'Factoring__technologis_container' },
+                            { className: 'Yandex__technologis_container' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
                                 null,
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Factoring__yii2' }),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Factoring__wordpress' }),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Factoring__js' }),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Factoring__php' })
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Yandex__js' }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Yandex__webpack' }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Yandex__less' })
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
                                 null,
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Factoring__jq' }),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Factoring__bootstrap' }),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Factoring__mysql' }),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Factoring__nginx' })
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Yandex__jq' }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Yandex__svg' })
                             )
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
-                            { className: 'Factoring__Description' },
-                            'Partial development of backend based on Yii 2 framework, admin panel, adaptive optimization of front-end elements. Add support for new languages.'
+                            { className: 'Yandex__Description YSText-Light' },
+                            'Development of SPA on jquery and webpack',
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                            'Adaptive layout',
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                            'Optimization of productivity'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'a',
-                            { href: __WEBPACK_IMPORTED_MODULE_2_react_global_configuration___default.a.get('factoring'), target: 'blank' },
+                            { href: __WEBPACK_IMPORTED_MODULE_2_react_global_configuration___default.a.get('yandex'), target: 'blank' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'figure',
-                                { className: 'Factoring__rotate_button' },
+                                { className: 'Yandex__rotate_button' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'div',
                                     null,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'span',
-                                        null,
+                                        { className: 'YSText-Light' },
                                         'View'
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'span',
-                                        null,
-                                        'FACTORING'
+                                        { className: 'YSText-Light' },
+                                        'Play Game'
                                     )
                                 )
                             )
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Factoring__arrow Factoring__arrow_hide',
-                            onClick: this.animateFactoring.bind(this) })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Yandex__arrow Yandex__arrow_hide', onClick: this.animateHistory.bind(this) })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'Factoring__logo_container' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../imgs/factoring2.png', className: 'Factoring__logo' }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h1',
-                            { className: 'Factoring__header' },
-                            'FACTORING'
-                        ),
+                        { className: 'Yandex__logo_container' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: '../imgs/yandex/logo.png', alt: 'Parallax Layer', className: 'Yandex__logo' }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'p',
-                            { className: 'Factoring__paragraph' },
-                            'The international company for the provision of factoring services.'
+                            { className: 'Yandex__paragraph YSText-Light' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'b',
+                                { className: 'Yandex__yndex-color' },
+                                'L'
+                            ),
+                            'ight and relaxing game',
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                            'in honor of the holiday on ',
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'b',
+                                { className: 'Yandex__yndex-color' },
+                                'F'
+                            ),
+                            'ebruary 23',
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                            'for ',
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'b',
+                                { className: 'Yandex__yndex-color' },
+                                'Y'
+                            ),
+                            'andex maps'
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Factoring__arrow Factoring__arrow_show general__arrow',
-                            onClick: this.animateFactoring.bind(this) })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'Yandex__arrow Yandex__arrow_show general__arrow',
+                            onClick: this.animateHistory.bind(this) })
                     )
                 )
             );
         }
     }]);
 
-    return Factoring;
+    return Yandex;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Factoring);
+/* harmony default export */ __webpack_exports__["a"] = (Yandex);
 
 /***/ }),
 /* 153 */

@@ -71,8 +71,25 @@ class Menu extends Component {
 
         this.path = window.location.href.split('/')[3].split('#');
 
-        if (this.path[1] == 'smoke-zone' || (this.path[0] == 'portfolio' && typeof this.path[1] == 'undefined')) {
+        if (this.path[1] == 'yandex' || (this.path[0] == 'portfolio' && typeof this.path[1] == 'undefined')) {
+            $('.menu__ul').find('span').css('cssText', 'color : white !important');
+
+            $('.menu__ul').find('i').css('cssText', 'color : white !important');
+
+            $('.menu__ul').find('i').mouseenter(function () {
+                $(this).css('cssText', 'color : #ED2025 !important');
+            });
+            $('.menu__ul').find('i').mouseleave(function () {
+                $(this).css('cssText', 'color : white !important');
+            })
+        }
+
+        if (this.path[1] == 'smoke-zone') {
+
             $('.menu__ul').find('span').css('cssText', 'color : #D40080 !important');
+
+            $('.menu__ul').find('i').css('cssText', 'color : #5f656f !important');
+
             $('.menu__ul').find('i').mouseenter(function () {
                 $(this).css('cssText', 'color : #D40080 !important');
             });
@@ -80,9 +97,14 @@ class Menu extends Component {
                 $(this).css('cssText', 'color : #5f656f !important');
             })
         }
+
+
         if (this.path[1] == 'history24') {
 
             $('.menu__ul').find('span').css('cssText', 'color : #E6E6E6 !important');
+
+            $('.menu__ul').find('i').css('cssText', 'color : #5f656f !important');
+
             $('.menu__ul').find('i').mouseenter(function () {
                 $(this).css('cssText', 'color : #936229 !important');
             });
@@ -93,6 +115,9 @@ class Menu extends Component {
         if (this.path[1] == 'welhome') {
 
             $('.menu__ul').find('span').css('cssText', 'color : #E6E6E6 !important');
+
+            $('.menu__ul').find('i').css('cssText', 'color : #5f656f !important');
+
             $('.menu__ul').find('i').mouseenter(function () {
                 $(this).css('cssText', 'color : #E6E6E6 !important');
             });
@@ -102,6 +127,9 @@ class Menu extends Component {
         }
         if (this.path[1] == 'factoring') {
             $('.menu__ul').find('span').css('cssText', 'color : #38925E !important');
+
+            $('.menu__ul').find('i').css('cssText', 'color : #5f656f !important');
+
             $('.menu__ul').find('i').mouseenter(function () {
                 $(this).css('cssText', 'color : #38925E !important');
             });
@@ -111,6 +139,9 @@ class Menu extends Component {
         }
         if (this.path[0] == '' || this.path[0] != 'portfolio') {
             $('.menu__ul').find('span').css('cssText', 'color : deepskyblue !important');
+
+            $('.menu__ul').find('i').css('cssText', 'color : #5f656f !important');
+
             $('.menu__ul').find('i').mouseenter(function () {
                 $(this).css('cssText', 'color : deepskyblue');
             });

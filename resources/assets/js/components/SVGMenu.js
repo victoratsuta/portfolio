@@ -48,7 +48,7 @@ class SVGMenu {
                 $('#mapid').animate({opacity: 1}, 500);
             }
             if (this.path[0] == 'portfolio') {
-                $(".morph-shape").removeClass('Smoke_Zone__stroke History24__stroke WellHome__stroke Factoring__stroke');
+                $(".morph-shape").removeClass('Smoke_Zone__stroke History24__stroke WellHome__stroke Factoring__stroke Yandex__stroke');
             }
             classie.remove(this.el, 'menu--anim');
             setTimeout(() => {
@@ -82,7 +82,7 @@ class SVGMenu {
                 $('#mapid').animate({opacity: 1}, 500);
             }
             if (this.path[0] == 'portfolio') {
-                $(".morph-shape").removeClass('Smoke_Zone__stroke History24__stroke WellHome__stroke Factoring__stroke');
+                $(".morph-shape").removeClass('Smoke_Zone__stroke History24__stroke WellHome__stroke Factoring__stroke Yandex__stroke');
             }
             classie.remove(this.el, 'menu--anim');
             setTimeout(() => {
@@ -97,7 +97,7 @@ class SVGMenu {
             if (document.getElementById('img_loader').style.opacity == '' || document.getElementById('img_loader').style.opacity == 1) {
                 $('#img_loader').animate({opacity: 0.3}, 500);
             }
-            if (this.path[1] !== 'welhome') {
+            if (this.path[1] !== 'welhome' && this.path[1] !== 'yandex') {
                 $('#main_container').animate({opacity: 0.3}, 500);
             }
             else {
@@ -108,7 +108,10 @@ class SVGMenu {
                 $('#mapid').animate({opacity: 0.3}, 500);
             }
 
-            if (this.path[1] == 'smoke-zone' || (this.path[0] == 'portfolio' && typeof this.path[1] == 'undefined')) {
+            if (this.path[1] == 'yandex' || (this.path[0] == 'portfolio' && typeof this.path[1] == 'undefined')) {
+                $(".morph-shape").addClass('Yandex__stroke');
+            }
+            if (this.path[1] == 'smoke-zone' ) {
                 $(".morph-shape").addClass('Smoke_Zone__stroke');
             }
             if (this.path[1] == 'history24') {
@@ -117,9 +120,9 @@ class SVGMenu {
             if (this.path[1] == 'welhome') {
                 $(".morph-shape").addClass('WellHome__stroke');
             }
-            if (this.path[1] == 'factoring') {
-                $(".morph-shape").addClass('Factoring__stroke');
-            }
+            // if (this.path[1] == 'factoring') {
+            //     $(".morph-shape").addClass('Factoring__stroke');
+            // }
             classie.add(this.el, 'menu--anim');
             setTimeout(() => {
                 classie.add(this.el, 'menu--open');

@@ -20,7 +20,9 @@ import config from 'react-global-configuration';
 config.set({
     smokeZone: 'http://smoke-zone.info',
     history: 'https://historypro.ru',
-    factoring: 'http://factoringvergelijken.nl'});
+    factoring: 'http://factoringvergelijken.nl',
+    yandex : 'http://yandex.atsuta.ru/',
+});
 
 render(
     <Router>

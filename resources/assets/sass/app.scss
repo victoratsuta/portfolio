@@ -1,10 +1,12 @@
 // Variables
 @import "variables";
+@import "pack/fonts";
 
 @import "components/portfolio_sections/Factoring";
 @import "components/portfolio_sections/History24";
 @import "components/portfolio_sections/Smoke_Zone";
 @import "components/portfolio_sections/WellHome";
+@import "components/portfolio_sections/Yandex";
 
 @import "components/Skills";
 @import "components/Menu";
@@ -327,6 +329,11 @@
   .ip-loader{
     display: none !important;
   }
+}
+
+.Yandex__stroke svg path {
+  stroke: $yandex-red !important;
+  stroke-width: 5px;
 }
 
 .Smoke_Zone__stroke svg path {

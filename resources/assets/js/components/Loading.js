@@ -69,8 +69,8 @@ class Loading {
             window.loadingFast ? self.progress = 1 : self.progress = 0;
 
                 var interval = setInterval(function () {
-                    self.progress = Math.min(self.progress + Math.random() * 0.1, 1);
-
+                    // self.progress = Math.min(self.progress + Math.random() * 0.1, 1);
+                    self.progress = 1;
                     instance.setProgress(self.progress);
 
                     // reached the end

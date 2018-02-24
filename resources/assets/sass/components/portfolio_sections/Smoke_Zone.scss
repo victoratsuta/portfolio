@@ -32,6 +32,7 @@
   font-weight: 600;
   text-shadow: rgb(153, 55, 172) 5px 5px 8px;
   z-index: 100;
+  margin-bottom: 0px;
 }
 .Smoke_Zone__paragraph{
   font-family: 'Roboto';
@@ -41,6 +42,7 @@
   line-height: 30px;
   font-weight: 300;
   z-index: 100;
+  margin-top: 0px;
 }
 .Smoke_Zone__logo{
   width: 300px;
@@ -110,8 +112,9 @@
 }
 
 .Smoke_Zone__Description {
+  font-family: 'Roboto';
   max-width: 600px;
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 50px;
   margin-bottom: 50px;
   padding-left: 20px;

@@ -33,12 +33,28 @@ class History24 extends Component {
 
     animateHistory() {
         if (this.clickState == 0) {
-            $('.History24__technologis').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-            $('.History24__logo_container').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+            $('.History24__technologis').removeClass('animated zoomIn').addClass('animated zoomOut');
+
+            setTimeout(function () {
+
+                $('.History24__technologis').css('display', 'none');
+
+                $('.History24__logo_container').removeClass('animated zoomOut').addClass('animated zoomIn').css('display', 'flex');
+
+            }, 500)
+
         }
         if (this.clickState == 1) {
-            $('.History24__logo_container').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-            $('.History24__technologis').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+            $('.History24__logo_container').removeClass('animated zoomIn').addClass('animated zoomOut');
+
+
+            setTimeout(function () {
+
+                $('.History24__logo_container').css('display', 'none');
+
+                $('.History24__technologis').removeClass('animated zoomOut').addClass('animated zoomIn').css('display', 'flex');
+
+            }, 500)
         }
         this.clickState = this.clickState ? 0 : 1;
     }

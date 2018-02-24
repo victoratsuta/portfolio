@@ -34,12 +34,27 @@ class WellHome extends Component {
 
     animateWellhome() {
         if (this.clickState == 0) {
-            $('.WellHome__technologis').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-            $('.WellHome__logo_container').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+            $('.WellHome__technologis').removeClass('animated lightSpeedIn').addClass('animated lightSpeedOut');
+
+            setTimeout(function () {
+
+                $('.WellHome__technologis').css('display', 'none');
+
+                $('.WellHome__logo_container').removeClass('animated lightSpeedOut').addClass('animated lightSpeedIn').css('display', 'flex');
+
+            }, 500)
+
         }
         if (this.clickState == 1) {
-            $('.WellHome__logo_container').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display', 'none');
-            $('.WellHome__technologis').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display', 'flex');
+            $('.WellHome__logo_container').removeClass('animated lightSpeedIn').addClass('animated lightSpeedOut');
+
+            setTimeout(function () {
+
+                $('.WellHome__logo_container').css('display', 'none');
+
+                $('.WellHome__technologis').removeClass('animated lightSpeedOut').addClass('animated lightSpeedIn').css('display', 'flex');
+
+            }, 500)
         }
         this.clickState = this.clickState ? 0 : 1;
     }

@@ -27,12 +27,27 @@ class Smoke_Zone extends Component {
 
     animateSmoke() {
         if (this.clickState == 0) {
-            $('.Smoke_Zone__technologis').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display','none');
-            $('.Smoke_Zone__logo_container').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display','flex');
+            $('.Smoke_Zone__technologis').removeClass('animated flipInX').addClass('animated flipOutX');
+
+            setTimeout(function () {
+
+                $('.Smoke_Zone__technologis').css('display', 'none');
+
+                $('.Smoke_Zone__logo_container').removeClass('animated flipOutX').addClass('animated flipInX').css('display', 'flex');
+
+            }, 500)
+
         }
         if (this.clickState == 1) {
-            $('.Smoke_Zone__logo_container').removeClass('animated fadeInUp').addClass('animated fadeOutUp').css('display','none');
-            $('.Smoke_Zone__technologis').removeClass('animated fadeOutUp').addClass('animated fadeInUp').css('display','flex');
+            $('.Smoke_Zone__logo_container').removeClass('animated flipInX').addClass('animated flipOutX');
+
+            setTimeout(function () {
+
+                $('.Smoke_Zone__logo_container').css('display', 'none');
+
+                $('.Smoke_Zone__technologis').removeClass('animated flipOutX').addClass('animated flipInX').css('display','flex');
+
+            }, 500)
         }
         this.clickState = this.clickState ? 0 : 1;
     }
