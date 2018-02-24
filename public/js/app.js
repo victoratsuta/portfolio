@@ -73183,12 +73183,12 @@ var Portfolio = function (_Component) {
                                 _extends({ className: 'container' }, options),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     __WEBPACK_IMPORTED_MODULE_7_react_fullpage__["Section"],
-                                    { className: 'custom-section', verticalAlign: 'true' },
+                                    null,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__portfolio_sections_Yandex__["a" /* default */], null)
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     __WEBPACK_IMPORTED_MODULE_7_react_fullpage__["Section"],
-                                    { className: 'custom-section', verticalAlign: 'true' },
+                                    null,
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__portfolio_sections_Smoke_Zone__["a" /* default */], null)
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
