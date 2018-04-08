@@ -18,8 +18,8 @@ import config from 'react-global-configuration';
 // Жить было бы проще если бы у жизни был исходный код ...
 
 config.set({
-    smokeZone: 'http://smoke-zone.info',
-    history: 'https://historypro.ru',
+    smokeZone: 'http://smoke-zone.atsuta.ru/list',
+    history: 'http://history24.atsuta.ru/',
     factoring: 'http://factoringvergelijken.nl',
     yandex : 'http://yandex.atsuta.ru/',
 });
