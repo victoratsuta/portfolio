@@ -31,10 +31,10 @@ class Home extends Component {
                     <div id="main_container">
                         {/* main content */}
                         <div className="ip-main for_fade">
-                            <div className="neon" contentEditable>ATSUTA VICTOR</div>
+                            <div className="neon">ATSUTA VICTOR</div>
                             <div className="info">&lt; I am fullstack web developer /&gt;</div>
                             <div className="info label_tech">
-                                <p>I work with technologies such as 
+                                <p>I work with technologies such as
                                     <span className="txt-rotate" data-period={1000} data-rotate="[ &quot; Laravel&quot;, &quot; React&quot;, &quot; Yii 2&quot;, &quot; Node JS&quot; ]" />
                                 </p>
                             </div>

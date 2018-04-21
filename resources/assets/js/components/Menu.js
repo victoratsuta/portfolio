@@ -152,9 +152,6 @@ class Menu extends Component {
     }
 
     componentDidMount() {
-        // console.log('componentDidMount');
-        // this.page = this.path[1];
-        // window.onpopstate = this.onBackButtonEvent.bind(this);
 
         if (typeof  this.path[1] != 'undefined') {
             history.replaceState('', "", "portfolio");
@@ -190,25 +187,25 @@ class Menu extends Component {
                         <ul className="menu__ul">
                             <li onClick={this.clickHandler.bind(this, '')}>
                                 <a>
-                                    <i className={'icon ra ra-crown'}></i>
+                                    <i className={'icon fas fa-home'}></i>
                                     <span>Home</span>
                                 </a>
                             </li>
                             <li onClick={this.clickHandler.bind(this, 'portfolio')}>
                                 <a>
-                                    <i className={'icon ra ra-trophy'}></i>
+                                    <i className={'icon fas fa-rocket'}></i>
                                     <span>Portfolio</span>
                                 </a>
                             </li>
                             <li onClick={this.clickHandler.bind(this, 'skills')}>
                                 <a>
-                                    <i className={'icon ra ra-crossed-sabres'}></i>
+                                    <i className={'icon fas fa-cog'}></i>
                                     <span>Skills</span>
                                 </a>
                             </li>
                             <li onClick={this.clickHandler.bind(this, 'contacts')}>
                                 <a>
-                                    <i className={'icon ra  ra-bell'}></i>
+                                    <i className={'icon fas fa-envelope'}></i>
                                     <span>Contact me</span>
                                 </a>
                             </li>

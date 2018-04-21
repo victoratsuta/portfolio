@@ -5,7 +5,7 @@ import SliderFx from './SliderFx';
 class Skills extends Component {
 
     componentDidMount() {
-        console.log('skill');
+
         this.SliderFx = new SliderFx(document.getElementById('slideshow'), {
             easing: 'cubic-bezier(.8,0,.2,1)'
         });

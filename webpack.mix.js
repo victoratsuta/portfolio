@@ -26,6 +26,10 @@ mix.react('resources/assets/js/app.js', 'public/js')
         require('postcss-css-variables')()
     ]
 })
+    .browserSync({
+        proxy: 'portfolio'
+        // host: 'portfolio.dev',
+    });
 
 
 // const ImageminPlugin = require('imagemin-webpack-plugin').default;

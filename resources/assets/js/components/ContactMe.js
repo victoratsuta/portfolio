@@ -20,7 +20,7 @@ class ContactMe extends Component {
         }
     }
     DrawMap (){
-        let mymap = L.map('mapid', {zoomControl: false}).setView([44.58, 33.49], 13);
+        let mymap = L.map('mapid', {zoomControl: false}).setView([55.751830, 37.589837], 11);
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidmljdG9yYXRzdXRhIiwiYSI6ImNqOW9iNnJjczJnaW8zM3MyeDdrcXBuN3oifQ.gIWOmeqEuCRHKmWb_AMXFQ', {
             maxZoom: 18,
             id: 'mapbox.dark',
@@ -34,7 +34,7 @@ class ContactMe extends Component {
             iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
-        L.marker([44.58, 33.49], {icon: greenIcon}).addTo(mymap);
+        L.marker([55.751830, 37.589837], {icon: greenIcon}).addTo(mymap);
     }
     _create () {
         $.ajaxSetup({

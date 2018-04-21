@@ -34,7 +34,7 @@ render(
         </div>
     </Router>
     ,
-    document.getElementById('portfolio')
+    document.getElementById('app')
 )
 
 

@@ -45,10 +45,14 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
           integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
           crossorigin=""/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
 </head>
 <body>
-<div id="portfolio">
+
+<div id="app">
 </div>
+
 <script src="{{asset('js/libraries/snap.svg.js')}}"></script>
 <script src="{{asset('js/libraries/Modernizr.js')}}"></script>
 <script src="{{asset('js/libraries/classie.js')}}"></script>
