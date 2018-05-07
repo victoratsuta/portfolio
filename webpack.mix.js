@@ -19,7 +19,19 @@ mix.webpackConfig({
     }
 });
 
-mix.react('resources/assets/js/app.js', 'public/js')
+mix.react('resources/assets/js/app.js', 'public/js').options({
+    loaders: [
+        {
+            test: /\.jsx$/,
+            loader: 'babel'
+        },
+        {
+            test: /\.js$/,
+            loader: 'babel',
+            exclude: /node_modules/
+        },
+    ]
+})
 
     .sass('resources/assets/sass/app.scss', 'public/css').options({
     postCss: [
@@ -28,7 +40,6 @@ mix.react('resources/assets/js/app.js', 'public/js')
 })
     .browserSync({
         proxy: 'portfolio'
-        // host: 'portfolio.dev',
     });
 
 

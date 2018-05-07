@@ -4,33 +4,36 @@ import React from 'react';
 import {render} from 'react-dom';
 import {
     BrowserRouter as Router,
-    Route,
 } from 'react-router-dom'
 
-import Home from './components/Home';
-import Skills from './components/Skills';
-import ContactMe from './components/ContactMe';
-import Portfolio from './components/Portfolio';
+import Content from './components/Content/Content'
+import Preloader from './components/Preloader/Preloader'
+import Menu from './components/Menu/Menu'
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
+import reducers from './reducers/index'
 
+import './app.scss'
 
-import config from 'react-global-configuration';
+const store = createStore(reducers)
 
 // Жить было бы проще если бы у жизни был исходный код ...
 
-config.set({
-    smokeZone: 'http://smoke-zone.atsuta.ru/list',
-    history: 'http://history24.atsuta.ru/',
-    factoring: 'http://factoringvergelijken.nl',
-    yandex : 'http://yandex.atsuta.ru/',
-});
-
 render(
     <Router>
-        <div>
-            <Route exact path="/skills" component={Skills}/>
-            <Route exact path="/contacts" component={ContactMe}/>
-            <Route exact path="/portfolio" component={Portfolio}/>
-            <Route exact path="/" component={Home}/>
+        <div className="global-wrapper">
+            <Provider store={store}>
+                <div id="ip-container" className="ip-container">
+
+                    <div>
+                        <Menu/>
+                        <Preloader/>
+                    </div>
+
+                    <Content/>
+
+                </div>
+            </Provider>
         </div>
     </Router>
     ,

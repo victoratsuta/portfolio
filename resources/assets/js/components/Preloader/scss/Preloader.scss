@@ -1,0 +1,31 @@
+@import "./preloaderEffect";
+@import "./animate.min";
+
+.transparent{
+  transition-duration: 0.5s;
+  opacity: 0 !important;
+}
+.show{
+  opacity: 1 !important;
+  transition-duration: 0.5s;
+}
+
+#img_loader{
+  filter: drop-shadow(-2px 6px 0px deepskyblue);
+  max-width: 200px;
+  min-width: 90px;
+  width: 13%;
+  pointer-events: all;
+
+}
+@media (max-height: 500px) {
+  #img_loader{
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
+  #img_loader{
+    width: 35%;
+  }
+}

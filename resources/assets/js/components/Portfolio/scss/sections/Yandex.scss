@@ -1,0 +1,151 @@
+$yandex-red : #ED2025;
+
+@font-face {
+  font-family: "YS Text";
+  src: url("/fonts/yandex/YandexSansText-Light.eot");
+  src: url("/fonts/yandex/YandexSansText-Light.eot?#iefix") format("embedded-opentype"),
+  url("/fonts/yandex/YandexSansText-Light.woff2") format("woff2"),
+  url("/fonts/yandex/YandexSansText-Light.woff") format("woff"),
+  url("/fonts/yandex/YandexSansText-Light.ttf") format("truetype"),
+  url("/fonts/yandex/YandexSansText-Light.svg#YSText-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+}
+
+.Yandex {
+  p,span {
+    font-family: "YS Text";
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+  }
+
+  background: #ecf0f1;
+
+  .technologies-container {
+
+    .technologies {
+
+      div:nth-child(1) {
+        div:nth-child(1) {
+          background-image: url(#{$img-path}/yandex/js.svg);
+        }
+        div:nth-child(2) {
+          background-size: 130px !important;
+          background-image: url(#{$img-path}/yandex/webpack.png);
+        }
+        div:nth-child(3) {
+          background-image: url(#{$img-path}/yandex/less.svg);
+          background-size: 120px !important;
+        }
+      }
+      div:nth-child(2) {
+        div:nth-child(1) {
+          background-image: url(#{$img-path}/yandex/jquery1.svg);
+        }
+        div:nth-child(2) {
+          background-image: url(#{$img-path}/yandex/svg.svg);
+        }
+      }
+    }
+    .description {
+
+      p {
+        font-size: 17px;
+        color: black;
+        text-align: center;
+        line-height: 30px;
+        font-style: italic;
+        b {
+          color: $yandex-red;
+        }
+      }
+    }
+    .rotate_button {
+
+      figure {
+
+        span {
+
+          border: 5px solid $yandex-red;
+
+        }
+        span:nth-child(1) {
+          color: black;
+        }
+        span:nth-child(2) {
+          color: white;
+          background: $yandex-red;
+        }
+
+      }
+    }
+
+  }
+  .logo-container {
+
+    img {
+      width: 300px;
+    }
+    p {
+      font-size: 17px;
+      color: black;
+      letter-spacing: 0.62px;
+      line-height: 42px;
+      font-weight: 300;
+      text-align: center;
+      z-index: 100;
+      font-style: italic;
+      b {
+        color: $yandex-red;
+      }
+    }
+  }
+  .arrow {
+    display: block;
+    background-image: url(#{$img-path}/down-arrow-red.svg);
+    background-position: center;
+    background-size: 80px;
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    cursor: pointer;
+  }
+  .show {
+    background-image: url(#{$img-path}/down-arrow-red.svg);
+  }
+  .hide {
+    background-image: url(#{$img-path}/cancel.svg);
+  }
+}
+
+@media (max-height: 850px) {
+  .Yandex {
+    .technologies-container {
+
+      div {
+        justify-content: space-between !important;
+      }
+
+      .technologies {
+        flex-direction: column;
+        margin-bottom: 50px;
+        div div {
+          background-size: 50px !important;
+          width: 50px !important;
+          height: 50px !important;
+        }
+        div:nth-child(1) {
+          div:nth-child(2) {
+            background-size: 64px !important;
+          }
+          div:nth-child(3) {
+            background-size: 64px !important;
+          }
+        }
+      }
+
+    }
+
+  }
+}

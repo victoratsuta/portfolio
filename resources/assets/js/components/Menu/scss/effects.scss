@@ -1,0 +1,37 @@
+@mixin effects($colorActive) {
+  span {
+    color: $colorActive !important;
+  }
+  i {
+    color: #5f656f !important;
+
+    &:hover {
+      color: $colorActive !important;
+    }
+  }
+}
+
+.effects-normal{
+  @include effects(deepskyblue)
+}
+
+.effects-welhome{
+  @include effects(#E6E6E6)
+}
+
+.effects-history24{
+  @include effects(#E6E6E6)
+}
+
+.effects-smoke-zone{
+  @include effects(#D40080)
+}
+
+.effects-yandex{
+  @include effects(#ED2025)
+}
+
+.effects-compareIp{
+  @include effects(rgba(237,32,37,0.7))
+}
+

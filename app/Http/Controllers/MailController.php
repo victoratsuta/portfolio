@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Mail;
 use Config;
-use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

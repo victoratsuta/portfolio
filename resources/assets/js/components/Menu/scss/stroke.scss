@@ -1,0 +1,29 @@
+@mixin stroke($color) {
+  svg path {
+    stroke: $color;
+  }
+}
+
+.stroke-normal{
+  @include stroke(#5f656f)
+}
+
+.stroke-welhome{
+  @include stroke(#E6E6E6)
+}
+
+.stroke-history24{
+  @include stroke(#E6E6E6)
+}
+
+.stroke-smoke-zone{
+  @include stroke(#D40080)
+}
+
+.stroke-yandex{
+  @include stroke(#ED2025)
+}
+
+.stroke-compareIp{
+  @include stroke(rgba(237,32,37,0.7))
+}
