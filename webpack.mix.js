@@ -11,33 +11,15 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.webpackConfig({
-    module: {
-        rules: [{
-            exclude: /node_modules/,
-        }],
-    }
-});
+// mix.webpackConfig({
+//     module: {
+//         rules: [{
+//             exclude: /node_modules/,
+//         }],
+//     }
+// });
 
-mix.react('resources/assets/js/app.js', 'public/js').options({
-    loaders: [
-        {
-            test: /\.jsx$/,
-            loader: 'babel'
-        },
-        {
-            test: /\.js$/,
-            loader: 'babel',
-            exclude: /node_modules/
-        },
-    ]
-})
-
-    .sass('resources/assets/sass/app.scss', 'public/css').options({
-    postCss: [
-        require('postcss-css-variables')()
-    ]
-})
+mix.react('resources/assets/js/app.js', 'public/js')
     .browserSync({
         proxy: 'portfolio'
     });

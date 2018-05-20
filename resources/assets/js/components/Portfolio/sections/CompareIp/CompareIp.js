@@ -36,7 +36,7 @@ class CompareIp extends Component {
         }
     }
 
-    
+
     render() {
         return (
             <div className={'CompareIp'}>
@@ -56,7 +56,7 @@ class CompareIp extends Component {
                                     <div></div>
                                     <div></div>
                                 </div>
-                                <button class="draw-border">Live</button>
+                                {/*<button class="draw-border">Live</button>*/}
                             </div>
                         </div>
                     </div>
