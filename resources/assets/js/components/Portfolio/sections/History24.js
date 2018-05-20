@@ -46,7 +46,7 @@ class History24 extends Component {
 
                     classname="History24"
                     logo='../imgs/pantheon2.svg'
-                    url={Constants.smokeZone}
+                    url={Constants.history24}
                     effectClassIn='zoomIn'
                     effectClassInOut='zoomOut'
                     technologies={_ => (
