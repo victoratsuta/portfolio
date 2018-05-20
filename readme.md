@@ -1,13 +1,5 @@
-
-
 ## Portfolio
 
-Laravel Framework 5.5.20
-React 16.2.0
+Laravel and React
 
-Projects:
-
-- SmokeZone 
-- Factoring  
-- History 24 
-- WelHome 
+http://atsuta.ru
