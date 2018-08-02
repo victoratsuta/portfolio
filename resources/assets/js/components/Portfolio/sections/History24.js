@@ -48,7 +48,7 @@ class History24 extends Component {
                     logo='../imgs/pantheon2.svg'
                     url={Constants.history24}
                     effectClassIn='zoomIn'
-                    effectClassInOut='zoomOut'
+                    effectClassOut='zoomOut'
                     technologies={_ => (
 
                         <div className={'technologies'}>
@@ -98,46 +98,6 @@ class History24 extends Component {
 
                 />
 
-                {/*<div className={'History24__inner'}>*/}
-                    {/*<div className={'History24__technologis'}>*/}
-                        {/*<div className={'History24__technologis_container'}>*/}
-                            {/*<div>*/}
-                                {/*<div className={'History24__laravel'}/>*/}
-                                {/*<div className={'History24__gulp'}/>*/}
-                                {/*<div className={'History24__jq'}/>*/}
-                                {/*<div className={'History24__js'}/>*/}
-                            {/*</div>*/}
-                            {/*<div>*/}
-                                {/*<div className={'History24__bootstrap'}/>*/}
-                                {/*<div className={'History24__mysql'}/>*/}
-                                {/*<div className={'History24__php'}/>*/}
-                                {/*<div className={'History24__sass'}/>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                        {/*<div className={'History24__Description'}>*/}
-                            {/*Full development of the educational platform for the preparation for the USE on history,*/}
-                            {/*based on the PHP framework Laravel.*/}
-                            {/*Designing the architecture of the system, writing the frontend*/}
-                            {/*using Bootstrap, Gulp, Jquery and many different libraries.*/}
-                        {/*</div>*/}
-                        {/*<a href={config.get('history')} target={'blank'}>*/}
-                            {/*<figure className={'History24__rotate_button'}>*/}
-                                {/*<div>*/}
-                                    {/*<span>View</span>*/}
-                                    {/*<span>History.RF</span>*/}
-                                {/*</div>*/}
-                            {/*</figure>*/}
-                        {/*</a>*/}
-                        {/*<div className={'History24__arrow History24__arrow_hide'} onClick={this.animateHistory.bind(this)}/>*/}
-                    {/*</div>*/}
-                    {/*<div className={'History24__logo_container'}>*/}
-                        {/*<img src={'../imgs/pantheon2.svg'} alt="Parallax Layer" className={'History24__logo'}/>*/}
-                        {/*<h1 className={'History24__header'}>HISTORY.RF</h1>*/}
-                        {/*<p className={'History24__paragraph'}>All-Russian portal of online preparation for the unified*/}
-                            {/*state exam on history</p>*/}
-                        {/*<div className={'History24__arrow History24__arrow_show general__arrow'} onClick={this.animateHistory.bind(this)}/>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
             </ParallaxMousemove>
         )
     }

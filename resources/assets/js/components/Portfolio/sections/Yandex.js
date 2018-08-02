@@ -14,7 +14,7 @@ class Yandex extends Component {
                 logo='../imgs/yandex/logo.png'
                 url={Constants.yandex}
                 effectClassIn='bounceIn'
-                effectClassInOut='bounceOut'
+                effectClassOut='bounceOut'
                 technologies={_ => (
 
                     <div className={'technologies'}>

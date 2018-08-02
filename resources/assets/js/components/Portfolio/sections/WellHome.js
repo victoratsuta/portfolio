@@ -47,7 +47,7 @@ class WellHome extends Component {
                     logo='../imgs/wh.jpg'
                     url={''}
                     effectClassIn='lightSpeedIn'
-                    effectClassInOut='lightSpeedOut'
+                    effectClassOut='lightSpeedOut'
                     technologies={_ => (
 
                         <div className={'technologies'}>

@@ -4,6 +4,9 @@ import Smoke_Zone from './sections/Smoke_Zone';
 import History24 from './sections/History24';
 import WellHome from './sections/WellHome';
 import Yandex from './sections/Yandex';
+import C2Corner from './sections/C2Corner';
+import CherryPick from './sections/CherryPick';
+import Houses from './sections/Houses';
 import CompareIp from './sections/CompareIp/CompareIp';
 
 import ScrollButton from './parts/ScrollButton';
@@ -37,6 +40,9 @@ class Portfolio extends Component {
             sectionClassName: 'section',
             anchors: [
                 URLS.compareip,
+                URLS.c2corner,
+                URLS.cherryPick,
+                URLS.houses,
                 URLS.yandex,
                 URLS.smokezone,
                 URLS.history24,
@@ -70,6 +76,15 @@ class Portfolio extends Component {
                 <SectionsContainer className="container" {...this.options}>
                     <Section>
                         <CompareIp preloader={this.props.preloader.preloader}/>
+                    </Section>
+                    <Section>
+                        <C2Corner/>
+                    </Section>
+                    <Section>
+                        <CherryPick/>
+                    </Section>
+                    <Section>
+                        <Houses/>
                     </Section>
                     <Section>
                         <Yandex/>

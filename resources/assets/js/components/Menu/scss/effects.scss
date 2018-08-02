@@ -35,3 +35,15 @@
   @include effects(rgba(237,32,37,0.7))
 }
 
+.effects-c2corner{
+  @include effects(#7A57D1)
+}
+
+.effects-cherry{
+  @include effects(#E8222D)
+}
+
+.effects-house{
+  @include effects(#E6E6E6)
+}
+

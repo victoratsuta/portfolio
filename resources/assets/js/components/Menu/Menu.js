@@ -23,6 +23,10 @@ styleClasses[URLS.compareip] = 'effects-compareIp'
 styleClasses[URLS.first_slide] = 'effects-compareIp'
 styleClasses[URLS.portfolio] = 'effects-compareIp'
 
+styleClasses[URLS.c2corner] = 'effects-c2corner'
+styleClasses[URLS.cherryPick] = 'effects-cherry'
+styleClasses[URLS.houses] = 'effects-house'
+
 const styleStroke = {}
 
 styleStroke[URLS.main] = 'stroke-normal'
@@ -32,6 +36,9 @@ styleStroke[URLS.welhome] = 'stroke-welhome'
 styleStroke[URLS.history24] = 'stroke-history24'
 styleStroke[URLS.smokezone] = 'stroke-smoke-zone'
 styleStroke[URLS.yandex] = 'stroke-yandex'
+
+styleStroke[URLS.c2corner] = 'stroke-c2corner'
+styleStroke[URLS.cherryPick] = 'stroke-cherry'
 
 styleStroke[URLS.compareip] = 'stroke-compareIp'
 styleStroke[URLS.first_slide] = 'stroke-compareIp'
@@ -57,8 +64,8 @@ class Menu extends Component {
         super(props);
 
         this.state = {
-            'effectStyle' : styleClasses[this.props.page.page],
-            'styleStroke' : styleClasses[this.props.page.page]
+            effectStyle : styleClasses[this.props.page.page],
+            styleStroke : styleStroke[this.props.page.page]
         }
 
         this.clickHandler = this.clickHandler.bind(this)
@@ -73,8 +80,8 @@ class Menu extends Component {
     menuStyleHandler(){
 
         this.setState({
-            'effectStyle' : styleClasses[this.props.page.page],
-            'styleStroke' : styleClasses[this.props.page.page]
+            effectStyle : styleClasses[this.props.page.page],
+            styleStroke : styleStroke[this.props.page.page]
         })
 
     }

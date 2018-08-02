@@ -11,6 +11,7 @@ const Constants = {
      'yandex' : 'http://yandex.atsuta.ru',
      'smokeZone' : 'http://smoke-zone.atsuta.ru',
      'history24' : 'http://history24.atsuta.ru/',
-
+     'compareIp' : 'https://compareip.com/',
+     'c2corner' : 'https://c2corner.com/',
 }
  export default Constants

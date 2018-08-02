@@ -1,0 +1,155 @@
+
+.Houses {
+
+  background-image: url(#{$img-path}/city.jpg);
+
+  background-size: cover;
+
+  .technologies-container {
+
+    .technologies {
+
+      div div{
+        filter: drop-shadow( 0px 0px 15px rgba(0,0,0,0.5) );
+      }
+
+      div:nth-child(1) {
+        div:nth-child(1) {
+          background-image: url(#{$img-path}/houses/vue.png);
+        }
+        div:nth-child(2) {
+          background-image: url(#{$img-path}/houses/laravel.png);
+        }
+        div:nth-child(3) {
+          background-image: url(#{$img-path}/houses/js.png);
+        }
+      }
+      div:nth-child(2) {
+        div:nth-child(1) {
+          background-image: url(#{$img-path}/houses/mysql.svg);
+        }
+        div:nth-child(2) {
+          background-image: url(#{$img-path}/houses/unit.png);
+        }
+        div:nth-child(3) {
+          background-image: url(#{$img-path}/houses/php.png);
+        }
+      }
+    }
+
+    .description {
+
+      p {
+        font-family: 'Hammersmith One', sans-serif;
+        max-width: 600px;
+        font-size: 20px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        padding-left: 20px;
+        padding-right: 20px;
+        color: white;
+        text-align: center;
+        filter: drop-shadow( 0px 0px 15px rgba(0,0,0,0.5) );
+      }
+    }
+    .rotate_button {
+
+      figure {
+
+        span {
+
+          border: 5px solid white;;
+
+        }
+        span:nth-child(1) {
+          color: white;;
+        }
+        span:nth-child(2) {
+          color: white;
+          background: transparent;
+        }
+
+      }
+    }
+
+  }
+  .logo-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 300px;
+      -webkit-filter: drop-shadow(0px 0px 15px black);
+      filter: drop-shadow(0px 0px 15px black);
+    }
+
+    .header{
+      font-family: 'Open Sans', 'Condensed';
+      text-transform: uppercase;
+      color: white;
+      font-size: 50px;
+      font-weight: 600;
+      z-index: 100;
+      text-align: center;
+      filter: drop-shadow( 0px 0px 15px rgba(0,0,0,0.5) );
+    }
+    .paragraph{
+      font-family: 'Hammersmith One', sans-serif;
+      font-size: 20px;
+      color: white;
+      letter-spacing: 0.62px;
+      line-height: 30px;
+      font-weight: 300;
+      text-align: center;
+      z-index: 100;
+      filter: drop-shadow( 0px 0px 15px rgba(0,0,0,0.5) );
+    }
+  }
+  .arrow {
+    display: block;
+    background-image: url(#{$img-path}/down-arrow_white.svg);
+    background-position: center;
+    background-size: 80px;
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    cursor: pointer;
+    -webkit-filter: drop-shadow(0px 0px 15px black);
+    filter: drop-shadow(0px 0px 15px black);
+  }
+  .show{
+    background-image: url(#{$img-path}/down-arrow_white.svg);
+  }
+  .hide{
+    background-image: url(#{$img-path}/cancel_white.svg);
+  }
+}
+@media (max-width: 500px) {
+  .History24 {
+    .technologies-container {
+
+      .technologies {
+        flex-direction: column;
+        margin-bottom: 50px;
+        div div {
+          background-size: 50px !important;
+          width: 50px !important;
+          height: 50px !important;
+        }
+        div:nth-child(1) {
+          div:nth-child(1) {
+            background-size: 100px !important;
+            width: 100px !important;
+            height: 100px !important;
+          }
+        }
+      }
+
+    }
+
+  }
+}
+

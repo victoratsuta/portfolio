@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Slideshow from './lib/Slideshow';
+import Constants from "../../../../constants/constants";
 
 import './lib/wordFx';
 
@@ -56,7 +57,9 @@ class CompareIp extends Component {
                                     <div></div>
                                     <div></div>
                                 </div>
-                                {/*<button class="draw-border">Live</button>*/}
+                                <a href={Constants.compareIp} target="_blank">
+                                    <button className="draw-border">Live</button>
+                                </a>
                             </div>
                         </div>
                     </div>

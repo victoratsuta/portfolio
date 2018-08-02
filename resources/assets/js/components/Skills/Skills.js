@@ -38,7 +38,7 @@ class Skills extends Component {
                                     </div>
                                     <div >
                                         <img src={imgPathBack + 'laravel3.png'}/>
-                                        <img src={imgPathBack + 'yii22.png'}/>
+                                        <img src={imgPathBack + 'lumen-logo.png'}/>
                                         <img src={imgPathBack + 'zend2.png'}/>
                                         <img src={imgPathBack + 'express1.png'}/>
                                     </div>
@@ -63,7 +63,7 @@ class Skills extends Component {
                                     <div >
                                         <img src={imgPathFront + 'angular.png'}/>
                                         <img src={imgPathFront + 'react2.png'}/>
-                                        <img src={imgPathFront + 'bootstrap1.png'}/>
+                                        <img src={imgPathFront + 'vue.png'}/>
                                         <img src={imgPathFront + 'materialize.svg'}/>
                                     </div>
                                     <div >
@@ -76,7 +76,7 @@ class Skills extends Component {
                                     <div >
                                         <img src={imgPathFront + 'sass.png'}/>
                                         <img src={imgPathFront + 'less.png'}/>
-                                        <img src={imgPathFront + 'stylus.png'}/>
+                                        <img src={imgPathFront + 'bootstrap1.png'}/>
                                         <img src={imgPathFront + 'mocha.png'}/>
                                     </div>
                                 </div>

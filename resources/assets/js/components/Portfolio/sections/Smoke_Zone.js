@@ -43,7 +43,7 @@ class Smoke_Zone extends Component {
                     logo='../imgs/hookah3.svg'
                     url={Constants.smokeZone}
                     effectClassIn='flipInX'
-                    effectClassInOut='flipOutX'
+                    effectClassOut='flipOutX'
                     technologies={_ => (
 
                         <div className={'technologies'}>
