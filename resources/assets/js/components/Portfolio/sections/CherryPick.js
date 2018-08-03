@@ -47,7 +47,7 @@ class CherryPick extends Component {
 
                         <div className={'description'}>
                             <p>
-                                Development of a portal for job search in the French area. Designing and writing the backend of the project. Building a restful API, with documentation on Swagger. Automatic functional tests.
+                                Development of a portal for job search in the French area. Designing and writing the backend of the project. Building a restful API, with documentation on Swagger. Automatic functional tests
                             </p>
                         </div>
                     )}
@@ -63,7 +63,7 @@ class CherryPick extends Component {
                         <p>
                             <h1 className={'header'}>CherryPick</h1>
                             <p className={'paragraph'}>
-                                A platform for job search and job posting.</p>
+                                A platform for job search and job posting</p>
                         </p>
                     )}
 

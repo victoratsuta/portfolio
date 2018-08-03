@@ -67,7 +67,7 @@ class Smoke_Zone extends Component {
                                 Full development of an online store, the sale of tobacco products based on a unique MVC
                                 core.
                                 Promotion and Support. Development of a flexible administrative system and a subsystem
-                                of content management.
+                                of content management
                             </p>
                         </div>
                     )}

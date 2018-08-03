@@ -74,7 +74,7 @@ class History24 extends Component {
                                 Full development of the educational platform for the preparation for the USE on history,
                                 based on the PHP framework Laravel.
                                 Designing the architecture of the system, writing the frontend
-                                using Bootstrap, Gulp, Jquery and many different libraries.
+                                using Bootstrap, Gulp, Jquery and many different libraries
                             </p>
                         </div>
                     )}

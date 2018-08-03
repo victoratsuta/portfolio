@@ -72,7 +72,7 @@ class Houses extends Component {
                         <div className={'description'}>
                             <p>
 
-                                Development of the project, including the development of the backend part on Laravel. And the frontend on VueJs. Design of architecture. Code review team members.
+                                Development of the project, including the development of the backend part on Laravel. And the frontend on VueJs. Design of architecture. Code review team members
                             </p>
                         </div>
                     )}
@@ -88,7 +88,7 @@ class Houses extends Component {
                     logoDescription={_ => (
                         <p>
                             <h1 className={'header'}>Ask Houses</h1>
-                            <p className={'paragraph'}>A system for assembling and buying a project for building a house.</p>
+                            <p className={'paragraph'}>A system for assembling and buying a project for building a house</p>
                         </p>
                     )}
 

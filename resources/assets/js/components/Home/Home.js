@@ -36,11 +36,11 @@ class Home extends Component {
             <div className="ip-main for_fade">
 
                 <div className={'Preivew'}>
-                    <div className="Preivew__neon">ATSUTA VICTOR</div>
-                    <div className="Preivew__info">&lt; I am fullstack web developer /&gt;</div>
+                    <div className="Preivew__neon">VICTOR ATSUTA</div>
+                    <div className="Preivew__info">&lt; Fullstack web developer /&gt;</div>
                     <div className="Preivew__info Preivew__label_tech">
 
-                        <p>I work with technologies such as {this.drawReactRotatingText()}
+                        <p>Working with technologies such as {this.drawReactRotatingText()}
                         </p>
                     </div>
                 </div>

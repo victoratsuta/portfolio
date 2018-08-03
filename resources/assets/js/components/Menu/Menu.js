@@ -103,14 +103,14 @@ class Menu extends Component {
 
                         <li onClick={() => this.clickHandler(URLS.portfolio)}>
                             <a>
-                                <i className={'icon fas fa-rocket'}/>
+                                <i className={'icon fas fa-trophy'}/>
                                 <span>Portfolio</span>
                             </a>
                         </li>
 
                         <li onClick={() => this.clickHandler(URLS.skills)}>
                             <a>
-                                <i className={'icon fas fa-cog'}/>
+                                <i className={'icon fas fa-graduation-cap'}/>
                                 <span>Skills</span>
                             </a>
                         </li>

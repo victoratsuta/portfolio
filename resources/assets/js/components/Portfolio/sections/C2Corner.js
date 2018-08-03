@@ -71,7 +71,7 @@ class C2Corner extends Component {
 
                         <div className={'description'}>
                             <p>
-                                Development of backend on Laravel and frontend on AngularJs, components for API work, payment operations, development and design of new functionality.
+                                Development of backend on Laravel and frontend on AngularJs, components for API work, payment operations, development and design of new functionality
                             </p>
                         </div>
                     )}
@@ -89,7 +89,7 @@ class C2Corner extends Component {
                         <p>
                             <h1 className={'header'}>C2Corner</h1>
                             <p className={'paragraph'}>
-                                Highly loaded platform for wholesale purchases and sales on the largest marketplaces such as Amazon, Ebay.</p>
+                                Highly loaded platform for wholesale purchases and sales on the largest marketplaces such as Amazon, Ebay</p>
                         </p>
                     )}
 

@@ -49,7 +49,7 @@ class CompareIp extends Component {
 
                             <div className={'description ' + this.state.animateClass}>
                                 <p className={'word--6'}>Development of a portal for the search of enterprises for the
-                                    establishment of patents for inventions.</p>
+                                    establishment of patents for inventions</p>
 
                                 <div className={'img-container'}>
                                     <div></div>
