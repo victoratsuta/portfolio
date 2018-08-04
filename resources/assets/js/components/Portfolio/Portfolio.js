@@ -41,8 +41,8 @@ class Portfolio extends Component {
             anchors: [
                 URLS.compareip,
                 URLS.c2corner,
-                URLS.cherryPick,
-                URLS.houses,
+                // URLS.cherryPick,
+                // URLS.houses,
                 URLS.yandex,
                 URLS.smokezone,
                 URLS.history24,
@@ -80,12 +80,12 @@ class Portfolio extends Component {
                     <Section>
                         <C2Corner/>
                     </Section>
-                    <Section>
-                        <CherryPick/>
-                    </Section>
-                    <Section>
-                        <Houses/>
-                    </Section>
+                    {/*<Section>*/}
+                        {/*<CherryPick/>*/}
+                    {/*</Section>*/}
+                    {/*<Section>*/}
+                        {/*<Houses/>*/}
+                    {/*</Section>*/}
                     <Section>
                         <Yandex/>
                     </Section>
