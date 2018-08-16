@@ -12,6 +12,8 @@ export const URLS = {
     c2corner : 'c2corner',
     cherryPick : 'cherry-pick',
     houses : 'houses',
+    arcbazar : 'arcbazar',
+    factoringvergelijken : 'factoringvergelijken',
 
     'url_skills' : '/skills',
     'url_contacts' : '/contacts',

@@ -11,10 +11,11 @@
 }
 
 #img_loader{
-  filter: drop-shadow(-2px 6px 0px deepskyblue);
-  max-width: 200px;
+  //filter: drop-shadow(-2px 6px 0px deepskyblue);
+  filter: drop-shadow(0px 0px 10px deepskyblue);
+  max-width: 380px;
   min-width: 90px;
-  width: 13%;
+  width: 30%;
   pointer-events: all;
 
 }
@@ -26,6 +27,6 @@
 
 @media (max-width: 500px) {
   #img_loader{
-    width: 35%;
+    width: 75%;
   }
 }

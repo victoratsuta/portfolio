@@ -25,7 +25,7 @@ class Preloader extends Component {
                     <h1 className="ip-logo">
 
                         <img className={"ip-inner " + (this.props.menu.status &&  URLS.main === this.props.page.page ? 'main-light' : 'main-dark')} id="img_loader"
-                             src={'../imgs/lion222.png'}
+                             src={'../imgs/logo_sevil.1.5.1.png'}
                              />
                     </h1>
                     <div className="ip-loader">

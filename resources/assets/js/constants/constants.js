@@ -1,4 +1,5 @@
 import History24 from "../components/Portfolio/sections/History24";
+import Factoringvergelijken from "../components/Portfolio/sections/Factoringvergelijken";
 
 const Constants = {
     'git' : 'https://github.com/victoratsuta',
@@ -13,5 +14,7 @@ const Constants = {
      'history24' : 'http://history24.atsuta.ru/',
      'compareIp' : 'https://compareip.com/',
      'c2corner' : 'https://c2corner.com/',
+     'arcbazr' : 'https://www.arcbazar.com/',
+     'factoringvergelijken' : 'https://factoringvergelijken.nl/',
 }
  export default Constants

@@ -1,0 +1,141 @@
+
+.Factoringvergelijken {
+
+  background: #f9cdad;
+
+  .technologies-container {
+
+    .technologies {
+
+      div div{
+        filter: drop-shadow( 5px 5px 5px rgba(0,0,0,0.5) );
+      }
+
+      div:nth-child(1) {
+        div:nth-child(1) {
+          background-image: url(#{$img-path}/factoringvergelijken/yii2.png );
+        }
+        div:nth-child(2) {
+          background-image: url(#{$img-path}/factoringvergelijken/php.png);
+        }
+        div:nth-child(3) {
+          background-image: url(#{$img-path}/factoringvergelijken/mysql.png);
+        }
+      }
+      div:nth-child(2) {
+        div:nth-child(1) {
+          background-image: url(#{$img-path}/factoringvergelijken/bootstrap.png);
+        }
+        div:nth-child(2) {
+          background-image: url(#{$img-path}/factoringvergelijken/js.png);
+        }
+        div:nth-child(3) {
+          background-image: url(#{$img-path}/factoringvergelijken/less.png);
+        }
+      }
+    }
+
+    .description {
+
+      p {
+
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+        font-family: 'Hammersmith One', sans-serif;
+        line-height: 28px;
+
+        max-width: 600px;
+        font-size: 18px;
+
+        padding-left: 20px;
+        padding-right: 20px;
+        color: black;
+        text-align: center;
+        font-weight: normal;
+
+
+        margin-top: 40px;
+        margin-bottom: 10px;
+
+      }
+      a{
+        color: black;
+        text-decoration: none;
+      }
+    }
+    .rotate_button {
+      figure {
+
+        span {
+
+          border: 5px solid black;
+
+        }
+        span:nth-child(1) {
+          color: #f9cdad;
+          background: #FF5D37;
+        }
+        span:nth-child(2) {
+          color: #f9cdad;
+          background: #FF5D37;
+        }
+
+      }
+    }
+
+  }
+  .logo-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    img {
+      width: 400px;
+    }
+
+    .header{
+      font-family: 'Open Sans', 'Condensed';
+      text-transform: uppercase;
+      color: black;
+      font-size: 50px;
+      font-weight: 600;
+      z-index: 100;
+      text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px;
+    }
+    .paragraph{
+
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+
+      font-family: 'Hammersmith One', sans-serif;
+      font-size: 20px;
+      color: black;
+      letter-spacing: 0.62px;
+      line-height: 30px;
+      font-weight: 300;
+      z-index: 100;
+    }
+  }
+  .arrow {
+    display: block;
+    background-position: center;
+    background-size: 80px;
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    cursor: pointer;
+    position: relative;
+  }
+  .show{
+    background-image: url(#{$img-path}/down-arrow.svg);
+  }
+  .hide{
+    background-image: url(#{$img-path}/cancel.svg);
+  }
+}

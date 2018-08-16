@@ -86,7 +86,7 @@
     justify-content: center;
 
     img {
-      width: 200px;
+      width: 300px;
       -webkit-filter: drop-shadow(0px 0px 15px black);
       filter: drop-shadow(0px 0px 15px black);
     }
@@ -128,31 +128,6 @@
   }
   .hide{
     background-image: url(#{$img-path}/cancel_white.svg);
-  }
-}
-@media (max-width: 500px) {
-  .History24 {
-    .technologies-container {
-
-      .technologies {
-        flex-direction: column;
-        margin-bottom: 50px;
-        div div {
-          background-size: 50px !important;
-          width: 50px !important;
-          height: 50px !important;
-        }
-        div:nth-child(1) {
-          div:nth-child(1) {
-            background-size: 100px !important;
-            width: 100px !important;
-            height: 100px !important;
-          }
-        }
-      }
-
-    }
-
   }
 }
 

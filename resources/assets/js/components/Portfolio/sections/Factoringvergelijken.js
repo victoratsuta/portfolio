@@ -1,37 +1,37 @@
 import React, {Component} from 'react';
 import ParallaxMousemove from 'react-parallax-mousemove';
-import Constants from '../../../constants/constants'
 import Pattern from './../parts/Pattern'
+import Constants from '../../../constants/constants'
 
 const style = {
-    History24__outter: {
-        backgroundPosition: 'center',
+    outter: {
+        background: 'white',
         width: '100%',
         position: 'relative',
-        overflow: 'hidden',
-        height: '100vh',
+        overflow: 'hidden'
     },
-    History24__bgLayerStyle: {
-        backgroundImage: 'url(../imgs/test.jpg)',
+    bgLayerStyle: {
+        backgroundImage: 'url(../imgs/profil_city.png)',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        width: '120vw',
+        width: '110%',
         position: 'absolute',
         overflow: 'hidden',
-        minHeight: '110vh',
+        minHeight: '40vh',
         marginLeft: '-5%',
         marginBottom: '-2%',
 
     }
 }
 
-class C2Corner extends Component {
+
+class Factoringvergelijken extends Component {
+
 
     render() {
         return (
-
-            <ParallaxMousemove containerStyle={style.History24__outter}>
-                <ParallaxMousemove.Layer layerStyle={style.History24__bgLayerStyle} config={{
+            <ParallaxMousemove containerStyle={style.outter}>
+                <ParallaxMousemove.Layer layerStyle={style.bgLayerStyle} config={{
                     xFactor: 0.05,
                     yFactor: 0.05,
                     springSettings: {
@@ -44,11 +44,11 @@ class C2Corner extends Component {
 
                 <Pattern
 
-                    classname="C2Corner"
-                    logo='../imgs/logo_c2corner.png'
-                    url={Constants.c2corner}
-                    effectClassIn='zoomIn'
-                    effectClassOut='zoomOut'
+                    classname="Factoringvergelijken"
+                    logo='../imgs/logo_f.png'
+                    url={Constants.factoringvergelijken}
+                    effectClassIn='bounceIn'
+                    effectClassOut='zoomOutUp'
                     technologies={_ => (
 
                         <div className={'technologies'}>
@@ -56,10 +56,8 @@ class C2Corner extends Component {
                                 <div/>
                                 <div/>
                                 <div/>
-                                <div/>
                             </div>
                             <div>
-                                <div/>
                                 <div/>
                                 <div/>
                                 <div/>
@@ -71,7 +69,7 @@ class C2Corner extends Component {
 
                         <div className={'description'}>
                             <p>
-                                Development of backend on Laravel and frontend on AngularJs, components for API work, payment operations, development and design of new functionality
+Development in the team application on Yii2, interface design. Modification of modules in the administration panel
                             </p>
                         </div>
                     )}
@@ -80,15 +78,15 @@ class C2Corner extends Component {
 
                         <div>
                             <span>View</span>
-                            <span>C2Corner</span>
+                            <span>factoring</span>
                         </div>
-
                     )}
 
                     logoDescription={_ => (
                         <p>
                             <p className={'paragraph'}>
-                                Highly loaded platform for wholesale purchases and sales on the largest marketplaces such as Amazon, Ebay</p>
+                                System for providing factoring services
+                            </p>
                         </p>
                     )}
 
@@ -99,4 +97,4 @@ class C2Corner extends Component {
     }
 }
 
-export default C2Corner;
+export default Factoringvergelijken;

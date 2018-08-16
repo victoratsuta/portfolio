@@ -8,6 +8,8 @@ import C2Corner from './sections/C2Corner';
 import CherryPick from './sections/CherryPick';
 import Houses from './sections/Houses';
 import CompareIp from './sections/CompareIp/CompareIp';
+import Arcbazar from './sections/Arcbazar';
+import Factoringvergelijken from './sections/Factoringvergelijken';
 
 import ScrollButton from './parts/ScrollButton';
 import {ScrollToTopOnMount, SectionsContainer, Section} from 'react-fullpage';
@@ -41,6 +43,8 @@ class Portfolio extends Component {
             anchors: [
                 URLS.compareip,
                 URLS.c2corner,
+                URLS.arcbazar,
+                URLS.factoringvergelijken,
                 // URLS.cherryPick,
                 // URLS.houses,
                 URLS.yandex,
@@ -86,6 +90,12 @@ class Portfolio extends Component {
                     {/*<Section>*/}
                         {/*<Houses/>*/}
                     {/*</Section>*/}
+                    <Section>
+                        <Arcbazar/>
+                    </Section>
+                    <Section>
+                        <Factoringvergelijken/>
+                    </Section>
                     <Section>
                         <Yandex/>
                     </Section>
