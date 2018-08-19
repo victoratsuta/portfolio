@@ -27,6 +27,9 @@ styleClasses[URLS.c2corner] = 'effects-c2corner'
 styleClasses[URLS.cherryPick] = 'effects-cherry'
 styleClasses[URLS.houses] = 'effects-house'
 
+styleClasses[URLS.arcbazar] = 'effects-arcbazar'
+styleClasses[URLS.factoringvergelijken] = 'effects-factoringvergelijken'
+
 const styleStroke = {}
 
 styleStroke[URLS.main] = 'stroke-normal'
@@ -43,6 +46,9 @@ styleStroke[URLS.cherryPick] = 'stroke-cherry'
 styleStroke[URLS.compareip] = 'stroke-compareIp'
 styleStroke[URLS.first_slide] = 'stroke-compareIp'
 styleStroke[URLS.portfolio] = 'stroke-compareIp'
+
+styleStroke[URLS.arcbazar] = 'stroke-arcbazar'
+styleStroke[URLS.factoringvergelijken] = 'stroke-factoringvergelijken'
 
 function mapStateToProps(state) {
     return {
@@ -78,6 +84,8 @@ class Menu extends Component {
     }
 
     menuStyleHandler(){
+
+        console.log(styleClasses[this.props.page.page])
 
         this.setState({
             effectStyle : styleClasses[this.props.page.page],
