@@ -12,7 +12,7 @@ const style = {
         height: '100vh',
     },
     History24__bgLayerStyle: {
-        backgroundImage: 'url(../imgs/test.jpg)',
+        backgroundImage: 'url(../imgs/stars.jpg)',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         width: '120vw',

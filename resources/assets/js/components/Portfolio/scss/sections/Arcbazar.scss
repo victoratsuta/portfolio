@@ -157,3 +157,19 @@
     background-image: url(#{$img-path}/cancel.svg);
   }
 }
+
+@media (max-width: 500px) {
+  .Arcbazar {
+
+    .logo-container {
+      img {
+
+        width: 100%;
+        max-width: 300px;
+
+      }
+
+    }
+
+  }
+}

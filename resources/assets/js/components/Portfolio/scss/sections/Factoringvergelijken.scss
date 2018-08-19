@@ -1,7 +1,7 @@
 
 .Factoringvergelijken {
 
-  background: #f9cdad;
+  background-image: linear-gradient(to right top, #2F2541, #6E3C5F, #B0576A, #E38065, #FEB85F, #F9F871);
 
   .technologies-container {
 
@@ -73,12 +73,12 @@
 
         }
         span:nth-child(1) {
-          color: #f9cdad;
-          background: #FF5D37;
+          color: #2F2541;
+          background: transparent;
         }
         span:nth-child(2) {
-          color: #f9cdad;
-          background: #FF5D37;
+          color: #2F2541;
+          background: transparent;
         }
 
       }
@@ -137,5 +137,22 @@
   }
   .hide{
     background-image: url(#{$img-path}/cancel.svg);
+  }
+}
+
+
+@media (max-width: 500px) {
+  .Factoringvergelijken {
+
+    .logo-container {
+      img {
+
+        width: 100%;
+        max-width: 300px;
+
+      }
+
+    }
+
   }
 }

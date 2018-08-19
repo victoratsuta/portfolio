@@ -170,6 +170,21 @@
   }
 }
 
+@media screen and (max-width: 650px) {
+  .slide {
+
+    left: 6%;
+    right: 6%;
+
+    div div img{
+
+      width: 23%;
+
+    }
+
+  }
+}
+
 @media screen and (max-height: 500px) {
   #Skills_slideshow > nav span {
     background: none;

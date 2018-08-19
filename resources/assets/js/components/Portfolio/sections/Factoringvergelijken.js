@@ -47,7 +47,7 @@ class Factoringvergelijken extends Component {
                     classname="Factoringvergelijken"
                     logo='../imgs/logo_f.png'
                     url={Constants.factoringvergelijken}
-                    effectClassIn='bounceIn'
+                    effectClassIn='slideInDown'
                     effectClassOut='zoomOutUp'
                     technologies={_ => (
 

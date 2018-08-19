@@ -26,7 +26,7 @@ class Arcbazar extends Component {
                     classname="Arcbazar"
                     logo='../imgs/arcbazar_logo.png'
                     url={Constants.arcbazr}
-                    effectClassIn='bounceIn'
+                    effectClassIn='flipInY'
                     effectClassOut='zoomOutUp'
                     technologies={_ => (
 
