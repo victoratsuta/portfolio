@@ -71,9 +71,10 @@ class WellHome extends Component {
                             <p>
                                 Development of a closed CRM system for the automation of business processes in the
                                 company engaged in the sale of real estate - <b><a href={'http://www.welhome.ru/'}
-                                                                                   target={'blank'}>Welhome</a></b>,
+                                                                                   target={'blank'}>Welhome</a></b>
+                                <span>,
                                 based on SugarCRM. Designing the database and system architecture. Integration with
-                                existing enterprise systems
+                                existing enterprise systems</span>
                             </p>
                         </div>
                     )}

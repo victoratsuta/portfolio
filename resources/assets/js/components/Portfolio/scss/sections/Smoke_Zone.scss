@@ -7,6 +7,10 @@
 
     .technologies {
 
+      div div{
+        background-size: contain !important;
+      }
+
       div:nth-child(1) {
         div:nth-child(1) {
           background-image: url(#{$img-path}/smoke-zone/apache.png);
@@ -84,7 +88,7 @@
     }
 
     .header{
-      font-family: 'Open Sans', 'Condensed';
+      font-family: 'OpenSans';
       text-transform: uppercase;
       color: white;
       font-size: 50px;
@@ -125,20 +129,44 @@
   }
 }
 @media (max-width: 500px) {
+
+
+
   .Smoke_Zone {
+
+    .logo-container {
+
+      img {
+
+        max-width: 200px;
+
+      }
+      .header{
+        font-size: 36px !important;
+        text-align: center;
+      }
+
+    }
+
     .technologies-container {
 
+      .description {
+
+        p span{
+
+          display: none;
+
+        }
+      }
       .technologies {
         flex-direction: column;
         margin-bottom: 50px;
         div div {
-          background-size: 50px !important;
           width: 50px !important;
           height: 50px !important;
         }
         div:nth-child(1) {
           div:nth-child(1) {
-            background-size: 100px !important;
             width: 100px !important;
             height: 100px !important;
           }

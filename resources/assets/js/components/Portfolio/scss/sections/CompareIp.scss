@@ -96,6 +96,7 @@
     flex-direction: column;
     align-content: center;
     justify-content: center;
+    align-items: center;
     pointer-events: none;
     opacity: 0;
     z-index: 1;
@@ -124,7 +125,7 @@
           background-image: url(#{$img-path}/skills/backand/laravel3.png);
           width: 80px !important;
           height: 80px !important;
-          background-size: 80px !important;
+          background-size: contain;
         }
         div:nth-child(2){
           background-image: url(#{$img-path}/skills/frontend/js1.png)
@@ -134,7 +135,7 @@
         }
         div:nth-child(4){
         background-image: url(#{$img-path}/welhome/spreadsheet.svg);
-          background-size: 150px !important;
+          background-size: contain;
           width: 150px !important;
         }
       }
@@ -238,7 +239,7 @@
 
   @media screen and (max-width: 40em) {
     .slide .word {
-      font-size: 2em;
+      font-size: 2.7em;
     }
   }
   .hide{
@@ -317,3 +318,15 @@
 
 
 }
+
+
+@media (max-width: 500px) {
+  .CompareIp{
+    .word--6{
+
+      max-width: 300px;
+
+    }
+  }
+}
+
