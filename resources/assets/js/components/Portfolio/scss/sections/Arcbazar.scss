@@ -114,6 +114,9 @@
 
     img {
       width: 400px;
+      @media (max-height: 400px) {
+        width: 180px !important;
+      }
     }
 
     .header{

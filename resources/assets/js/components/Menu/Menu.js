@@ -9,6 +9,10 @@ import Loading from './../Preloader/lib/Loading'
 import './scss/Menu.scss'
 import Slideshow from "../Portfolio/sections/CompareIp/lib/Slideshow";
 
+const UP = 38
+const DOWN = 40
+const ESC = 27
+
 let styleClasses = {}
 
 styleClasses[URLS.main] = 'effects-normal'
@@ -76,6 +80,8 @@ class Menu extends Component {
 
         this.clickHandler = this.clickHandler.bind(this)
         this.menuStyleHandler = this.menuStyleHandler.bind(this)
+        this.escFunction = this.escFunction.bind(this)
+
     }
 
     clickHandler(page) {
@@ -83,9 +89,27 @@ class Menu extends Component {
         this.props.reloadPage(true)
     }
 
-    menuStyleHandler(){
+    componentDidMount(){
 
-        console.log(styleClasses[this.props.page.page])
+        document.addEventListener("keydown", this.escFunction, false);
+    }
+    componentWillUnmount(){
+
+        document.removeEventListener("keydown", this.escFunction, false);
+    }
+
+    escFunction(event){
+
+
+        if(event.keyCode === ESC) {
+
+            this.menuStyleHandler()
+
+        }
+
+    }
+
+    menuStyleHandler(){
 
         this.setState({
             effectStyle : styleClasses[this.props.page.page],

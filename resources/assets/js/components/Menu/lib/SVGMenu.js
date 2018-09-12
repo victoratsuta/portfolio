@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {toggleStatus, setStatusMenu} from '../../../actions/menu'
+
+const UP = 38
+const DOWN = 40
+const ESC = 27
 
 function mapStateToProps(state) {
     return {
@@ -24,11 +27,24 @@ class SVGMenu extends Component {
         super(props)
         this.path = window.location.href.split('/')[3].split('#');
         this.keys = {37: 1, 38: 1, 39: 1, 40: 1};
-
+        this.escFunction = this.escFunction.bind(this)
+        
     }
 
-    componentDidMount() {
+    componentDidMount(){
         this.init()
+        document.addEventListener("keydown", this.escFunction, false);
+    }
+    componentWillUnmount(){
+        document.removeEventListener("keydown", this.escFunction, false);
+    }
+
+    escFunction(event){
+        if(event.keyCode === ESC) {
+
+            this.toggle()
+
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -68,17 +84,6 @@ class SVGMenu extends Component {
         if (this.props.menu.status) {
             this.enableScroll();
 
-
-            // if (document.getElementById('img_loader').style.opacity != 0) {
-            //     $('#img_loader').animate({opacity: 1}, 500);
-            // }
-            //
-            // if (this.path[0] == 'contacts') {
-            //     $('#mycontact_form_container').animate({opacity: 1}, 500);
-            //     $('#mapid').animate({opacity: 1}, 500);
-            // }
-
-
             classie.remove(this.el, 'menu--anim');
             setTimeout(() => {
                 classie.remove(this.el, 'menu--open');
@@ -95,21 +100,9 @@ class SVGMenu extends Component {
 
     toggle() {
 
-        // this.path = window.location.href.split('/')[3].split('#');
-
         if (this.props.menu.status) {
 
             this.enableScroll();
-
-            //
-            // if (document.getElementById('img_loader').style.opacity != 0) {
-            //     $('#img_loader').animate({opacity: 1}, 500);
-            // }
-            //
-            // if (this.contactForm == 'contact') {
-            //     $('#mycontact_form_container').animate({opacity: 1}, 500);
-            //     $('#mapid').animate({opacity: 1}, 500);
-            // }
 
             classie.remove(this.el, 'menu--anim');
             setTimeout(() => {
@@ -120,22 +113,6 @@ class SVGMenu extends Component {
         else {
 
             this.disableScroll();
-
-            // if (document.getElementById('img_loader').style.opacity == '' || document.getElementById('img_loader').style.opacity == 1) {
-            //     $('#img_loader').animate({opacity: 0.3}, 500);
-            // }
-            // if (this.path[1] !== 'welhome' && this.path[1] !== 'yandex') {
-            //     $('#main_container').animate({opacity: 0.3}, 500);
-            // }
-            // else {
-            //     $('#main_container').animate({opacity: 0.1}, 500);
-            // }
-            // if (this.contactForm == 'contact') {
-            //     $('#mycontact_form_container').animate({opacity: 0.3}, 500);
-            //     $('#mapid').animate({opacity: 0.3}, 500);
-            // }
-            //
-
 
             classie.add(this.el, 'menu--anim');
             setTimeout(() => {

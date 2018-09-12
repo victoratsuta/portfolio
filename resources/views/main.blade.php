@@ -28,7 +28,7 @@
     <meta name=apple-mobile-web-app-status-bar-style content=#0E0D10>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Atsuta Victor | Web Master</title>
+    <title>Victor Atsuta | Web Master</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('/favicons/apple-touch-icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('/favicons/favicon-32x32.png')}}">

@@ -95,6 +95,9 @@
 
     img {
       width: 400px;
+      @media (max-height: 400px) {
+        width: 220px !important;
+      }
     }
 
     .header{
