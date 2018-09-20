@@ -5,6 +5,7 @@ const Constants = {
     'git' : 'https://github.com/victoratsuta',
     'codewars' : 'https://www.codewars.com/users/victoratsuta',
     'linkedin' : 'https://www.linkedin.com/in/victor-atsuta-701727160/',
+    'telegramm' : 'https://telegram.me/atsutaVictor',
 
      'mapUrl' : 'https://api.tiles.mapbox.com/v4/mapbox.dark/{z}/{x}/{y}.png',
      'accessToken' : '?access_token=pk.eyJ1IjoidmljdG9yYXRzdXRhIiwiYSI6ImNqOW9iNnJjczJnaW8zM3MyeDdrcXBuN3oifQ.gIWOmeqEuCRHKmWb_AMXFQ',
