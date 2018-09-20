@@ -59,7 +59,7 @@ class Home extends Component {
                         <div
                         />
                     </a>
-                    <a href={Constants.telegramm} target="_blank">
+                    <a href={Constants.telegramm}>
                         <div
                         />
                     </a>
