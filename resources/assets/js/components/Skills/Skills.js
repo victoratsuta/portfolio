@@ -43,7 +43,7 @@ class Skills extends Component {
                                         <img src={imgPathBack + 'express1.png'}/>
                                     </div>
                                     <div >
-                                        <img src={imgPathBack + 'git1.png'}/>
+                                        <img src={imgPathBack + 'git.png'}/>
                                         <img src={imgPathOther + 'ubuntu.png'}/>
                                         <img src={imgPathOther + 'docker.svg'}/>
                                         <img src={imgPathBack + 'apache.png'}/>

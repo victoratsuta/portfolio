@@ -5,8 +5,8 @@ import History24 from './sections/History24';
 import WellHome from './sections/WellHome';
 import Yandex from './sections/Yandex';
 import C2Corner from './sections/C2Corner';
-import CherryPick from './sections/CherryPick';
-import Houses from './sections/Houses';
+// import CherryPick from './sections/CherryPick';
+// import Houses from './sections/Houses';
 import CompareIp from './sections/CompareIp/CompareIp';
 import Arcbazar from './sections/Arcbazar';
 import Factoringvergelijken from './sections/Factoringvergelijken';
@@ -45,8 +45,8 @@ class Portfolio extends Component {
                 URLS.c2corner,
                 URLS.arcbazar,
                 URLS.factoringvergelijken,
-                URLS.cherryPick,
-                URLS.houses,
+                // URLS.cherryPick,
+                // URLS.houses,
                 URLS.yandex,
                 URLS.smokezone,
                 URLS.history24,
@@ -84,12 +84,12 @@ class Portfolio extends Component {
                     <Section>
                         <C2Corner/>
                     </Section>
-                    <Section>
-                        <CherryPick/>
-                    </Section>
-                    <Section>
-                        <Houses/>
-                    </Section>
+                    {/*<Section>*/}
+                        {/*<CherryPick/>*/}
+                    {/*</Section>*/}
+                    {/*<Section>*/}
+                        {/*<Houses/>*/}
+                    {/*</Section>*/}
                     <Section>
                         <Arcbazar/>
                     </Section>
