@@ -69,7 +69,7 @@ class Skills extends Component {
                                     <div >
 
                                         <img src={imgPathFront + 'redux.png'}/>
-                                        <img src={imgPathFront + 'webpack2.gif'}/>
+                                        <img src={imgPathFront + 'webpack.svg'}/>
                                         <img src={imgPathFront + 'yarn.png'}/>
                                         <img src={imgPathFront + 'npm.png'}/>
                                     </div>
