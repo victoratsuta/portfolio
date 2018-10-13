@@ -12,6 +12,7 @@
 */
 
 Route::get('/', function () {
+
     return view('main');
 });
 Route::get('/portfolio', function () {
