@@ -60,22 +60,23 @@
     }
     .rotate_button {
 
-      figure {
-
-        span {
-
-          border: 5px solid white;;
-
-        }
-        span:nth-child(1) {
-          color: white;;
-        }
-        span:nth-child(2) {
-          color: white;
-          background: transparent;
-        }
-
-      }
+      //figure {
+      //
+      //  span {
+      //
+      //    border: 5px solid white;;
+      //
+      //  }
+      //  span:nth-child(1) {
+      //    color: white;;
+      //  }
+      //  span:nth-child(2) {
+      //    color: white;
+      //    background: transparent;
+      //  }
+      //
+      //}
+      display: none;
     }
 
   }

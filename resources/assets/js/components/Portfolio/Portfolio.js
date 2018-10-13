@@ -45,8 +45,8 @@ class Portfolio extends Component {
                 URLS.c2corner,
                 URLS.arcbazar,
                 URLS.factoringvergelijken,
-                // URLS.cherryPick,
-                // URLS.houses,
+                URLS.cherryPick,
+                URLS.houses,
                 URLS.yandex,
                 URLS.smokezone,
                 URLS.history24,
@@ -84,12 +84,12 @@ class Portfolio extends Component {
                     <Section>
                         <C2Corner/>
                     </Section>
-                    {/*<Section>*/}
-                        {/*<CherryPick/>*/}
-                    {/*</Section>*/}
-                    {/*<Section>*/}
-                        {/*<Houses/>*/}
-                    {/*</Section>*/}
+                    <Section>
+                        <CherryPick/>
+                    </Section>
+                    <Section>
+                        <Houses/>
+                    </Section>
                     <Section>
                         <Arcbazar/>
                     </Section>

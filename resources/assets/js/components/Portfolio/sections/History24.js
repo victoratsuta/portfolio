@@ -84,8 +84,7 @@ class History24 extends Component {
                     figure={_ => (
 
                         <div>
-                            <span>View</span>
-                            <span>History.RF</span>
+
                         </div>
 
                     )}

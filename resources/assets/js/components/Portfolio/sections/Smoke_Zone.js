@@ -77,8 +77,7 @@ class Smoke_Zone extends Component {
                     figure={_ => (
 
                         <div>
-                            <span>View</span>
-                            <span>Smoke-Zone</span>
+
                         </div>
                     )}
 

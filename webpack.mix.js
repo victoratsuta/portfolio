@@ -47,7 +47,7 @@ mix.webpackConfig({
             },
             plugins: [
                 imageminMozjpeg({
-                    quality: 10,
+                    quality: 50,
                     progressive: true
                 })
             ]
