@@ -4,10 +4,8 @@ import {URLS} from './../../constants/urls'
 import {connect} from "react-redux";
 import {setPage, reloadPage} from "../../actions/page";
 import {bindActionCreators} from "redux";
-import Loading from './../Preloader/lib/Loading'
 
 import './scss/Menu.scss'
-import Slideshow from "../Portfolio/sections/CompareIp/lib/Slideshow";
 
 const UP = 38
 const DOWN = 40
