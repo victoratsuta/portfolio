@@ -39,7 +39,7 @@ class Skills extends Component {
                                     <div >
                                         <img src={imgPathBack + 'laravel3.png'}/>
                                         <img src={imgPathBack + 'lumen-logo.png'}/>
-                                        <img src={imgPathBack + 'zend2.png'}/>
+                                        <img src={imgPathBack + 'yii2.png'}/>
                                         <img src={imgPathBack + 'express1.png'}/>
                                     </div>
                                     <div >

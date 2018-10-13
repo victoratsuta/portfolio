@@ -37,9 +37,18 @@ mix.webpackConfig({
         }]),
         new ImageminPlugin({
             test: /\.(jpe?g|png|gif|svg)$/i,
+            optipng: {
+                optimizationLevel: 3
+            },
+            jpegtran: {
+                progressive: false
+            },
+            svgo: {
+            },
             plugins: [
                 imageminMozjpeg({
-                    quality: 50,
+                    quality: 10,
+                    progressive: true
                 })
             ]
         })
