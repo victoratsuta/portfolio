@@ -13,19 +13,46 @@
 
 Route::get('/', function () {
 
-    return view('main');
+    $meta = [
+        'title' => 'Victor Atsuta | Web Master - Official website',
+        'description' => 'The official site of the professional web developer Victor Atsuta. Development and optimization of web applications of any complexity.',
+        'keywords' => 'Victor Atsuta, Atsuta, official website, website development, Application Development',
+    ];
+
+    return view('main', ['meta' => $meta]);
 });
 Route::get('/portfolio', function () {
-    return view('main');
+
+    $meta = [
+        'title' => 'Victor Atsuta | Web Master - Portfolio',
+        'description' => 'List of developed projects, frontend and backend parts of web applications',
+        'keywords' => 'Victor Atsuta, Atsuta, official website, portfolio, project list, backend, frontend',
+    ];
+
+    return view('main', ['meta' => $meta]);
 });
 Route::get('/skills', function () {
-    return view('main');
+
+    $meta = [
+        'title' => 'Victor Atsuta | Web Master - Skills',
+        'description' => 'The official site of the professional web developer Victor Atsuta. List of technologies and skills',
+        'keywords' => 'Victor Atsuta, Atsuta, official website, web technologies, my skills',
+    ];
+
+    return view('main', ['meta' => $meta]);
+
 });
 Route::get('/contacts', function () {
-    return view('main');
+
+    $meta = [
+        'title' => 'Victor Atsuta | Web Master - Contact me',
+        'description' => 'The official site of the professional web developer Victor Atsuta. Contact form with me',
+        'keywords' => 'Victor Atsuta, Atsuta, official website, Feedback, contact me',
+    ];
+
+    return view('main', ['meta' => $meta]);
+
 });
-Route::get('/admin', function () {
-    return view('admin');
-});
+
 
 Route::post('mail', 'MailController@index');
