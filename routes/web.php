@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/sitemap', 'SiteMapController@index');
+
 Route::get('/', function () {
 
     $meta = [
@@ -20,7 +22,8 @@ Route::get('/', function () {
     ];
 
     return view('main', ['meta' => $meta]);
-});
+})->name('main');
+
 Route::get('/portfolio', function () {
 
     $meta = [
@@ -30,7 +33,8 @@ Route::get('/portfolio', function () {
     ];
 
     return view('main', ['meta' => $meta]);
-});
+})->name('portfolio');
+
 Route::get('/skills', function () {
 
     $meta = [
@@ -41,7 +45,8 @@ Route::get('/skills', function () {
 
     return view('main', ['meta' => $meta]);
 
-});
+})->name('skills');
+
 Route::get('/contacts', function () {
 
     $meta = [
@@ -52,7 +57,7 @@ Route::get('/contacts', function () {
 
     return view('main', ['meta' => $meta]);
 
-});
+})->name('contacts');
 
 
 Route::post('mail', 'MailController@index');

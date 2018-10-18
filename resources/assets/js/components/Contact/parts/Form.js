@@ -41,6 +41,13 @@ class Form extends Component {
 
         const contact = this.props.contact
 
+        Alert.info('Message is Sent', {
+            position: 'top-right',
+            effect: 'scale',
+            beep: false,
+            timeout: 2000,
+        });
+
         axios.post('/mail',
             {
                 username: contact.username,

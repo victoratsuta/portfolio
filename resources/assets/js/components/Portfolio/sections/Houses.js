@@ -86,9 +86,7 @@ class Houses extends Component {
                     )}
 
                     logoDescription={_ => (
-                        <p>
                             <p className={'paragraph'}>A system for assembling and buying a project for building a house</p>
-                        </p>
                     )}
 
                 />

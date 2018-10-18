@@ -71,10 +71,10 @@ class Arcbazar extends Component {
                     )}
 
                     logoDescription={_ => (
-                        <p>
+
                             <p className={'paragraph'}>
-                                System wich provide to create design competition</p>
-                        </p>
+                                System which provide to create design competition</p>
+
                     )}
 
                 />

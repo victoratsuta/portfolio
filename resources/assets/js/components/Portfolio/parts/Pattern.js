@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import PropTypes from 'prop-types';
 
 class Pattern extends Component {
 
@@ -55,5 +55,18 @@ class Pattern extends Component {
         )
     }
 }
+
+Pattern.propTypes = {
+    classname: PropTypes.string,
+    logo: PropTypes.string,
+    url: PropTypes.string,
+    effectClassIn: PropTypes.string,
+    effectClassOut: PropTypes.string,
+
+    technologies : PropTypes.func,
+    description : PropTypes.func,
+    figure : PropTypes.func,
+    logoDescription : PropTypes.func
+};
 
 export default Pattern;

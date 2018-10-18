@@ -86,10 +86,8 @@ class C2Corner extends Component {
                     )}
 
                     logoDescription={_ => (
-                        <p>
-                            <p className={'paragraph'}>
+                        <p className={'paragraph'}>
                                 Highly loaded platform for wholesale purchases and sales on the largest marketplaces such as Amazon, Ebay</p>
-                        </p>
                     )}
 
                 />
