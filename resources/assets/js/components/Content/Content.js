@@ -4,7 +4,7 @@ import Skills from './../Skills/Skills'
 import Contact from './../Contact/Contact'
 import Portfolio from './../Portfolio/Portfolio'
 import {URLS} from './../../constants/urls'
-import 'leaflet-css'
+import '../../../../../node_modules/leaflet/dist/leaflet.css'
 
 import {
     Route,
