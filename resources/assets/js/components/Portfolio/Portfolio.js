@@ -20,6 +20,9 @@ import {URLS} from './../../constants/urls'
 import {connect} from "react-redux";
 import {setPage} from "../../actions/page";
 import {bindActionCreators} from "redux";
+import Linkful from "./sections/Linkful/Linkful";
+import Smsplaza from "./sections/Smsplaza/Smsplaza";
+import Abirix from "./sections/Abirix/Abirix";
 
 function mapStateToProps(state) {
     return {
@@ -41,6 +44,10 @@ class Portfolio extends Component {
         this.options = {
             sectionClassName: 'section',
             anchors: [
+
+                URLS.abirix,
+                URLS.smsplaza,
+                URLS.linkful,
                 URLS.compareip,
                 URLS.c2corner,
                 URLS.arcbazar,
@@ -78,9 +85,23 @@ class Portfolio extends Component {
             <div>
                 <ScrollToTopOnMount/>
                 <SectionsContainer className="container" {...this.options}>
+
+                    <Section>
+                        <Abirix/>
+                    </Section>
+
+                    <Section>
+                        <Smsplaza/>
+                    </Section>
+
+                    <Section>
+                        <Linkful/>
+                    </Section>
+
                     <Section>
                         <CompareIp preloader={this.props.preloader.preloader}/>
                     </Section>
+
                     <Section>
                         <C2Corner/>
                     </Section>

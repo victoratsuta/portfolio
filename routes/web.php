@@ -16,9 +16,9 @@ Route::get('/sitemap', 'SiteMapController@index');
 Route::get('/', function () {
 
     $meta = [
-        'title' => 'Victor Atsuta | Web Master - Official website',
-        'description' => 'The official site of the professional web developer Victor Atsuta. Development and optimization of web applications of any complexity.',
-        'keywords' => 'Victor Atsuta, Atsuta, official website, website development, Application Development',
+        'title' => 'Viktor Atsuta | Senior Software Engineer - Official website',
+        'description' => 'The official site of the professional web developer Viktor Atsuta. Development and optimization of web applications of any complexity.',
+        'keywords' => 'Viktor Atsuta, Atsuta, official website, website development, Application Development',
     ];
 
     return view('main', ['meta' => $meta]);
@@ -27,9 +27,9 @@ Route::get('/', function () {
 Route::get('/portfolio', function () {
 
     $meta = [
-        'title' => 'Victor Atsuta | Web Master - Portfolio',
+        'title' => 'Viktor Atsuta | Senior Software Engineer - Portfolio',
         'description' => 'List of developed projects, frontend and backend parts of web applications',
-        'keywords' => 'Victor Atsuta, Atsuta, official website, portfolio, project list, backend, frontend',
+        'keywords' => 'Viktor Atsuta, Atsuta, official website, portfolio, project list, backend, frontend',
     ];
 
     return view('main', ['meta' => $meta]);
@@ -38,9 +38,9 @@ Route::get('/portfolio', function () {
 Route::get('/skills', function () {
 
     $meta = [
-        'title' => 'Victor Atsuta | Web Master - Skills',
-        'description' => 'The official site of the professional web developer Victor Atsuta. List of technologies and skills',
-        'keywords' => 'Victor Atsuta, Atsuta, official website, web technologies, my skills',
+        'title' => 'Viktor Atsuta | Senior Software Engineer - Skills',
+        'description' => 'The official site of the professional web developer Viktor Atsuta. List of technologies and skills',
+        'keywords' => 'Viktor Atsuta, Atsuta, official website, web technologies, my skills',
     ];
 
     return view('main', ['meta' => $meta]);
@@ -50,9 +50,9 @@ Route::get('/skills', function () {
 Route::get('/contacts', function () {
 
     $meta = [
-        'title' => 'Victor Atsuta | Web Master - Contact me',
-        'description' => 'The official site of the professional web developer Victor Atsuta. Contact form with me',
-        'keywords' => 'Victor Atsuta, Atsuta, official website, Feedback, contact me',
+        'title' => 'Viktor Atsuta | Senior Software Engineer - Contact me',
+        'description' => 'The official site of the professional web developer Viktor Atsuta. Contact form with me',
+        'keywords' => 'Viktor Atsuta, Atsuta, official website, Feedback, contact me',
     ];
 
     return view('main', ['meta' => $meta]);

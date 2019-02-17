@@ -3,9 +3,9 @@ import { Map, TileLayer, Marker} from 'react-leaflet'
 import Constants from '../../../constants/constants'
 
 const coordinates = {
-    lat: 55.751830,
-    lng: 37.589837,
-    zoom: 11,
+    lat: -8.697561,
+    lng: 	115.162402,
+    zoom: 12,
 }
 
 class MapLeaflet extends Component {

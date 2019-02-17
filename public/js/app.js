@@ -14107,6 +14107,88 @@ window.L = exports;
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14139,14 +14221,14 @@ var isArray = Array.isArray;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var bind = __webpack_require__(144);
-var isBuffer = __webpack_require__(409);
+var isBuffer = __webpack_require__(414);
 
 /*global toString:true*/
 
@@ -14446,88 +14528,6 @@ module.exports = {
   extend: extend,
   trim: trim
 };
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
 
 
 /***/ }),
@@ -14947,23 +14947,6 @@ module.exports = invariant;
 
 /***/ }),
 /* 11 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__ = __webpack_require__(111);
-
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__["a" /* default */] || freeSelf || Function('return this')();
-
-/* harmony default export */ __webpack_exports__["a"] = (root);
-
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14998,8 +14981,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Constants = {
   'git': 'https://github.com/victoratsuta',
   'codewars': 'https://www.codewars.com/users/victoratsuta',
+  'instagramm': 'https://www.instagram.com/atsutavictor/',
   'linkedin': 'https://www.linkedin.com/in/victor-atsuta-701727160/',
   'telegramm': 'tg://resolve?domain=atsutaVictor',
+  'linksful': 'https://linkful.me/examplelinkfulme',
 
   'mapUrl': 'https://api.tiles.mapbox.com/v4/mapbox.dark/{z}/{x}/{y}.png',
   'accessToken': '?access_token=pk.eyJ1IjoidmljdG9yYXRzdXRhIiwiYSI6ImNqOW9iNnJjczJnaW8zM3MyeDdrcXBuN3oifQ.gIWOmeqEuCRHKmWb_AMXFQ',
@@ -15010,7 +14995,9 @@ var Constants = {
   'compareIp': 'https://compareip.com/',
   'c2corner': 'https://c2corner.com/',
   'arcbazr': 'https://www.arcbazar.com/',
-  'factoringvergelijken': 'https://factoringvergelijken.nl/'
+  'factoringvergelijken': 'https://factoringvergelijken.nl/',
+  'linksfulUrl': 'https://linkful.me/',
+  'smsplaza': 'https://smsplaza.io'
 };
 var _default = Constants;
 var _default2 = _default;
@@ -15050,6 +15037,23 @@ exports.default = _default2;
 
 ;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__ = __webpack_require__(111);
+
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = __WEBPACK_IMPORTED_MODULE_0__freeGlobal_js__["a" /* default */] || freeSelf || Function('return this')();
+
+/* harmony default export */ __webpack_exports__["a"] = (root);
+
 
 /***/ }),
 /* 13 */
@@ -16334,7 +16338,7 @@ module.exports = warning;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__isArray_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isKey_js__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stringToPath_js__ = __webpack_require__(219);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__toString_js__ = __webpack_require__(113);
@@ -16404,7 +16408,7 @@ function baseGetTag(value) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(12);
 
 
 /** Built-in value references. */
@@ -16522,10 +16526,13 @@ var URLS = exports.URLS = {
     smokezone: 'smoke-zone',
     yandex: 'yandex',
     compareip: 'compareip',
+    smsplaza: 'smsplaza',
+    abirix: 'abirix',
     first_slide: 'first-slide',
     c2corner: 'c2corner',
     cherryPick: 'cherry-pick',
     houses: 'houses',
+    linkful: 'linkful',
 
     arcbazar: 'arcbazar',
     factoringvergelijken: 'factoringvergelijken',
@@ -18136,7 +18143,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__isArray_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isSymbol_js__ = __webpack_require__(66);
 
 
@@ -18347,7 +18354,7 @@ function eq(value, other) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getNative_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__root_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__root_js__ = __webpack_require__(12);
 
 
 
@@ -18689,7 +18696,7 @@ var getSymbols = !nativeGetSymbols ? __WEBPACK_IMPORTED_MODULE_1__stubArray_js__
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(11);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stubFalse_js__ = __webpack_require__(274);
 
 
@@ -18867,7 +18874,7 @@ function isArrayLike(value) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__arrayEach_js__ = __webpack_require__(132);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__baseEach_js__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__castFunction_js__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__isArray_js__ = __webpack_require__(7);
 
 
 
@@ -19451,8 +19458,8 @@ exports.ACTION_SET_MENU_STATUS = ACTION_SET_MENU_STATUS;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(7);
-var normalizeHeaderName = __webpack_require__(412);
+var utils = __webpack_require__(8);
+var normalizeHeaderName = __webpack_require__(417);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -19542,7 +19549,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(411)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(416)))
 
 /***/ }),
 /* 95 */
@@ -20484,7 +20491,7 @@ var _reactParallaxMousemove = __webpack_require__(26);
 
 var _reactParallaxMousemove2 = _interopRequireDefault(_reactParallaxMousemove);
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(11);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -20706,7 +20713,7 @@ var _Pattern = __webpack_require__(20);
 
 var _Pattern2 = _interopRequireDefault(_Pattern);
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(11);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -21719,7 +21726,7 @@ function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(12);
 
 
 /** Built-in value references. */
@@ -21760,7 +21767,7 @@ function getAllKeys(object) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__arrayPush_js__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isArray_js__ = __webpack_require__(7);
 
 
 
@@ -21820,7 +21827,7 @@ function stubArray() {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseTimes_js__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isArguments_js__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isArray_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__isBuffer_js__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__isIndex_js__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__isTypedArray_js__ = __webpack_require__(126);
@@ -21943,7 +21950,7 @@ function overArg(func, transform) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__baseEach_js__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__baseIteratee_js__ = __webpack_require__(287);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__baseReduce_js__ = __webpack_require__(296);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__isArray_js__ = __webpack_require__(7);
 
 
 
@@ -22119,7 +22126,7 @@ function arrayEach(array, iteratee) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__initCloneArray_js__ = __webpack_require__(307);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__initCloneByTag_js__ = __webpack_require__(308);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__initCloneObject_js__ = __webpack_require__(313);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__isArray_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__isBuffer_js__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__isMap_js__ = __webpack_require__(315);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__isObject_js__ = __webpack_require__(22);
@@ -23725,13 +23732,13 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 
 
-var utils = __webpack_require__(7);
-var settle = __webpack_require__(413);
-var buildURL = __webpack_require__(415);
-var parseHeaders = __webpack_require__(416);
-var isURLSameOrigin = __webpack_require__(417);
+var utils = __webpack_require__(8);
+var settle = __webpack_require__(418);
+var buildURL = __webpack_require__(420);
+var parseHeaders = __webpack_require__(421);
+var isURLSameOrigin = __webpack_require__(422);
 var createError = __webpack_require__(146);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(418);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(423);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -23828,7 +23835,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(419);
+      var cookies = __webpack_require__(424);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -23912,7 +23919,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(414);
+var enhanceError = __webpack_require__(419);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -24000,11 +24007,11 @@ var _Content = __webpack_require__(184);
 
 var _Content2 = _interopRequireDefault(_Content);
 
-var _Preloader = __webpack_require__(387);
+var _Preloader = __webpack_require__(392);
 
 var _Preloader2 = _interopRequireDefault(_Preloader);
 
-var _Menu = __webpack_require__(392);
+var _Menu = __webpack_require__(397);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
@@ -24012,11 +24019,11 @@ var _reactRedux = __webpack_require__(13);
 
 var _redux = __webpack_require__(14);
 
-var _index = __webpack_require__(396);
+var _index = __webpack_require__(401);
 
 var _index2 = _interopRequireDefault(_index);
 
-__webpack_require__(401);
+__webpack_require__(406);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24026,7 +24033,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     enterModule && enterModule(module);
 })();
 
-__webpack_require__(403);
+__webpack_require__(408);
 
 var store = (0, _redux.createStore)(_index2.default);
 
@@ -51017,11 +51024,11 @@ var _Portfolio2 = _interopRequireDefault(_Portfolio);
 
 var _urls = __webpack_require__(34);
 
-__webpack_require__(379);
+__webpack_require__(384);
 
 var _reactRouterDom = __webpack_require__(57);
 
-__webpack_require__(385);
+__webpack_require__(390);
 
 var _reactRedux = __webpack_require__(13);
 
@@ -51147,7 +51154,7 @@ var _reactRotatingText = __webpack_require__(186);
 
 var _reactRotatingText2 = _interopRequireDefault(_reactRotatingText);
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(11);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -51194,7 +51201,7 @@ var Home = function (_Component) {
 
             return this.props.preloader.preloader ? '' : _react2.default.createElement(_reactRotatingText2.default, {
                 typingInterval: 100,
-                items: ['Laravel', 'React', 'NodeJs']
+                items: ['Laravel', 'React', 'Angular', 'VueJs', 'NodeJs']
             });
         }
     }, {
@@ -51209,12 +51216,12 @@ var Home = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'Preivew__neon' },
-                        'VICTOR ATSUTA'
+                        'VIKTOR ATSUTA'
                     ),
                     _react2.default.createElement(
                         'div',
                         { className: 'Preivew__info' },
-                        '< Fullstack web developer />'
+                        '< Senior Software Engineer />'
                     ),
                     _react2.default.createElement(
                         'div',
@@ -51232,12 +51239,7 @@ var Home = function (_Component) {
                     { className: 'Icons__icon_container' },
                     _react2.default.createElement(
                         'a',
-                        { href: _constants2.default.git, target: '_blank' },
-                        _react2.default.createElement('div', null)
-                    ),
-                    _react2.default.createElement(
-                        'a',
-                        { href: _constants2.default.codewars, target: '_blank' },
+                        { href: _constants2.default.instagramm, target: '_blank' },
                         _react2.default.createElement('div', null)
                     ),
                     _react2.default.createElement(
@@ -51247,7 +51249,7 @@ var Home = function (_Component) {
                     ),
                     _react2.default.createElement(
                         'a',
-                        { href: _constants2.default.telegramm },
+                        { href: _constants2.default.linksful, target: '_blank' },
                         _react2.default.createElement('div', null)
                     )
                 )
@@ -52303,12 +52305,12 @@ if(false) {
 /* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
 
 
 // module
-exports.push([module.i, ".ip-main {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  overflow: hidden;\n  margin: 0 auto;\n  padding: 160px 0 10em 0;\n  max-width: 1100px;\n  width: 90%;\n  height: 100vh; }\n  .ip-main h2 {\n    margin: 0;\n    padding: 0.5em 0 1em;\n    color: #be4856;\n    text-align: center;\n    font-size: 4.25em;\n    font-size: 4vw;\n    line-height: 1; }\n\n@media screen and (max-width: 45em) {\n  .ip-main h2 {\n    font-size: 2.25em;\n    font-size: 10vw; } }\n\n.Icons__icon_container {\n  margin-top: 100px;\n  width: 300px;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-around; }\n  @media (max-height: 500px) {\n    .Icons__icon_container {\n      margin-top: 30px; } }\n  @media (max-width: 500px) {\n    .Icons__icon_container {\n      margin-top: 30px; } }\n  .Icons__icon_container div {\n    position: relative;\n    background-size: 40px;\n    width: 40px;\n    height: 40px; }\n  .Icons__icon_container a:nth-child(1) div {\n    background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABECAMAAAALOLO9AAABWVBMVEUAAAAMV3AAvv0Gh7IAuvgAvfwBuPUElscFjbsAvfwAvPsGirYIdpsBtvIFlMMAvv4BuvgEl8kEmcoHf6YBtvMBs+8BtPABtPACsewCquMEmMkFjrsAu/oAu/oBt/QCreYDqN8DodYDodUEndAHeZ8Au/kAvf0AvPsAuvgBt/QBs+8Bs+8BsesCr+kCr+gCqeADoNQEnM4DotcBuvgBufcBuvgBuPYBtPABs+4Bsu0Cr+kCq+QCsOsCr+oCq+MCreYCqOAAvv0CquICpt0Cq+QDo9kFlcQDn9MBtfEBuPUBs+8BufYBtvMBtvQBs+8Bs+4CrOYCreYDotcDn9MDodYAu/oBtfEBtPACsesCquICrucCsOkDpNoBtvICsu0AvPoBuPYBt/QAvfwDpNkBtfICrOUEnM0Cr+kDn9MEnM8CquIBtvMAuvgAu/oDp94EntEGjLkAv/8Avv6EGwVeAAAAcXRSTlMAA/0K5vjOHRL89RcGwlH+3BoXCNq9s6uoZiUN8ezJfVQ+OSIO/Pr46taxqYaAcWM1Liv97eHWysOZlZCMempmXVdXTklENCn30tDPt6umnph3MiYS7725nZyEaUr7+/Lx4c+enG9cWFNB1dGvraacOe7rTMwAAAQtSURBVFjDrZdne9owEIBl7HhgKFD2CLstG0pI2KMZzWiz9+jeu9b//9CCwT7bGESf3pc8Unyvbkh3BzIVitsqHTY8tZ2XL3dqnsZhaYuj0IJi2w4eZCMWCYglkj0IbtsWgPDxPAMQAMXk4zwh5P5t9JFkKo+it/cJIPQgapFmiiU6oOdRKn5gialF/spsU3qrEpGs9mYY5GouSYSy1HSZUapeLBELvqxOpzyNSgsJ+3QqZQ8vhsF7UzhVVlpYWINf3IX0D3KhizN9iCem4jm+wU/woTbvH5RM+/pdv9My4w47/d2+T8n7B0hJMsr+JkJUqm9fMrkujX6KQmhT+TeTVClhhS45ZW/5MoslCQsRxvO2Xn/rYSLCcM2WeTmSTkXBF1YwQfXs57ZJzAtsPhZPhsSzdPpMDCXjMT9b4Cbl6LlqX1l5A89Uq6/U6seDYqffuFI1nk2yVVIjituISNpYjXlpXKaAMVKLDNOSgDlyGRsIYG+fqGxT+0BFGAy33D4JyK5IghF3oY7PjRA6WYZbmcckmMcZqLN8MgywA97RDk2CoTvwnjtKCLlzEGy/T9g97FArZ0MpJ1hbNxChbFiBmjOlXV/SpBj6Unt6zAEiE0TE0rMAvRgKkKXJmCyY4ACqw6LIk2N4WHTr6I0kwedNIvCRy/IGvYa2UeQYyg8UX6MX5hjyZ/UCYbD6sQjmOyzyaAWsvG5yjNsLFFfQzv/I1A6qgRUTIseEGKBYQx7YPjbJMXdwnPIg6CIukmOKGAYVHcGlPUxKCdvh8UeoByvxqy1SzNYrWI17KKGpoQduwnQHNFU0gUQWbljXyTDrVqjFiohqSlDWyEr6mkapSf0FC3AH20/nU7btGOoI6+PpAEo0MY/yRTdrOrnhG2uN0Xj8l4lxsyBckdFScGv0ohORUbPJ3XYbcuAs2eIJbXJdKjdZ/VAXkc2ncyNMgUIfy9+wfEDmohA/cWmyT3OV9Y592TgZ5sZH3o2MsLY4JP7aU0wVluuauff33rmgZ4z07ibn+GVFb4g6/Qgc79ggxtYBECB+xf9kRub4eLp9/VD5lXKqS/PqNEomqRbEG4sc22PK5bqa9LG8fmgLTJtvbyhjZ3eG0Om7awYPTYsYWuix4pXZ7JBgxuag8GfxZyPwNRcbiHrMJ+PUzejuatAqP6nUsAhU0u8+p6+/6DH3HhiypLfYVhiFFu/LRqbdFG+bi3lYMHwTPhqZ7PBVQMxmYyxH4Skd470wsodpbmyLvJhKinMwwvup/SjdHl+ZJSbLZldr9wyYFY1H7bTJBHV8Dj57MBtz3qVN+3J8DasN9d4Mp/BafFa/r+YfKQH8hHTyxKH0xXx1zmhY3h0b5HhihsG7ZeCQaXXzyCAjRoZ4iimyLt9ll4wNXf5p+JCNkc8LXNDLHJzpd88CjLc/vU7/AQ9aYNuDifdeAAAAAElFTkSuQmCC\"); }\n  .Icons__icon_container a:nth-child(2) div {\n    background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAMAAABG8BK2AAAC+lBMVEUAAADrMhGBTDt/UkLWt4y8pZwlseB4iZBdbHF5Z2BlVlIer+BRp8RXgpBsm6oftulBrtNIg5d+jpKedmglseA3rtVWa3FqiZMnuOgftOYnteUptuYgtecsteMvuecvrNYoqdRCp8lFl7M7sdk+lLAydo1rhI1ojZmNkJJKU1UasOEgs+Qsst8us+AxteE3sts6td8wqNAsqtRHqMg8pslGosCJw9ZMhZmOsb1OgpRanbNeoLZonrB6rr8juOoZuO0ls+Iosd8hseEgt+kzsNotuOclteU+sNcvqtMzsdsqqNMsrdc9pMZXudo1q9Ismr49sdhGstZCnrxZqcQkx/1akqVkn7NRjqMran9wmKZ0scVHn70YrN4VqNkWotA9wu49stoqvO4wu+oosuEnuOcpuOgxrNUrs+Egtugts+ArqdQ4r9Ysp9BGuN4nt+cxteEntOQssd4jrt09stk6qM0ust5DpsdOqcgvrNY6osVQpsMzps03ocQxja0xs943n8FSqsY/n79DoL9XnLNfn7VVw+hNpMI9Z3VRanNar8w+WmSMp7CkydTUxr88bX0dtOcxuOYyvu00ueYirtwqrNceuewZqts0s94OtOshrt0kq9kboc4hseEnr905wO0nrtpQv+QpsN45sdkvrNYvps46o8Y7q9EmteUqst9AueFBsdYtp9ArostJrs8ym787p8wtpMwpkrVLs9Yok7dMnbchfJpWobkencg+kKtgtdIAwf9bt9VSo79Zs9J7tcdLWV4htucztN8XptZKv+Ydr+BFtdsqt+Yrsd1PvOATm8hHx/EtwfI7qc0lsuE4tuA1psslnsZJxe5CvecBvv4bw/pJrc4cf6Flx+c+sNZPw+lSrMo5nsBJsdM1qtFDosIjiapFsNQleZVBsdc2q9JPudsxhqJ3zOmH2fSLr7yOy+ApXW8+0/8Nte0asuUVqdtCu+QXqdklq9dFu+NayO01v+0duOxHu+JJy/ZJla48ka0Jr+cAse6TwtEHvPfn+/5TAAAA/XRSTlMAAgMGAgfnExIMCeAxJBXiPh8LCs5lGw/i4uLd2dLPtpV5UEs7Mh8ZDg3o5+Hau5+Wf3hTSz82NSwpKCMdD+Pi4N7U08rGurOvqqKLi4qHfnRuYjs5Ny4uLSwkG+zq6OHg397Z18/HxMPBwL+7uLW1o6Ghl5GAgGxrZ2BeXV1aVk1HQzw1LCsjIR8VFBMMDO3n4NvZ2NbT0s3Kx8fDvrm5tbOmoJ+cl5aUj46KiIJ3cXFrY2NdU0lGQ0A4ODcmIB/o4+Lhz8zJyci9u7WzrKmop6aXjIyLiYeCfn59fHV1c15bWVVPSkQpKCEcEfnx49/X09G3kIWAfnxxUkwvLmqkYQAABhJJREFUWMPtV2VcU1EU39vmBhswlDHWY2PSHSLS3aCigthFNyggjYiKgt3d3d3d3d3d3fr7Ofbu3d6e20A/c7688+4577/T547QQi0EiUh1N4uNvnTx4qXoWDN3KvG/QAweLQuw7ndgzrzQ0HlzDvTnCBw66/8rEnHXkkB2yCpJIotERhAyae8ew47pPNuFhlb/AELalesz/XY8SfWU5lkeYpMhabZFXgUMexcTdRJdtxyb3A7NAiG7MgeUtNEkpUlC+MZAqo3aOLMX6WtTMOlo49i6KZQXjpxiGuYdYT17+vQZi4gN/5aA2Xu0o4w4PmgnNhaShZP6CgV9Jy12xwK1zTrxXKstxwP0MK9S0f6w4mEJCXFrp1NKsXpjzmvDabVciEVxsRbVgKRbLhdZqeDYp2qOjzMH69FjG1MT5S+MJpJlhaj0KyCvlQaUKnYxNiOzRJbKKtATh845mblSogA2ZKxVj2Jx9CwN69I+qYLvtpTjnxMd/SmZkjwUOIeIuV3VoSBRdh4wpR6V7khumi7sDRfboE3ynOt2LfBzAEGh2ocZqYHp5mcMe7uAMu6bjmAIlKynrNaBPKI3Y2YCcMunUo0xS1JMYDb5NzvQulO2AonbhE4ItrRmilBFYk723+aMGlgOuiYieLfs8etgO/RdZ7aDak7iJ64D5rCr/4LpOMgAZST7qxof7SGMC383TrXokAXafqn5CE6kE1QAnMt1kMsS6Gbo+4IFeN0OtoYoI/bH1+Aw7k4QXyH6uW5SlPxZNyUWpI9lbkVGo9P7LnpUy67E+ySgArwJwAenIPmJOf1no021UdmT+s46Y9xDZloirwoMleAVuLGZEQZMf9IXTJvudsYozA+ZiYMZwTGPnpTnC/jOVIJ3WR0IQESSkWpopjoDros/HFpi+uNGCTOK4DV38j3UWAsxd66H8rNOtiNVYNr2qgDc9reJEDrijausdB3SRs4N2KXQrAmeoRyOZT3dVWDa9RkOAemu8JBq6usQp1PBCJ+sh612/0UkyA/vA6oCujK+PRx4R02VfW0Wsk+Q/ur3OX3srunMVqC2H99FBWYHoztkb0/2xAz46tVpv3+/puQYKiuZeuSaAsZnhyaYHoGO2OKvv8Adt7gk22eBcj0NTtLVYE2Xfu0VfMXYL8p5pX/G+n54KGK0JVm4GZ4N/TAGExt8iCER11Pmoz4gozcEMrcRoqbUyUrHkQ5Dcn/aS8BttVYdXV2tt0IQ1zhEKuLYxxR+7xQhnBApy+6V3o3VYXkh1RxV2TwIwhTajlCBGWlbCDjLqU6ydEmviY4dO5xn7EkmNMLslQeN6QScOlwPlCODVKvYKAimuTV/KNoe9fWtwIq7bI/O6BKBl/y5cj4JFEc6/AqSoz0QJfTahBORsheDmT/1gby6k+B49aCX4nTv8bxQxlvYCSeq4W0HeKcWNfav64BaWIh+nviBzjYDXZuXZqU6pPPTYf6j55Fl3TLFlAgk4Rk0/N7NWgiEblxVryp4Esiu/kjusWbibDjy3P0eEvBU5AcaFxlMr8Kcb+7lRIZ8fiahhL7MS1HNTKqazQDXVN25/mu9YU8VWpvqQhVL5kqCiTlR8UXgHTV7akWKAcy+MZ85JM6jQaf7gyxKUYNC5aGvG/aDyPcsdVuTp0xRfMyRcb2mTaPwl0mV16PEQUux8yKO21ntDnfixSsnjfewuzfEZdh8JiZPx64T75A8I/XX8pSwBtzR6BttAWfV2W5GPEZCjhRqutga9uuI4GBOvqtugyCk1qUzOSsssKZv6O9K0ERFYzfi8xduExx6KtNuYISUjEXZ2HONlrvfdd8y/L18282rV4dUesFIQ5RVNIIWnK++65Gm7/Ebeq4C4dVoz9hbOk2geEf2iwW2aMZZ53O6VpsCcVuWvwuhaapOYYhZGqU9Yiinm/cXxiLG5lA5Va0lHs6BA4rbNPevnd5SX6azJw13arDdkWJ3C4z1ZgItoXMy7uixiIi8hPfucVsXNoCRamyO/OOfzdal4XbciZlnZd2wZVbv/oyB852kDYT/IJKF25rln/VlS+xyrFmNAYnQQi0E6Q/X6nkotAVi0wAAAABJRU5ErkJggg==\");\n    background-size: 50px !important;\n    width: 50px !important;\n    height: 50px !important;\n    background-position-y: -5px; }\n  .Icons__icon_container a:nth-child(3) div {\n    max-width: 256px;\n    max-height: 256px;\n    background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNDkuNjUyIDQ5LjY1MiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDkuNjUyIDQ5LjY1MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxnPgoJCTxnPgoJCQk8cGF0aCBkPSJNMjkuMzUsMjEuMjk4Yy0yLjEyNSwwLTMuMDc0LDEuMTY4LTMuNjA1LDEuOTg4di0xLjcwNGgtNC4wMDJjMC4wNTIsMS4xMjgsMCwxMi4wNDEsMCwxMi4wNDFoNC4wMDJ2LTYuNzI3ICAgICBjMC0wLjM1OSwwLjAyMy0wLjcyLDAuMTMxLTAuOTc3YzAuMjktMC43MiwwLjk0OC0xLjQ2NSwyLjA1NC0xLjQ2NWMxLjQ0OCwwLDIuMDI3LDEuMTA0LDIuMDI3LDIuNzI0djYuNDQyaDQuMDAyaDAuMDAxdi02LjkwNSAgICAgQzMzLjk1OCwyMy4wMTksMzEuOTgzLDIxLjI5OCwyOS4zNSwyMS4yOTh6IE0yNS43NDIsMjMuMzI4aC0wLjAyNWMwLjAwOC0wLjAxNCwwLjAyLTAuMDI3LDAuMDI1LTAuMDQxVjIzLjMyOHoiIGZpbGw9IiMwMGMxZmYiLz4KCQkJPHJlY3QgeD0iMTUuNTIzIiB5PSIyMS41ODIiIHdpZHRoPSI0LjAwMiIgaGVpZ2h0PSIxMi4wNDEiIGZpbGw9IiMwMGMxZmYiLz4KCQkJPHBhdGggZD0iTTI0LjgyNiwwQzExLjEzNywwLDAsMTEuMTM3LDAsMjQuODI2YzAsMTMuNjg4LDExLjEzNywyNC44MjYsMjQuODI2LDI0LjgyNmMxMy42ODgsMCwyNC44MjYtMTEuMTM4LDI0LjgyNi0yNC44MjYgICAgIEM0OS42NTIsMTEuMTM3LDM4LjUxNiwwLDI0LjgyNiwweiBNMzcuOTkxLDM2LjA1NWMwLDEuMDU2LTAuODc2LDEuOTEtMS45NTksMS45MUgxMy40NTFjLTEuMDgsMC0xLjk1Ny0wLjg1NC0xLjk1Ny0xLjkxVjEzLjIxMSAgICAgYzAtMS4wNTUsMC44NzctMS45MSwxLjk1Ny0xLjkxaDIyLjU4MWMxLjA4MiwwLDEuOTU5LDAuODU2LDEuOTU5LDEuOTFWMzYuMDU1eiIgZmlsbD0iIzAwYzFmZiIvPgoJCQk8cGF0aCBkPSJNMTcuNTUxLDE1Ljc3N2MtMS4zNjgsMC0yLjI2NCwwLjg5OC0yLjI2NCwyLjA4YzAsMS4xNTUsMC44NjksMi4wOCwyLjIxMSwyLjA4aDAuMDI2YzEuMzk2LDAsMi4yNjUtMC45MjUsMi4yNjUtMi4wOCAgICAgQzE5Ljc2MiwxNi42NzYsMTguOTIxLDE1Ljc3NywxNy41NTEsMTUuNzc3eiIgZmlsbD0iIzAwYzFmZiIvPgoJCTwvZz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K); }\n  .Icons__icon_container a:nth-child(4) div {\n    max-width: 256px;\n    max-height: 256px;\n    background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTQ5MC42MjYsMTUzLjQ0MmMtMTMuNjk3LTMxLjI5Mi0zMy4yMzYtNTkuMTU4LTU4LjA3My04Mi44MTljLTMuMjA3LTMuMDU1LTguMjgtMi45MzMtMTEuMzM1LDAuMjc1ICAgIGMtMy4wNTQsMy4yMDYtMi45MzEsOC4yOCwwLjI3NSwxMS4zMzNjNDguMDI0LDQ1Ljc1MSw3NC40NzMsMTA3LjQ2NCw3NC40NzMsMTczLjc2OWMwLDEzMi4zMTgtMTA3LjY0OCwyMzkuOTY3LTIzOS45NjcsMjM5Ljk2NyAgICBTMTYuMDMzLDM4OC4zMTgsMTYuMDMzLDI1NlMxMjMuNjgyLDE2LjAzMywyNTYsMTYuMDMzYzQ4LjMzNiwwLDk0LjkzLDE0LjMwNiwxMzQuNzQyLDQxLjM2OSAgICBjMy42NjEsMi40ODksOC42NDcsMS41MzgsMTEuMTM3LTIuMTIyYzIuNDg5LTMuNjYyLDEuNTM4LTguNjQ4LTIuMTIzLTExLjEzN0MzNTcuMjc0LDE1LjI2NSwzMDcuNTY1LDAsMjU2LDAgICAgQzE4Ny42MiwwLDEyMy4zMzMsMjYuNjI4LDc0Ljk4MSw3NC45ODFDMjYuNjI5LDEyMy4zMzMsMCwxODcuNjIsMCwyNTZzMjYuNjI5LDEzMi42NjcsNzQuOTgxLDE4MS4wMTkgICAgQzEyMy4zMzMsNDg1LjM3MiwxODcuNjIsNTEyLDI1Niw1MTJzMTMyLjY2Ny0yNi42MjgsMTgxLjAxOS03NC45ODFDNDg1LjM3MSwzODguNjY3LDUxMiwzMjQuMzgsNTEyLDI1NiAgICBDNTEyLDIyMC4zNDgsNTA0LjgwOCwxODUuODQyLDQ5MC42MjYsMTUzLjQ0MnoiIGZpbGw9IiMwMGM0ZmEiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0zNzIuMzMzLDEwOC41NTJsLTE1NC4xNzYsNzEuNzcxYy00LjAxNCwxLjg2OC01Ljc1Myw2LjYzOC0zLjg4NCwxMC42NTJzNi42MzgsNS43NTUsMTAuNjUsMy44ODVsOTUuMTA2LTQ0LjI3NCAgICBsLTQ2LjIzNywzNy40MzFsLTEwNi4xMDcsODUuODk2bC01OC4wMzYtMjUuMzkybDgxLjMyNi0zNy44NThjNC4wMTQtMS44Nyw1Ljc1My02LjYzOCwzLjg4NC0xMC42NTIgICAgYy0xLjg2OC00LjAxNC02LjYzOS01Ljc1NS0xMC42NS0zLjg4NWwtODcuNTQsNDAuNzUyYy00LjY1NCwyLjE2Ni03LjU5Miw2LjkwNS03LjQ3NCwxMi4wMzVjMC4xMTUsNS4wMiwzLjE0OSw5LjUzOCw3Ljc0OCwxMS41NSAgICBsNjQuODAyLDI4LjM1bDE4Ljk3OSwxMTMuODczYzEuMTY4LDcuMDQxLDEwLjcwMiw5LjA0NiwxNC42MTMsMy4wNzVsNTMuODM2LTgyLjE3MWwxMDEuODExLDQ3LjUxMiAgICBjOC4xNTcsMy44MSwxNy44NjQtMi4wMTIsMTguMzktMTAuOTY2bDE0LjM0NC0yNDMuODQ5YzAuMDE1LTAuMjI2LDAuMDE0LTAuNDU4LDAuMDA5LTAuNjg1ICAgIEMzODMuNTY3LDEwOS45MjcsMzc3LjQ3MSwxMDYuMTc2LDM3Mi4zMzMsMTA4LjU1MnogTTE5MC4wMTgsMzYwLjkzMWwtMTIuNDA0LTc0LjQyOGwxMjYuMzY5LTEwMi4yOTlsLTk2LjcxOCwxMDguNDQxICAgIGMtMC44NywwLjk3Ni0xLjUxNiwyLjIwNC0xLjgxNiwzLjQ3OUwxOTAuMDE4LDM2MC45MzF6IE0yMDcuMDQ5LDM1OC42MzFsMTEuNzItNDkuMjI4bDE1LjcyNCw3LjMzOEwyMDcuMDQ5LDM1OC42MzF6ICAgICBNMjQzLjM3MSwzMDMuMTkxbC0xNi45NjctNy45MTdsODMuNDY5LTkzLjU4NkwyOTcuOCwyMjAuMTE2TDI0My4zNzEsMzAzLjE5MXogTTM1My42MzcsMzU0LjY0OWwtOTUuNTg2LTQ0LjYwN2wxMDcuODk3LTE2NC42ODQgICAgTDM1My42MzcsMzU0LjY0OXoiIGZpbGw9IiMwMGM0ZmEiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K); }\n  .Icons__icon_container a {\n    outline: none; }\n\n.react-rotating-text-cursor {\n  animation: blinking-cursor 0.8s cubic-bezier(0.68, 0.01, 0.01, 0.99) 0s infinite; }\n\n@keyframes blinking-cursor {\n  0% {\n    opacity: 0; }\n  50% {\n    opacity: 1; }\n  100% {\n    opacity: 0; } }\n\n.Preivew {\n  margin: 0 auto;\n  text-align: center;\n  color: #87ceeb;\n  text-shadow: 0 0 10px #87ceeb, 0 0 15px #87ceeb; }\n  .Preivew div:nth-child(1) {\n    font-family: 'Wire One', Helvetica, Arial, sans-serif;\n    font-size: 100px;\n    color: white;\n    text-shadow: 0 0 10px #87ceeb, 0 0 15px #87ceeb, 0 0 30px deepskyblue, 0 0 30px deepskyblue, 0 0 30px deepskyblue, 0 0 40px deepskyblue, 0 0 50px deepskyblue, 0 0 60px deepskyblue, 0 0 70px deepskyblue, 0 0 80px deepskyblue, 0 0 90px deepskyblue, 0 0 100px skyblue; }\n  @media (max-width: 500px) {\n    .Preivew div:nth-child(1) {\n      font-size: 80px; } }\n  .Preivew div:nth-child(2) {\n    font-size: 30px; }\n  @media (max-width: 500px) {\n    .Preivew div:nth-child(2) {\n      font-size: 20px; } }\n  .Preivew div:nth-child(3) {\n    font-size: 18px;\n    white-space: nowrap; }\n  @media (max-width: 500px) {\n    .Preivew div:nth-child(3) {\n      font-size: 14px; } }\n", ""]);
+exports.push([module.i, ".ip-main {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  overflow: hidden;\n  margin: 0 auto;\n  padding: 160px 0 10em 0;\n  max-width: 1100px;\n  width: 90%;\n  height: 100vh; }\n  .ip-main h2 {\n    margin: 0;\n    padding: 0.5em 0 1em;\n    color: #be4856;\n    text-align: center;\n    font-size: 4.25em;\n    font-size: 4vw;\n    line-height: 1; }\n\n@media screen and (max-width: 45em) {\n  .ip-main h2 {\n    font-size: 2.25em;\n    font-size: 10vw; } }\n\n.Icons__icon_container {\n  margin-top: 100px;\n  width: 300px;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-around; }\n  @media (max-height: 500px) {\n    .Icons__icon_container {\n      margin-top: 30px; } }\n  @media (max-width: 500px) {\n    .Icons__icon_container {\n      margin-top: 30px; } }\n  .Icons__icon_container div {\n    position: relative;\n    background-size: 40px;\n    width: 40px;\n    height: 40px; }\n  .Icons__icon_container a:nth-child(1) div {\n    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMiIgY2xhc3M9IiI+PGc+PHBhdGggZD0ibTMwNSAyNTZjMCAyNy4wNjI1LTIxLjkzNzUgNDktNDkgNDlzLTQ5LTIxLjkzNzUtNDktNDkgMjEuOTM3NS00OSA0OS00OSA0OSAyMS45Mzc1IDQ5IDQ5em0wIDAiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6IzAwQzFGRiIgZGF0YS1vbGRfY29sb3I9IiMwMDRDRkYiPjwvcGF0aD48cGF0aCBkPSJtMzcwLjU5Mzc1IDE2OS4zMDQ2ODhjLTIuMzU1NDY5LTYuMzgyODEzLTYuMTEzMjgxLTEyLjE2MDE1Ny0xMC45OTYwOTQtMTYuOTAyMzQ0LTQuNzQyMTg3LTQuODgyODEzLTEwLjUxNTYyNS04LjY0MDYyNS0xNi45MDIzNDQtMTAuOTk2MDk0LTUuMTc5Njg3LTIuMDExNzE5LTEyLjk2MDkzNy00LjQwNjI1LTI3LjI5Mjk2OC01LjA1ODU5NC0xNS41MDM5MDYtLjcwNzAzMS0yMC4xNTIzNDQtLjg1OTM3NS01OS40MDIzNDQtLjg1OTM3NS0zOS4yNTM5MDYgMC00My45MDIzNDQuMTQ4NDM4LTU5LjQwMjM0NC44NTU0NjktMTQuMzMyMDMxLjY1NjI1LTIyLjExNzE4NyAzLjA1MDc4MS0yNy4yOTI5NjggNS4wNjI1LTYuMzg2NzE5IDIuMzU1NDY5LTEyLjE2NDA2MyA2LjExMzI4MS0xNi45MDIzNDQgMTAuOTk2MDk0LTQuODgyODEzIDQuNzQyMTg3LTguNjQwNjI1IDEwLjUxNTYyNS0xMSAxNi45MDIzNDQtMi4wMTE3MTkgNS4xNzk2ODctNC40MDYyNSAxMi45NjQ4NDMtNS4wNTg1OTQgMjcuMjk2ODc0LS43MDcwMzEgMTUuNS0uODU5Mzc1IDIwLjE0ODQzOC0uODU5Mzc1IDU5LjQwMjM0NCAwIDM5LjI1LjE1MjM0NCA0My44OTg0MzguODU5Mzc1IDU5LjQwMjM0NC42NTIzNDQgMTQuMzMyMDMxIDMuMDQ2ODc1IDIyLjExMzI4MSA1LjA1ODU5NCAyNy4yOTI5NjkgMi4zNTkzNzUgNi4zODY3MTkgNi4xMTMyODEgMTIuMTYwMTU2IDEwLjk5NjA5NCAxNi45MDIzNDMgNC43NDIxODcgNC44ODI4MTMgMTAuNTE1NjI0IDguNjQwNjI2IDE2LjkwMjM0MyAxMC45OTYwOTQgNS4xNzk2ODggMi4wMTU2MjUgMTIuOTY0ODQ0IDQuNDEwMTU2IDI3LjI5Njg3NSA1LjA2MjUgMTUuNS43MDcwMzIgMjAuMTQ0NTMyLjg1NTQ2OSA1OS4zOTg0MzguODU1NDY5IDM5LjI1NzgxMiAwIDQzLjkwNjI1LS4xNDg0MzcgNTkuNDAyMzQ0LS44NTU0NjkgMTQuMzMyMDMxLS42NTIzNDQgMjIuMTE3MTg3LTMuMDQ2ODc1IDI3LjI5Njg3NC01LjA2MjUgMTIuODIwMzEzLTQuOTQ1MzEyIDIyLjk1MzEyNi0xNS4wNzgxMjUgMjcuODk4NDM4LTI3Ljg5ODQzNyAyLjAxMTcxOS01LjE3OTY4OCA0LjQwNjI1LTEyLjk2MDkzOCA1LjA2MjUtMjcuMjkyOTY5LjcwNzAzMS0xNS41MDM5MDYuODU1NDY5LTIwLjE1MjM0NC44NTU0NjktNTkuNDAyMzQ0IDAtMzkuMjUzOTA2LS4xNDg0MzgtNDMuOTAyMzQ0LS44NTU0NjktNTkuNDAyMzQ0LS42NTIzNDQtMTQuMzMyMDMxLTMuMDQ2ODc1LTIyLjExNzE4Ny01LjA2MjUtMjcuMjk2ODc0em0tMTE0LjU5Mzc1IDE2Mi4xNzk2ODdjLTQxLjY5MTQwNiAwLTc1LjQ4ODI4MS0zMy43OTI5NjktNzUuNDg4MjgxLTc1LjQ4NDM3NXMzMy43OTY4NzUtNzUuNDg0Mzc1IDc1LjQ4ODI4MS03NS40ODQzNzVjNDEuNjg3NSAwIDc1LjQ4NDM3NSAzMy43OTI5NjkgNzUuNDg0Mzc1IDc1LjQ4NDM3NXMtMzMuNzk2ODc1IDc1LjQ4NDM3NS03NS40ODQzNzUgNzUuNDg0Mzc1em03OC40Njg3NS0xMzYuMzEyNWMtOS43NDIxODggMC0xNy42NDA2MjUtNy44OTg0MzctMTcuNjQwNjI1LTE3LjY0MDYyNXM3Ljg5ODQzNy0xNy42NDA2MjUgMTcuNjQwNjI1LTE3LjY0MDYyNSAxNy42NDA2MjUgNy44OTg0MzcgMTcuNjQwNjI1IDE3LjY0MDYyNWMtLjAwMzkwNiA5Ljc0MjE4OC03Ljg5ODQzNyAxNy42NDA2MjUtMTcuNjQwNjI1IDE3LjY0MDYyNXptMCAwIiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBjbGFzcz0iYWN0aXZlLXBhdGgiIHN0eWxlPSJmaWxsOiMwMEMxRkYiIGRhdGEtb2xkX2NvbG9yPSIjMDA0Q0ZGIj48L3BhdGg+PHBhdGggZD0ibTI1NiAwYy0xNDEuMzYzMjgxIDAtMjU2IDExNC42MzY3MTktMjU2IDI1NnMxMTQuNjM2NzE5IDI1NiAyNTYgMjU2IDI1Ni0xMTQuNjM2NzE5IDI1Ni0yNTYtMTE0LjYzNjcxOS0yNTYtMjU2LTI1NnptMTQ2LjExMzI4MSAzMTYuNjA1NDY5Yy0uNzEwOTM3IDE1LjY0ODQzNy0zLjE5OTIxOSAyNi4zMzIwMzEtNi44MzIwMzEgMzUuNjgzNTkzLTcuNjM2NzE5IDE5Ljc0NjA5NC0yMy4yNDYwOTQgMzUuMzU1NDY5LTQyLjk5MjE4OCA0Mi45OTIxODgtOS4zNDc2NTYgMy42MzI4MTItMjAuMDM1MTU2IDYuMTE3MTg4LTM1LjY3OTY4NyA2LjgzMjAzMS0xNS42NzU3ODEuNzE0ODQ0LTIwLjY4MzU5NC44ODY3MTktNjAuNjA1NDY5Ljg4NjcxOS0zOS45MjU3ODEgMC00NC45Mjk2ODctLjE3MTg3NS02MC42MDkzNzUtLjg4NjcxOS0xNS42NDQ1MzEtLjcxNDg0My0yNi4zMzIwMzEtMy4xOTkyMTktMzUuNjc5Njg3LTYuODMyMDMxLTkuODEyNS0zLjY5MTQwNi0xOC42OTUzMTMtOS40NzY1NjItMjYuMDM5MDYzLTE2Ljk1NzAzMS03LjQ3NjU2Mi03LjMzOTg0NC0xMy4yNjE3MTktMTYuMjI2NTYzLTE2Ljk1MzEyNS0yNi4wMzUxNTctMy42MzI4MTItOS4zNDc2NTYtNi4xMjEwOTQtMjAuMDM1MTU2LTYuODMyMDMxLTM1LjY3OTY4Ny0uNzIyNjU2LTE1LjY3OTY4Ny0uODkwNjI1LTIwLjY4NzUtLjg5MDYyNS02MC42MDkzNzVzLjE2Nzk2OS00NC45Mjk2ODguODg2NzE5LTYwLjYwNTQ2OWMuNzEwOTM3LTE1LjY0ODQzNyAzLjE5NTMxMi0yNi4zMzIwMzEgNi44MjgxMjUtMzUuNjgzNTkzIDMuNjkxNDA2LTkuODA4NTk0IDkuNDgwNDY4LTE4LjY5NTMxMyAxNi45NjA5MzctMjYuMDM1MTU3IDcuMzM5ODQ0LTcuNDgwNDY5IDE2LjIyNjU2My0xMy4yNjU2MjUgMjYuMDM1MTU3LTE2Ljk1NzAzMSA5LjM1MTU2Mi0zLjYzMjgxMiAyMC4wMzUxNTYtNi4xMTcxODggMzUuNjgzNTkzLTYuODMyMDMxIDE1LjY3NTc4MS0uNzE0ODQ0IDIwLjY4MzU5NC0uODg2NzE5IDYwLjYwNTQ2OS0uODg2NzE5czQ0LjkyOTY4OC4xNzE4NzUgNjAuNjA1NDY5Ljg5MDYyNWMxNS42NDg0MzcuNzEwOTM3IDI2LjMzMjAzMSAzLjE5NTMxMyAzNS42ODM1OTMgNi44MjQyMTkgOS44MDg1OTQgMy42OTE0MDYgMTguNjk1MzEzIDkuNDgwNDY4IDI2LjAzOTA2MyAxNi45NjA5MzcgNy40NzY1NjMgNy4zNDM3NSAxMy4yNjU2MjUgMTYuMjI2NTYzIDE2Ljk1MzEyNSAyNi4wMzUxNTcgMy42MzY3MTkgOS4zNTE1NjIgNi4xMjEwOTQgMjAuMDM1MTU2IDYuODM1OTM4IDM1LjY4MzU5My43MTQ4NDMgMTUuNjc1NzgxLjg4MjgxMiAyMC42ODM1OTQuODgyODEyIDYwLjYwNTQ2OXMtLjE2Nzk2OSA0NC45Mjk2ODgtLjg4NjcxOSA2MC42MDU0Njl6bTAgMCIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgY2xhc3M9ImFjdGl2ZS1wYXRoIiBzdHlsZT0iZmlsbDojMDBDMUZGIiBkYXRhLW9sZF9jb2xvcj0iIzAwNENGRiI+PC9wYXRoPjwvZz4gPC9zdmc+); }\n  .Icons__icon_container a:nth-child(2) div {\n    max-width: 256px;\n    max-height: 256px;\n    background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNDkuNjUyIDQ5LjY1MiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDkuNjUyIDQ5LjY1MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxnPgoJCTxnPgoJCQk8cGF0aCBkPSJNMjkuMzUsMjEuMjk4Yy0yLjEyNSwwLTMuMDc0LDEuMTY4LTMuNjA1LDEuOTg4di0xLjcwNGgtNC4wMDJjMC4wNTIsMS4xMjgsMCwxMi4wNDEsMCwxMi4wNDFoNC4wMDJ2LTYuNzI3ICAgICBjMC0wLjM1OSwwLjAyMy0wLjcyLDAuMTMxLTAuOTc3YzAuMjktMC43MiwwLjk0OC0xLjQ2NSwyLjA1NC0xLjQ2NWMxLjQ0OCwwLDIuMDI3LDEuMTA0LDIuMDI3LDIuNzI0djYuNDQyaDQuMDAyaDAuMDAxdi02LjkwNSAgICAgQzMzLjk1OCwyMy4wMTksMzEuOTgzLDIxLjI5OCwyOS4zNSwyMS4yOTh6IE0yNS43NDIsMjMuMzI4aC0wLjAyNWMwLjAwOC0wLjAxNCwwLjAyLTAuMDI3LDAuMDI1LTAuMDQxVjIzLjMyOHoiIGZpbGw9IiMwMGMxZmYiLz4KCQkJPHJlY3QgeD0iMTUuNTIzIiB5PSIyMS41ODIiIHdpZHRoPSI0LjAwMiIgaGVpZ2h0PSIxMi4wNDEiIGZpbGw9IiMwMGMxZmYiLz4KCQkJPHBhdGggZD0iTTI0LjgyNiwwQzExLjEzNywwLDAsMTEuMTM3LDAsMjQuODI2YzAsMTMuNjg4LDExLjEzNywyNC44MjYsMjQuODI2LDI0LjgyNmMxMy42ODgsMCwyNC44MjYtMTEuMTM4LDI0LjgyNi0yNC44MjYgICAgIEM0OS42NTIsMTEuMTM3LDM4LjUxNiwwLDI0LjgyNiwweiBNMzcuOTkxLDM2LjA1NWMwLDEuMDU2LTAuODc2LDEuOTEtMS45NTksMS45MUgxMy40NTFjLTEuMDgsMC0xLjk1Ny0wLjg1NC0xLjk1Ny0xLjkxVjEzLjIxMSAgICAgYzAtMS4wNTUsMC44NzctMS45MSwxLjk1Ny0xLjkxaDIyLjU4MWMxLjA4MiwwLDEuOTU5LDAuODU2LDEuOTU5LDEuOTFWMzYuMDU1eiIgZmlsbD0iIzAwYzFmZiIvPgoJCQk8cGF0aCBkPSJNMTcuNTUxLDE1Ljc3N2MtMS4zNjgsMC0yLjI2NCwwLjg5OC0yLjI2NCwyLjA4YzAsMS4xNTUsMC44NjksMi4wOCwyLjIxMSwyLjA4aDAuMDI2YzEuMzk2LDAsMi4yNjUtMC45MjUsMi4yNjUtMi4wOCAgICAgQzE5Ljc2MiwxNi42NzYsMTguOTIxLDE1Ljc3NywxNy41NTEsMTUuNzc3eiIgZmlsbD0iIzAwYzFmZiIvPgoJCTwvZz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K); }\n  .Icons__icon_container a:nth-child(3) div {\n    background-image: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGwAAABsCAYAAACPZlfNAAAC7UlEQVR42u2dO07DUBBFWQorYwlUYUXUiUTpCAmhINHR0NJRIbEAOiCgtPn5zefOnJEiRQrYb+7xjP3ejO2LCyXbfH+bfLDkgABYABLwAiFZgQdUAtEAN1gkxiYAivHiOOBGOYs/OIZ/wCrsZ8erKkmfu18CS/nPJFNIC2AJaQIsIW0AJaQTsIT0ApaYbsAS0g5YQhqSCoV0jIRVsRpsPvYIYar3YJiN11uITs0zw8fqKUDHlrXh46wESwlaWlg0hw7U2tpROnoHal0dVjlo2VKh94GQBZpcdGWJ4NRRpg5LHdxJ+8wQXd0n4iftz3JwkUIoQZsFzFM0hbXJKGitoksR2lH7qRxd1vO/kCirHl3HHr0SwCLTYWbLditvq3ToAc4tygCmMYeMBHaznB4Wq2kTIvyZth1zPDCn1Y2ts/+f9dNiOb38fn8LWYmfud3L+8+v3feru+ePm9X6devTzj/785jxUfIXScvpcQspTRlFqWzjCux3e9e3q/e09S8FcG7Asj0zShWaC7CssEZNlD2hmQPLDksNGsDEoJkCU4LVHljmAqDnRcHo/YUDq7ycZKHBXmCVYGWGNmebbsBCqrLVgY06MUZ2QmUf39CUWAHYOasZABMDljktAkwsygAGMM5hnMMM9gcwwZN6lnu2JYBFFEf3/b/KyspBYF2gRS48z17N8QQWUdXOAmp2dB38wbjUoFDDiqyHuTSSAi0AGFGWD9bBO1iIsmStASf/AdBiu6U8JpXdoVkXZ2W7gCMOFNdu39lkE4KLinCP+WUYMGwwMMu0iA1Oh0SZYHQRZWLRRZQJRhfQBGEBTBAY0MRg7Zt4YrYLCXmOAMxHW6AJwSI1iqRCoAnDIjUKawg0Me1IjYK6AU1QL6AJ6lTh0bDttAGaoCZAE9SiytOz2/nfEZq8z12irZSf1aGV9a+aYy2yh+oLsauMv43jbUGdK0SEGKov7k4nTqa30LY3q9t+VF/A3RoekBrAw5IDFLIfRTCFlSoiYiMAAAAASUVORK5CYII=\"); }\n  .Icons__icon_container a {\n    outline: none; }\n\n.react-rotating-text-cursor {\n  animation: blinking-cursor 0.8s cubic-bezier(0.68, 0.01, 0.01, 0.99) 0s infinite; }\n\n@keyframes blinking-cursor {\n  0% {\n    opacity: 0; }\n  50% {\n    opacity: 1; }\n  100% {\n    opacity: 0; } }\n\n.Preivew {\n  margin: 0 auto;\n  text-align: center;\n  color: #87ceeb;\n  text-shadow: 0 0 10px #87ceeb, 0 0 15px #87ceeb; }\n  .Preivew div:nth-child(1) {\n    font-family: 'Wire One', Helvetica, Arial, sans-serif;\n    font-size: 100px;\n    color: white;\n    text-shadow: 0 0 10px #87ceeb, 0 0 15px #87ceeb, 0 0 30px deepskyblue, 0 0 30px deepskyblue, 0 0 30px deepskyblue, 0 0 40px deepskyblue, 0 0 50px deepskyblue, 0 0 60px deepskyblue, 0 0 70px deepskyblue, 0 0 80px deepskyblue, 0 0 90px deepskyblue, 0 0 100px skyblue; }\n  @media (max-width: 500px) {\n    .Preivew div:nth-child(1) {\n      font-size: 80px; } }\n  .Preivew div:nth-child(2) {\n    font-size: 30px; }\n  @media (max-width: 500px) {\n    .Preivew div:nth-child(2) {\n      font-size: 20px; } }\n  .Preivew div:nth-child(3) {\n    font-size: 18px;\n    white-space: nowrap; }\n  @media (max-width: 500px) {\n    .Preivew div:nth-child(3) {\n      font-size: 14px; } }\n", ""]);
 
 // exports
 
@@ -52539,35 +52541,65 @@ var Skills = function (_Component) {
                                 _react2.default.createElement(
                                     'div',
                                     null,
-                                    _react2.default.createElement('img', { src: imgPathFront + 'html2.png' }),
-                                    _react2.default.createElement('img', { src: imgPathFront + 'css2.png' }),
                                     _react2.default.createElement('img', { src: imgPathFront + 'js1.png' }),
-                                    _react2.default.createElement('img', { src: imgPathFront + 'jquery1.png' })
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    null,
-                                    _react2.default.createElement('img', { src: imgPathFront + 'angular.png' }),
-                                    _react2.default.createElement('img', { src: imgPathFront + 'react2.png' }),
                                     _react2.default.createElement('img', { src: imgPathFront + 'vue.png' }),
-                                    _react2.default.createElement('img', { src: imgPathFront + 'materialize.svg' })
+                                    _react2.default.createElement('img', { src: imgPathFront + 'nuxt.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'vuex.png' })
                                 ),
                                 _react2.default.createElement(
                                     'div',
                                     null,
+                                    _react2.default.createElement('img', { src: imgPathFront + 'ts.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'angular.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'rxjs.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'clarity.png' })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    null,
+                                    _react2.default.createElement('img', { src: imgPathFront + 'react.png' }),
                                     _react2.default.createElement('img', { src: imgPathFront + 'redux.png' }),
-                                    _react2.default.createElement('img', { src: imgPathFront + 'webpack.svg' }),
-                                    _react2.default.createElement('img', { src: imgPathFront + 'yarn.png' }),
-                                    _react2.default.createElement('img', { src: imgPathFront + 'npm.png' })
+                                    _react2.default.createElement('img', { src: imgPathFront + 'redux-saga.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'flow.png' })
                                 ),
                                 _react2.default.createElement(
                                     'div',
                                     null,
                                     _react2.default.createElement('img', { src: imgPathFront + 'sass.png' }),
                                     _react2.default.createElement('img', { src: imgPathFront + 'less.png' }),
-                                    _react2.default.createElement('img', { src: imgPathFront + 'bootstrap1.png' }),
-                                    _react2.default.createElement('img', { src: imgPathFront + 'mocha.png' })
+                                    _react2.default.createElement('img', { src: imgPathFront + 'yarn.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'webpack.png' })
                                 )
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'slide' },
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                _react2.default.createElement(
+                                    'div',
+                                    null,
+                                    _react2.default.createElement('img', { src: imgPathFront + 'html2.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'css2.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'jquery.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'npm.png' })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    null,
+                                    _react2.default.createElement('img', { src: imgPathFront + 'bootstrap1.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'materialize.svg' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'mocha.png' }),
+                                    _react2.default.createElement('img', { src: imgPathFront + 'eslint.png' })
+                                ),
+                                _react2.default.createElement('div', null),
+                                _react2.default.createElement('div', null)
                             )
                         )
                     )
@@ -52971,7 +53003,7 @@ if(false) {
 /* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
 
 
@@ -53125,7 +53157,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactLeaflet = __webpack_require__(210);
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(11);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -53144,9 +53176,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var coordinates = {
-    lat: 55.751830,
-    lng: 37.589837,
-    zoom: 11
+    lat: -8.697561,
+    lng: 115.162402,
+    zoom: 12
 };
 
 var MapLeaflet = function (_Component) {
@@ -53998,7 +54030,7 @@ function isMasked(func) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(12);
 
 
 /** Used to detect overreaching core-js shims. */
@@ -54432,7 +54464,7 @@ function mapCacheSet(key, value) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__arrayMap_js__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isArray_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__isSymbol_js__ = __webpack_require__(66);
 
 
@@ -54559,7 +54591,7 @@ function baseHasIn(object, key) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__castPath_js__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isArguments_js__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isArray_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__isIndex_js__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__isLength_js__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__toKey_js__ = __webpack_require__(32);
@@ -54715,7 +54747,7 @@ function baseFlatten(array, depth, predicate, isStrict, result) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isArguments_js__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isArray_js__ = __webpack_require__(7);
 
 
 
@@ -54952,7 +54984,7 @@ function shortOut(func) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__equalByTag_js__ = __webpack_require__(268);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__equalObjects_js__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getTag_js__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__isArray_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__isBuffer_js__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__isTypedArray_js__ = __webpack_require__(126);
 
@@ -55793,7 +55825,7 @@ var nativeKeys = Object(__WEBPACK_IMPORTED_MODULE_0__overArg_js__["a" /* default
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getNative_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__root_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__root_js__ = __webpack_require__(12);
 
 
 
@@ -55809,7 +55841,7 @@ var DataView = Object(__WEBPACK_IMPORTED_MODULE_0__getNative_js__["a" /* default
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getNative_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__root_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__root_js__ = __webpack_require__(12);
 
 
 
@@ -55825,7 +55857,7 @@ var Promise = Object(__WEBPACK_IMPORTED_MODULE_0__getNative_js__["a" /* default 
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getNative_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__root_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__root_js__ = __webpack_require__(12);
 
 
 
@@ -55841,7 +55873,7 @@ var Set = Object(__WEBPACK_IMPORTED_MODULE_0__getNative_js__["a" /* default */])
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getNative_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__root_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__root_js__ = __webpack_require__(12);
 
 
 
@@ -56013,7 +56045,7 @@ function createBaseEach(eachFunc, fromRight) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseMatches_js__ = __webpack_require__(288);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__baseMatchesProperty_js__ = __webpack_require__(291);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__identity_js__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__isArray_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__isArray_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__property_js__ = __webpack_require__(293);
 
 
@@ -56583,7 +56615,7 @@ function nativeKeysIn(object) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(11);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__root_js__ = __webpack_require__(12);
 
 
 /** Detect free variable `exports`. */
@@ -60335,7 +60367,7 @@ if(false) {
 /* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
 
 
@@ -60380,7 +60412,7 @@ if(false) {
 /* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
 
 
@@ -60425,7 +60457,7 @@ if(false) {
 /* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
 
 
@@ -60508,6 +60540,18 @@ var _page = __webpack_require__(56);
 
 var _redux = __webpack_require__(14);
 
+var _Linkful = __webpack_require__(380);
+
+var _Linkful2 = _interopRequireDefault(_Linkful);
+
+var _Smsplaza = __webpack_require__(432);
+
+var _Smsplaza2 = _interopRequireDefault(_Smsplaza);
+
+var _Abirix = __webpack_require__(434);
+
+var _Abirix2 = _interopRequireDefault(_Abirix);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function () {
@@ -60547,7 +60591,7 @@ var Portfolio = function (_Component) {
 
         _this.options = {
             sectionClassName: 'section',
-            anchors: [_urls.URLS.compareip, _urls.URLS.c2corner, _urls.URLS.arcbazar, _urls.URLS.factoringvergelijken,
+            anchors: [_urls.URLS.abirix, _urls.URLS.smsplaza, _urls.URLS.linkful, _urls.URLS.compareip, _urls.URLS.c2corner, _urls.URLS.arcbazar, _urls.URLS.factoringvergelijken,
             // URLS.cherryPick,
             // URLS.houses,
             _urls.URLS.yandex, _urls.URLS.smokezone, _urls.URLS.history24, _urls.URLS.welhome],
@@ -60584,6 +60628,21 @@ var Portfolio = function (_Component) {
                 _react2.default.createElement(
                     _reactFullpage.SectionsContainer,
                     _extends({ className: 'container' }, this.options),
+                    _react2.default.createElement(
+                        _reactFullpage.Section,
+                        null,
+                        _react2.default.createElement(_Abirix2.default, null)
+                    ),
+                    _react2.default.createElement(
+                        _reactFullpage.Section,
+                        null,
+                        _react2.default.createElement(_Smsplaza2.default, null)
+                    ),
+                    _react2.default.createElement(
+                        _reactFullpage.Section,
+                        null,
+                        _react2.default.createElement(_Linkful2.default, null)
+                    ),
                     _react2.default.createElement(
                         _reactFullpage.Section,
                         null,
@@ -60711,7 +60770,7 @@ var _reactParallaxMousemove = __webpack_require__(26);
 
 var _reactParallaxMousemove2 = _interopRequireDefault(_reactParallaxMousemove);
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(11);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -61143,7 +61202,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(11);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -61368,7 +61427,7 @@ var _reactParallaxMousemove = __webpack_require__(26);
 
 var _reactParallaxMousemove2 = _interopRequireDefault(_reactParallaxMousemove);
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(11);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -61399,9 +61458,7 @@ var style = {
         height: '100vh'
     },
     History24__bgLayerStyle: {
-        backgroundImage: 'url(../imgs/stars.jpg)',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
+
         width: '120vw',
         position: 'absolute',
         overflow: 'hidden',
@@ -61585,7 +61642,7 @@ var _Slideshow = __webpack_require__(363);
 
 var _Slideshow2 = _interopRequireDefault(_Slideshow);
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(11);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -62014,7 +62071,7 @@ var _Pattern = __webpack_require__(20);
 
 var _Pattern2 = _interopRequireDefault(_Pattern);
 
-var _constants = __webpack_require__(12);
+var _constants = __webpack_require__(11);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -64677,12 +64734,14 @@ if(false) {
 /* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
+exports.i(__webpack_require__(379), "");
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Montserrat+Alternates:700|Volkhov:700|Hammersmith+One|Arbutus+Slab|Poppins:800|Questrial|Bungee+Outline|Josefin+Sans:700);", ""]);
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Luckiest+Guy);", ""]);
 
 // module
-exports.push([module.i, ".flex {\n  display: flex !important; }\n\n.none {\n  display: none !important; }\n\n.Pattern {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  height: 100vh; }\n  .Pattern .technologies-container {\n    z-index: 100;\n    display: none;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center; }\n    .Pattern .technologies-container .technologies {\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center; }\n      .Pattern .technologies-container .technologies div {\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n        .Pattern .technologies-container .technologies div div {\n          display: block;\n          background-position: center;\n          background-repeat: no-repeat;\n          background-size: contain;\n          width: 100px;\n          height: 100px;\n          margin-left: 20px;\n          margin-right: 20px;\n          margin-top: 20px; }\n    .Pattern .technologies-container .description {\n      max-width: 600px;\n      margin-top: 20px;\n      margin-bottom: 20px;\n      padding-left: 20px;\n      padding-right: 20px; }\n      @media (max-height: 400px) {\n        .Pattern .technologies-container .description {\n          margin-top: 10px !important;\n          margin-bottom: 10px !important; }\n          .Pattern .technologies-container .description p {\n            line-height: 22px !important; } }\n    .Pattern .technologies-container .rotate_button figure {\n      margin-bottom: 30px !important;\n      width: 200px;\n      height: 60px;\n      cursor: pointer;\n      perspective: 500px;\n      -webkit-perspective: 500px; }\n      @media (max-height: 400px) {\n        .Pattern .technologies-container .rotate_button figure {\n          margin-bottom: 10px !important; } }\n      .Pattern .technologies-container .rotate_button figure:hover div {\n        transform: rotateX(-90deg); }\n      .Pattern .technologies-container .rotate_button figure div {\n        height: 100%;\n        transform-style: preserve-3d;\n        -webkit-transform-style: preserve-3d;\n        transition: 0.25s;\n        -webkit-transition: 0.25s; }\n      .Pattern .technologies-container .rotate_button figure span {\n        width: 100%;\n        height: 100%;\n        position: absolute;\n        left: 0;\n        box-sizing: border-box;\n        font-family: 'Source Sans Pro', sans-serif;\n        line-height: 50px;\n        font-size: 17pt;\n        text-align: center;\n        text-transform: uppercase; }\n      .Pattern .technologies-container .rotate_button figure span:nth-child(1) {\n        transform: translate3d(0, 0, 30px);\n        -webkit-transform: translate3d(0, 0, 30px); }\n      .Pattern .technologies-container .rotate_button figure span:nth-child(2) {\n        transform: rotateX(90deg) translate3d(0, 0, 30px);\n        -webkit-transform: rotateX(90deg) translate3d(0, 0, 30px); }\n  .Pattern .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .Pattern .logo-container img {\n      width: 300px; }\n      @media (max-height: 400px) {\n        .Pattern .logo-container img {\n          width: 120px !important; } }\n\n@media (max-width: 500px), (max-height: 400px) {\n  .Pattern .technologies-container .technologies {\n    margin-bottom: 10px !important; }\n    .Pattern .technologies-container .technologies div div {\n      background-size: 50px !important;\n      width: 50px !important;\n      height: 50px !important; }\n  .Pattern .technologies-container .description {\n    margin-top: 0px !important;\n    margin-bottom: 20px;\n    font-size: 16px !important;\n    line-height: 22px; }\n    .Pattern .technologies-container .description p {\n      margin-top: 15px !important;\n      margin-bottom: 5px !important;\n      font-size: 17px !important;\n      max-width: 300px !important; }\n  .Pattern .logo-container img {\n    width: 150px; }\n  .Pattern .logo-container .paragraph {\n    font-size: 17px !important;\n    max-width: 300px !important; }\n  .Pattern .logo-container .rotate_button figure {\n    margin-bottom: 15px !important; }\n  .Pattern .arrow {\n    background-size: 40px !important;\n    width: 40px !important;\n    height: 40px !important; } }\n\n@media (max-width: 1150px) {\n  .Pattern .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; } }\n\n@media (max-height: 850px) {\n  .Pattern .technologies-container div {\n    justify-content: space-between !important; }\n  .Pattern .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .Pattern .technologies-container .technologies div div {\n      background-size: 50px !important;\n      width: 50px !important;\n      height: 50px !important; } }\n\n@media (max-height: 650px) and (orientation: landscape) {\n  .Pattern .technologies-container .description p {\n    display: none !important; }\n  .Pattern .logo-container .paragraph {\n    max-width: none !important; }\n  .Pattern .header {\n    margin-top: 0px !important; } }\n\n.toTopAnchor {\n  position: absolute;\n  right: 20px;\n  bottom: 20px;\n  display: block;\n  background-image: url(/imgs/totop.svg);\n  background-position: center;\n  background-size: 40px;\n  width: 40px;\n  height: 40px;\n  margin: auto;\n  cursor: pointer; }\n\n@media (max-height: 500px) {\n  .toTopAnchor {\n    display: none !important; } }\n\n/* Color schemes */\n.demo-1 {\n  --color-text: #fff;\n  --color-bg: #101010;\n  --color-link: #fff;\n  --color-link-hover: #fff473;\n  --color-nav: #fff;\n  --color-bg-slide-1: #4cabef;\n  --color-bg-slide-2: #0406e6;\n  --color-bg-slide-3: #272526;\n  --color-bg-slide-4: #b9b9b9;\n  --color-bg-slide-5: #5900ce;\n  --color-bg-slide-6: #1b1a1a;\n  --color-bg-slide-7: #bf2525;\n  --color-bg-slide-8: #d6d1d1;\n  --color-bg-slide-9: #000000; }\n\n.CompareIp {\n  /* Header */\n  /* Slideshow */\n  /* Word + SVG styles */ }\n  .CompareIp .content {\n    position: relative;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin: 0 auto;\n    min-height: 100vh; }\n  .CompareIp .content--fixed {\n    position: fixed;\n    z-index: 10000;\n    top: 0;\n    left: 0;\n    display: grid;\n    align-content: space-between;\n    width: 100%;\n    max-width: none;\n    min-height: 0;\n    height: 100vh;\n    padding: 1.5em;\n    pointer-events: none;\n    grid-template-columns: 50% 50%;\n    grid-template-rows: auto auto 4em;\n    grid-template-areas: 'header header' '... ...' 'github demos'; }\n  .CompareIp .content--fixed a {\n    pointer-events: auto; }\n  .CompareIp .codrops-header {\n    position: relative;\n    z-index: 100;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-start;\n    align-items: center;\n    align-self: start;\n    grid-area: header;\n    justify-self: start; }\n  .CompareIp .codrops-header__title {\n    font-size: 1.15em;\n    font-weight: normal;\n    margin: 0 0 0 1em;\n    padding: 0.75em 0; }\n  .CompareIp .slideshow {\n    position: absolute !important;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0; }\n  .CompareIp .slide {\n    position: absolute !important;\n    width: 100vw;\n    height: 100vh;\n    top: 0;\n    left: 0 !important;\n    display: flex;\n    flex-direction: column;\n    align-content: center;\n    justify-content: center;\n    align-items: center;\n    pointer-events: none;\n    opacity: 0;\n    z-index: 1; }\n    .CompareIp .slide .description {\n      height: auto; }\n      .CompareIp .slide .description .img-container {\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n        .CompareIp .slide .description .img-container div {\n          display: block;\n          background-position: center;\n          background-repeat: no-repeat;\n          background-size: contain;\n          width: 50px;\n          height: 50px;\n          margin-left: 20px;\n          margin-right: 20px;\n          margin-top: 20px; }\n        .CompareIp .slide .description .img-container div:nth-child(1) {\n          background-image: url(/imgs/skills/backand/laravel3.png);\n          width: 80px !important;\n          height: 80px !important;\n          background-size: contain; }\n        .CompareIp .slide .description .img-container div:nth-child(2) {\n          background-image: url(/imgs/skills/frontend/js1.png); }\n        .CompareIp .slide .description .img-container div:nth-child(3) {\n          background-image: url(/imgs/history/mysql.svg); }\n        .CompareIp .slide .description .img-container div:nth-child(4) {\n          background-image: url(/imgs/welhome/spreadsheet.svg);\n          background-size: contain;\n          width: 150px !important; }\n  .CompareIp .slide--current {\n    opacity: 1;\n    pointer-events: auto;\n    z-index: 100; }\n  .CompareIp .slide__bg {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0; }\n  .CompareIp .slide__bg--6 {\n    background: var(--color-bg-slide-6); }\n  .CompareIp .slidenav {\n    position: relative;\n    margin: 16em 0 0 0;\n    z-index: 200; }\n  .CompareIp .slidenav__item {\n    background: none;\n    border: none;\n    font-size: 1.5em;\n    color: var(--color-nav);\n    margin: 1em; }\n  .CompareIp .slidenav__item:focus {\n    outline: none; }\n  .CompareIp .slidenav__item:hover {\n    opacity: 0.6; }\n  .CompareIp .slidenav__item--next .icon {\n    transform: rotate(180deg); }\n  .CompareIp .word {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    flex-wrap: wrap;\n    margin: 0 0 0.25em 0;\n    cursor: default;\n    -webkit-touch-callout: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n    grid-area: title;\n    font-size: 10vw;\n    font-weight: 400; }\n  .CompareIp .word span {\n    display: block;\n    position: relative;\n    flex: none;\n    white-space: pre; }\n  .CompareIp .word--6 {\n    font-family: 'Hammersmith One', sans-serif; }\n  .CompareIp .word--6 .char1,\n  .CompareIp .word--6 .char8 {\n    color: #dc2e2e; }\n  .CompareIp .shapes {\n    position: fixed;\n    pointer-events: none;\n    top: 0;\n    left: 0; }\n  @media screen and (max-width: 40em) {\n    .CompareIp .slide .word {\n      font-size: 2.7em; } }\n  .CompareIp .hide {\n    opacity: 0; }\n  .CompareIp .description {\n    font-size: 16px !important; }\n  .CompareIp .draw-border {\n    margin-top: 40px;\n    background: none;\n    border: none;\n    cursor: pointer;\n    line-height: 1.5;\n    font: 700 1.2rem 'Roboto Slab', sans-serif;\n    padding: 1em 2em;\n    letter-spacing: 0.05rem;\n    box-shadow: inset 0 0 0 4px #d6d1d1;\n    color: #d6d1d1;\n    transition: color 0.25s 0.08333s;\n    position: relative; }\n    .CompareIp .draw-border:focus {\n      outline: 2px dotted #dc2e2e; }\n    .CompareIp .draw-border::before, .CompareIp .draw-border::after {\n      border: 0 solid transparent;\n      box-sizing: border-box;\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 0;\n      height: 0;\n      bottom: 0;\n      right: 0; }\n    .CompareIp .draw-border::before {\n      border-bottom-width: 4px;\n      border-left-width: 4px; }\n    .CompareIp .draw-border::after {\n      border-top-width: 4px;\n      border-right-width: 4px; }\n    .CompareIp .draw-border:hover {\n      color: #dc2e2e; }\n      .CompareIp .draw-border:hover::before, .CompareIp .draw-border:hover::after {\n        border-color: #dc2e2e;\n        transition: border-color 0s, width 0.25s, height 0.25s;\n        width: 100%;\n        height: 100%; }\n      .CompareIp .draw-border:hover::before {\n        transition-delay: 0s, 0s, 0.25s; }\n      .CompareIp .draw-border:hover::after {\n        transition-delay: 0s, 0.25s, 0s; }\n\n@media (max-width: 500px) {\n  .CompareIp .word--6 {\n    max-width: 300px; } }\n\n@font-face {\n  font-family: \"YS Text\";\n  src: url(\"/fonts/yandex/YandexSansText-Light.eot\");\n  src: url(\"/fonts/yandex/YandexSansText-Light.eot?#iefix\") format(\"embedded-opentype\"), url(\"/fonts/yandex/YandexSansText-Light.woff2\") format(\"woff2\"), url(\"/fonts/yandex/YandexSansText-Light.woff\") format(\"woff\"), url(\"/fonts/yandex/YandexSansText-Light.ttf\") format(\"truetype\"), url(\"/fonts/yandex/YandexSansText-Light.svg#YSText-Light\") format(\"svg\");\n  font-weight: 300;\n  font-style: normal; }\n\n.Yandex {\n  background: #ecf0f1; }\n  .Yandex p, .Yandex span {\n    font-family: \"YS Text\";\n    font-weight: 300;\n    font-style: normal;\n    font-stretch: normal; }\n  .Yandex .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/yandex/js.svg); }\n  .Yandex .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-size: 130px !important;\n    background-image: url(/imgs/yandex/webpack.png); }\n  .Yandex .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/yandex/less.svg);\n    background-size: 120px !important; }\n  .Yandex .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/yandex/jquery1.svg); }\n  .Yandex .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/yandex/svg.svg); }\n  .Yandex .technologies-container .description p {\n    font-size: 17px;\n    color: black;\n    text-align: center;\n    line-height: 30px;\n    font-style: italic; }\n    .Yandex .technologies-container .description p b {\n      color: #ED2025; }\n  .Yandex .technologies-container .rotate_button {\n    display: none; }\n  .Yandex .logo-container img {\n    width: 300px; }\n  .Yandex .logo-container p {\n    font-size: 17px;\n    color: black;\n    letter-spacing: 0.62px;\n    line-height: 42px;\n    font-weight: 300;\n    text-align: center;\n    z-index: 100;\n    font-style: italic; }\n    .Yandex .logo-container p b {\n      color: #ED2025; }\n  .Yandex .arrow {\n    display: block;\n    background-image: url(/imgs/down-arrow-red.svg);\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer; }\n  .Yandex .show {\n    background-image: url(/imgs/down-arrow-red.svg); }\n  .Yandex .hide {\n    background-image: url(/imgs/cancel.svg); }\n\n@media (max-height: 850px) {\n  .Yandex .technologies-container div {\n    justify-content: space-between !important; }\n  .Yandex .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .Yandex .technologies-container .technologies div div {\n      background-size: 50px !important;\n      width: 50px !important;\n      height: 50px !important; }\n    .Yandex .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n      background-size: 64px !important; }\n    .Yandex .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n      background-size: 64px !important; } }\n\n.Smoke_Zone {\n  background: black; }\n  .Smoke_Zone .technologies-container .technologies div div {\n    background-size: contain !important; }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/smoke-zone/apache.png);\n    background-size: 150px;\n    width: 150px;\n    height: 150px; }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/smoke-zone/javascript.svg); }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/smoke-zone/jq.svg); }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/smoke-zone/mvc.svg); }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/smoke-zone/mysql.svg); }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/smoke-zone/php.svg); }\n  .Smoke_Zone .technologies-container .description p {\n    font-family: 'Roboto';\n    max-width: 600px;\n    font-size: 18px;\n    margin-top: 20px;\n    margin-bottom: 20px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: #C80085;\n    text-align: center; }\n  .Smoke_Zone .technologies-container .rotate_button {\n    display: none; }\n  .Smoke_Zone .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .Smoke_Zone .logo-container img {\n      width: 300px;\n      -webkit-filter: drop-shadow(0px 0px 15px #9937AC);\n      filter: drop-shadow(0px 0px 15px #9937AC); }\n    .Smoke_Zone .logo-container .header {\n      font-family: 'OpenSans';\n      text-transform: uppercase;\n      color: white;\n      font-size: 50px;\n      font-weight: 600;\n      text-shadow: #9937ac 5px 5px 8px;\n      z-index: 100;\n      margin-bottom: 0px;\n      text-align: center; }\n      @media (max-height: 400px) {\n        .Smoke_Zone .logo-container .header {\n          font-size: 30px; } }\n    .Smoke_Zone .logo-container .paragraph {\n      font-family: 'Roboto';\n      font-size: 20px;\n      color: #C80085;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      z-index: 100;\n      margin-top: 0px;\n      text-align: center; }\n  .Smoke_Zone .arrow {\n    display: block;\n    background-image: url(/imgs/down-arrow_white.svg);\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    -webkit-filter: drop-shadow(0px 0px 15px #9937AC);\n    filter: drop-shadow(0px 0px 15px #9937AC); }\n  .Smoke_Zone .show {\n    background-image: url(/imgs/down-arrow_white.svg); }\n  .Smoke_Zone .hide {\n    background-image: url(/imgs/cancel_white.svg); }\n\n@media (max-width: 500px) {\n  .Smoke_Zone .logo-container img {\n    max-width: 200px; }\n  .Smoke_Zone .logo-container .header {\n    font-size: 36px !important;\n    text-align: center; }\n  .Smoke_Zone .technologies-container .description p span {\n    display: none; }\n  .Smoke_Zone .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .Smoke_Zone .technologies-container .technologies div div {\n      width: 50px !important;\n      height: 50px !important; }\n    .Smoke_Zone .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n      width: 100px !important;\n      height: 100px !important; } }\n\n.History24 {\n  background: black; }\n  .History24 .technologies-container .technologies div div {\n    background-size: contain !important; }\n  .History24 .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/history/Bootstrap.png); }\n  .History24 .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/history/gulp.svg);\n    background-size: 50px !important; }\n  .History24 .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/history/jq.svg); }\n  .History24 .technologies-container .technologies div:nth-child(1) div:nth-child(4) {\n    background-image: url(/imgs/history/js.svg); }\n  .History24 .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/history/laravel.svg);\n    background-size: 80px; }\n  .History24 .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/history/mysql.svg); }\n  .History24 .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/history/php.svg); }\n  .History24 .technologies-container .technologies div:nth-child(2) div:nth-child(4) {\n    background-image: url(/imgs/history/sass.svg); }\n  .History24 .technologies-container .description p {\n    font-family: 'Roboto';\n    max-width: 600px;\n    font-size: 20px;\n    margin-top: 50px;\n    margin-bottom: 50px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: white;\n    text-align: center;\n    font-weight: 100; }\n  .History24 .technologies-container .rotate_button {\n    display: none; }\n  .History24 .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .History24 .logo-container img {\n      width: 300px;\n      -webkit-filter: drop-shadow(0px 0px 15px black);\n      filter: drop-shadow(0px 0px 15px black); }\n    .History24 .logo-container .header {\n      font-family: 'OpenSans', 'Condensed';\n      text-transform: uppercase;\n      color: white;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-align: center; }\n      @media (max-height: 400px) {\n        .History24 .logo-container .header {\n          font-size: 30px; } }\n    .History24 .logo-container .paragraph {\n      font-family: 'Roboto';\n      font-size: 20px;\n      color: white;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      text-align: center;\n      z-index: 100; }\n  .History24 .arrow {\n    display: block;\n    background-image: url(/imgs/down-arrow_white.svg);\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    -webkit-filter: drop-shadow(0px 0px 15px black);\n    filter: drop-shadow(0px 0px 15px black); }\n  .History24 .show {\n    background-image: url(/imgs/down-arrow_white.svg); }\n  .History24 .hide {\n    background-image: url(/imgs/cancel_white.svg); }\n\n@media (max-width: 500px) {\n  .History24 .logo-container img {\n    max-width: 200px; }\n  .History24 .logo-container .header {\n    font-size: 36px !important;\n    text-align: center; }\n  .History24 .technologies-container .description p span {\n    display: none; }\n  .History24 .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .History24 .technologies-container .technologies div div {\n      width: 40px !important;\n      height: 40px !important; } }\n\n.WellHome {\n  background: white; }\n  .WellHome .technologies-container .technologies div div {\n    background-size: contain !important; }\n  .WellHome .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/welhome/sugar.png); }\n  .WellHome .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/welhome/php_w.png); }\n  .WellHome .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/welhome/zend_w.png); }\n  .WellHome .technologies-container .technologies div:nth-child(1) div:nth-child(4) {\n    background-image: url(/imgs/welhome/mysql_w.png); }\n  .WellHome .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/welhome/nginx_w.png); }\n  .WellHome .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/welhome/js_w.png); }\n  .WellHome .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/welhome/jquery_w.png);\n    background-size: 150px !important;\n    width: 150px !important;\n    height: 150px !important; }\n  .WellHome .technologies-container .description p {\n    font-family: 'Roboto';\n    max-width: 600px;\n    font-size: 18px;\n    margin-top: 10px;\n    margin-bottom: 10px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: black;\n    text-align: center;\n    font-weight: 100; }\n  .WellHome .technologies-container .description a {\n    color: black;\n    text-decoration: none; }\n  .WellHome .technologies-container .rotate_button {\n    display: none; }\n  .WellHome .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    text-align: center; }\n    .WellHome .logo-container img {\n      width: 300px; }\n    .WellHome .logo-container .header {\n      font-family: 'OpenSans', 'Condensed';\n      text-transform: uppercase;\n      color: black;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px; }\n      @media (max-height: 400px) {\n        .WellHome .logo-container .header {\n          font-size: 40px; } }\n    .WellHome .logo-container .paragraph {\n      font-family: 'Roboto';\n      font-size: 20px;\n      color: black;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      z-index: 100; }\n  .WellHome .arrow {\n    display: block;\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    position: relative; }\n  .WellHome .show {\n    background-image: url(/imgs/down-arrow.svg); }\n  .WellHome .hide {\n    background-image: url(/imgs/cancel.svg); }\n\n@media (max-width: 500px) {\n  .WellHome .logo-container .header {\n    font-size: 36px !important;\n    text-align: center; }\n  .WellHome .technologies-container .description p span {\n    display: none; }\n  .WellHome .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .WellHome .technologies-container .technologies div div {\n      width: 40px !important;\n      height: 40px !important; }\n    .WellHome .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n      background-size: contain !important;\n      width: 40px !important;\n      height: 40px !important; } }\n\n.C2Corner {\n  background: black; }\n  .C2Corner .technologies-container .technologies div div {\n    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5)); }\n  .C2Corner .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/c2corner/angularJs.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/skills/frontend/js1.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/c2corner/stripe.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(1) div:nth-child(4) {\n    background-image: url(/imgs/c2corner/bower.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/c2corner/laravel.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/c2corner/api.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/c2corner/gulp.jpg); }\n  .C2Corner .technologies-container .technologies div:nth-child(2) div:nth-child(4) {\n    background-image: url(/imgs/c2corner/npm.png); }\n  .C2Corner .technologies-container .description p {\n    filter: drop-shadow(0px 0px 15px black);\n    font-family: 'Roboto';\n    max-width: 600px;\n    font-size: 20px;\n    margin-top: 50px;\n    margin-bottom: 50px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: white;\n    text-align: center; }\n  .C2Corner .technologies-container .rotate_button figure span {\n    border: 5px solid white; }\n  .C2Corner .technologies-container .rotate_button figure span:nth-child(1) {\n    color: white; }\n  .C2Corner .technologies-container .rotate_button figure span:nth-child(2) {\n    color: white;\n    background: #597BDF; }\n  .C2Corner .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .C2Corner .logo-container img {\n      width: 300px;\n      -webkit-filter: drop-shadow(0px 0px 15px black);\n      filter: drop-shadow(0px 0px 15px black); }\n    .C2Corner .logo-container .header {\n      font-family: 'Open Sans', 'Condensed';\n      text-transform: uppercase;\n      color: white;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-align: center; }\n    .C2Corner .logo-container .paragraph {\n      font-family: 'Roboto';\n      font-size: 20px;\n      color: white;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      text-align: center;\n      z-index: 100;\n      max-width: 500px; }\n  .C2Corner .arrow {\n    display: block;\n    background-image: url(/imgs/down-arrow_white.svg);\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    -webkit-filter: drop-shadow(0px 0px 15px black);\n    filter: drop-shadow(0px 0px 15px black); }\n  .C2Corner .show {\n    background-image: url(/imgs/down-arrow_white.svg); }\n  .C2Corner .hide {\n    background-image: url(/imgs/cancel_white.svg); }\n\n.CherryPick {\n  background: #F00000;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #DC281E, #F00000);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #DC281E, #F00000);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .CherryPick .technologies-container .technologies div div {\n    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5)); }\n  .CherryPick .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/cheryPick/angular.png); }\n  .CherryPick .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/cheryPick/laravel.png); }\n  .CherryPick .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/cheryPick/mysql.png); }\n  .CherryPick .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/cheryPick/php.png); }\n  .CherryPick .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/cheryPick/js.png); }\n  .CherryPick .technologies-container .description p {\n    font-family: 'Hammersmith One', sans-serif;\n    max-width: 600px;\n    font-size: 18px;\n    margin-top: 10px;\n    margin-bottom: 10px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: black;\n    text-align: center; }\n  .CherryPick .technologies-container .description a {\n    color: black;\n    text-decoration: none; }\n  .CherryPick .technologies-container .rotate_button {\n    display: none; }\n  .CherryPick .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    text-align: center; }\n    .CherryPick .logo-container img {\n      width: 200px; }\n    .CherryPick .logo-container .header {\n      font-family: 'Open Sans', 'Condensed';\n      text-transform: uppercase;\n      color: black;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px; }\n    .CherryPick .logo-container .paragraph {\n      display: inline-block;\n      font-family: 'Hammersmith One', sans-serif;\n      font-size: 20px;\n      color: black;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      z-index: 100; }\n  .CherryPick .arrow {\n    display: block;\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    position: relative; }\n  .CherryPick .show {\n    background-image: url(/imgs/down-arrow.svg); }\n  .CherryPick .hide {\n    background-image: url(/imgs/cancel.svg); }\n\n@media (max-width: 500px) {\n  .Smoke_Zone .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .Smoke_Zone .technologies-container .technologies div div {\n      background-size: 50px !important;\n      width: 50px !important;\n      height: 50px !important; }\n    .Smoke_Zone .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n      background-size: 100px !important;\n      width: 100px !important;\n      height: 100px !important; } }\n\n.Houses {\n  background-image: url(/imgs/city.jpg);\n  background-size: cover; }\n  .Houses .technologies-container .technologies div div {\n    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5)); }\n  .Houses .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/houses/vue.png); }\n  .Houses .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/houses/laravel.png); }\n  .Houses .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/houses/js.png); }\n  .Houses .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/houses/mysql.svg); }\n  .Houses .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/houses/unit.png); }\n  .Houses .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/houses/php.png); }\n  .Houses .technologies-container .description p {\n    font-family: 'Hammersmith One', sans-serif;\n    max-width: 600px;\n    font-size: 20px;\n    margin-top: 50px;\n    margin-bottom: 50px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: white;\n    text-align: center;\n    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5)); }\n  .Houses .technologies-container .rotate_button {\n    display: none; }\n  .Houses .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .Houses .logo-container img {\n      width: 300px;\n      -webkit-filter: drop-shadow(0px 0px 15px black);\n      filter: drop-shadow(0px 0px 15px black); }\n    .Houses .logo-container .header {\n      font-family: 'Open Sans', 'Condensed';\n      text-transform: uppercase;\n      color: white;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-align: center;\n      filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5)); }\n    .Houses .logo-container .paragraph {\n      font-family: 'Hammersmith One', sans-serif;\n      font-size: 20px;\n      color: white;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      text-align: center;\n      z-index: 100;\n      filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5)); }\n  .Houses .arrow {\n    display: block;\n    background-image: url(/imgs/down-arrow_white.svg);\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    -webkit-filter: drop-shadow(0px 0px 15px black);\n    filter: drop-shadow(0px 0px 15px black); }\n  .Houses .show {\n    background-image: url(/imgs/down-arrow_white.svg); }\n  .Houses .hide {\n    background-image: url(/imgs/cancel_white.svg); }\n\n.Arcbazar {\n  background: #9796f0;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #fbc7d4, #9796f0);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #fbc7d4, #9796f0);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .Arcbazar .technologies-container .technologies div div {\n    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));\n    background-size: contain !important; }\n  .Arcbazar .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/arcbazar/yii.png); }\n  .Arcbazar .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/arcbazar/jq.png); }\n  .Arcbazar .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/arcbazar/mysql.svg); }\n  .Arcbazar .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/arcbazar/elasticsearch-logo.png); }\n  .Arcbazar .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/arcbazar/php.png); }\n  .Arcbazar .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/arcbazar/js.png); }\n  .Arcbazar .technologies-container .description {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column; }\n    .Arcbazar .technologies-container .description .first {\n      margin-top: 40px; }\n    .Arcbazar .technologies-container .description .last {\n      margin-bottom: 10px; }\n    .Arcbazar .technologies-container .description p {\n      padding-top: 5px;\n      padding-bottom: 5px;\n      font-family: 'Hammersmith One', sans-serif;\n      line-height: 28px;\n      max-width: 600px;\n      font-size: 18px;\n      padding-left: 20px;\n      padding-right: 20px;\n      color: black;\n      text-align: center;\n      font-weight: normal;\n      width: fit-content;\n      margin-top: 0px;\n      margin-bottom: 0px; }\n    .Arcbazar .technologies-container .description a {\n      color: black;\n      text-decoration: none; }\n  .Arcbazar .technologies-container .rotate_button figure span {\n    border: 5px solid black; }\n  .Arcbazar .technologies-container .rotate_button figure span:nth-child(1) {\n    color: black; }\n  .Arcbazar .technologies-container .rotate_button figure span:nth-child(2) {\n    color: #a696c8;\n    background: black; }\n  .Arcbazar .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    text-align: center; }\n    .Arcbazar .logo-container img {\n      width: 400px; }\n      @media (max-height: 400px) {\n        .Arcbazar .logo-container img {\n          width: 180px !important; } }\n    .Arcbazar .logo-container .header {\n      font-family: 'Open Sans', 'Condensed';\n      text-transform: uppercase;\n      color: black;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px; }\n    .Arcbazar .logo-container .paragraph {\n      background: black;\n      padding-left: 20px;\n      padding-right: 20px;\n      padding-top: 5px;\n      padding-bottom: 5px;\n      font-family: 'Hammersmith One', sans-serif;\n      font-size: 20px;\n      color: #a696c8;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      z-index: 100; }\n  .Arcbazar .arrow {\n    display: block;\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    position: relative; }\n  .Arcbazar .show {\n    background-image: url(/imgs/down-arrow.svg); }\n  .Arcbazar .hide {\n    background-image: url(/imgs/cancel.svg); }\n\n@media (max-width: 500px) {\n  .Arcbazar .technologies-container .description p {\n    margin-top: 0 !important;\n    margin-bottom: 0px !important; }\n  .Arcbazar .logo-container img {\n    width: 100%;\n    max-width: 300px; } }\n\n.Factoringvergelijken {\n  background-image: linear-gradient(to right top, #2F2541, #6E3C5F, #B0576A, #E38065, #FEB85F, #F9F871); }\n  .Factoringvergelijken .technologies-container .technologies div div {\n    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5)); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/factoringvergelijken/yii2.png); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/factoringvergelijken/php.png); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/factoringvergelijken/mysql.png); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/factoringvergelijken/bootstrap.png); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/factoringvergelijken/js.png); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/factoringvergelijken/less.png); }\n  .Factoringvergelijken .technologies-container .description p {\n    padding-top: 5px;\n    padding-bottom: 5px;\n    font-family: 'Hammersmith One', sans-serif;\n    line-height: 28px;\n    max-width: 600px;\n    font-size: 18px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: black;\n    text-align: center;\n    font-weight: normal;\n    margin-top: 40px;\n    margin-bottom: 10px; }\n  .Factoringvergelijken .technologies-container .description a {\n    color: black;\n    text-decoration: none; }\n  .Factoringvergelijken .technologies-container .rotate_button figure span {\n    border: 5px solid black; }\n  .Factoringvergelijken .technologies-container .rotate_button figure span:nth-child(1) {\n    color: #2F2541;\n    background: transparent; }\n  .Factoringvergelijken .technologies-container .rotate_button figure span:nth-child(2) {\n    color: #2F2541;\n    background: transparent; }\n  .Factoringvergelijken .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    text-align: center; }\n    .Factoringvergelijken .logo-container img {\n      width: 400px; }\n      @media (max-height: 400px) {\n        .Factoringvergelijken .logo-container img {\n          width: 220px !important; } }\n    .Factoringvergelijken .logo-container .header {\n      font-family: 'Open Sans', 'Condensed';\n      text-transform: uppercase;\n      color: black;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px; }\n    .Factoringvergelijken .logo-container .paragraph {\n      padding-left: 20px;\n      padding-right: 20px;\n      padding-top: 5px;\n      padding-bottom: 5px;\n      font-family: 'Hammersmith One', sans-serif;\n      font-size: 20px;\n      color: black;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      z-index: 100; }\n  .Factoringvergelijken .arrow {\n    display: block;\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    position: relative; }\n  .Factoringvergelijken .show {\n    background-image: url(/imgs/down-arrow.svg); }\n  .Factoringvergelijken .hide {\n    background-image: url(/imgs/cancel.svg); }\n\n@media (max-width: 500px) {\n  .Factoringvergelijken .logo-container img {\n    width: 100%;\n    max-width: 300px; } }\n", ""]);
+exports.push([module.i, ".flex {\n  display: flex !important; }\n\n.none {\n  display: none !important; }\n\n.Pattern {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  height: 100vh; }\n  .Pattern .technologies-container {\n    z-index: 100;\n    display: none;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center; }\n    .Pattern .technologies-container .technologies {\n      display: flex;\n      flex-direction: row;\n      justify-content: center;\n      align-items: center; }\n      .Pattern .technologies-container .technologies div {\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n        .Pattern .technologies-container .technologies div div {\n          display: block;\n          background-position: center;\n          background-repeat: no-repeat;\n          background-size: contain;\n          width: 100px;\n          height: 100px;\n          margin-left: 20px;\n          margin-right: 20px;\n          margin-top: 20px; }\n    .Pattern .technologies-container .description {\n      max-width: 600px;\n      margin-top: 20px;\n      margin-bottom: 20px;\n      padding-left: 20px;\n      padding-right: 20px; }\n      @media (max-height: 400px) {\n        .Pattern .technologies-container .description {\n          margin-top: 10px !important;\n          margin-bottom: 10px !important; }\n          .Pattern .technologies-container .description p {\n            line-height: 22px !important; } }\n    .Pattern .technologies-container .rotate_button figure {\n      margin-bottom: 30px !important;\n      width: 200px;\n      height: 60px;\n      cursor: pointer;\n      perspective: 500px;\n      -webkit-perspective: 500px; }\n      @media (max-height: 400px) {\n        .Pattern .technologies-container .rotate_button figure {\n          margin-bottom: 10px !important; } }\n      .Pattern .technologies-container .rotate_button figure:hover div {\n        transform: rotateX(-90deg); }\n      .Pattern .technologies-container .rotate_button figure div {\n        height: 100%;\n        transform-style: preserve-3d;\n        -webkit-transform-style: preserve-3d;\n        transition: 0.25s;\n        -webkit-transition: 0.25s; }\n      .Pattern .technologies-container .rotate_button figure span {\n        width: 100%;\n        height: 100%;\n        position: absolute;\n        left: 0;\n        box-sizing: border-box;\n        font-family: 'Source Sans Pro', sans-serif;\n        line-height: 50px;\n        font-size: 17pt;\n        text-align: center;\n        text-transform: uppercase; }\n      .Pattern .technologies-container .rotate_button figure span:nth-child(1) {\n        transform: translate3d(0, 0, 30px);\n        -webkit-transform: translate3d(0, 0, 30px); }\n      .Pattern .technologies-container .rotate_button figure span:nth-child(2) {\n        transform: rotateX(90deg) translate3d(0, 0, 30px);\n        -webkit-transform: rotateX(90deg) translate3d(0, 0, 30px); }\n  .Pattern .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .Pattern .logo-container img {\n      width: 300px; }\n      @media (max-height: 400px) {\n        .Pattern .logo-container img {\n          width: 120px !important; } }\n\n@media (max-width: 500px), (max-height: 400px) {\n  .Pattern .technologies-container .technologies {\n    margin-bottom: 10px !important; }\n    .Pattern .technologies-container .technologies div div {\n      background-size: 50px !important;\n      width: 50px !important;\n      height: 50px !important; }\n  .Pattern .technologies-container .description {\n    margin-top: 0px !important;\n    margin-bottom: 20px;\n    font-size: 16px !important;\n    line-height: 22px; }\n    .Pattern .technologies-container .description p {\n      margin-top: 15px !important;\n      margin-bottom: 5px !important;\n      font-size: 17px !important;\n      max-width: 300px !important; }\n  .Pattern .logo-container img {\n    width: 150px; }\n  .Pattern .logo-container .paragraph {\n    font-size: 17px !important;\n    max-width: 300px !important; }\n  .Pattern .logo-container .rotate_button figure {\n    margin-bottom: 15px !important; }\n  .Pattern .arrow {\n    background-size: 40px !important;\n    width: 40px !important;\n    height: 40px !important; } }\n\n@media (max-width: 1150px) {\n  .Pattern .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; } }\n\n@media (max-height: 850px) {\n  .Pattern .technologies-container div {\n    justify-content: space-between !important; }\n  .Pattern .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .Pattern .technologies-container .technologies div div {\n      background-size: 50px !important;\n      width: 50px !important;\n      height: 50px !important; } }\n\n@media (max-height: 650px) and (orientation: landscape) {\n  .Pattern .technologies-container .description p {\n    display: none !important; }\n  .Pattern .logo-container .paragraph {\n    max-width: none !important; }\n  .Pattern .header {\n    margin-top: 0px !important; } }\n\n.toTopAnchor {\n  position: absolute;\n  right: 20px;\n  bottom: 20px;\n  display: block;\n  background-image: url(/imgs/totop.svg);\n  background-position: center;\n  background-size: 40px;\n  width: 40px;\n  height: 40px;\n  margin: auto;\n  cursor: pointer; }\n\n@media (max-height: 500px) {\n  .toTopAnchor {\n    display: none !important; } }\n\n/* Color schemes */\n.demo-1 {\n  --color-text: #fff;\n  --color-bg: #101010;\n  --color-link: #fff;\n  --color-link-hover: #fff473;\n  --color-nav: #fff;\n  --color-bg-slide-1: #4cabef;\n  --color-bg-slide-2: #0406e6;\n  --color-bg-slide-3: #272526;\n  --color-bg-slide-4: #b9b9b9;\n  --color-bg-slide-5: #5900ce;\n  --color-bg-slide-6: #1b1a1a;\n  --color-bg-slide-7: #bf2525;\n  --color-bg-slide-8: #d6d1d1;\n  --color-bg-slide-9: #000000; }\n\n.CompareIp {\n  /* Header */\n  /* Slideshow */\n  /* Word + SVG styles */ }\n  .CompareIp .content {\n    position: relative;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin: 0 auto;\n    min-height: 100vh; }\n  .CompareIp .content--fixed {\n    position: fixed;\n    z-index: 10000;\n    top: 0;\n    left: 0;\n    display: grid;\n    align-content: space-between;\n    width: 100%;\n    max-width: none;\n    min-height: 0;\n    height: 100vh;\n    padding: 1.5em;\n    pointer-events: none;\n    grid-template-columns: 50% 50%;\n    grid-template-rows: auto auto 4em;\n    grid-template-areas: 'header header' '... ...' 'github demos'; }\n  .CompareIp .content--fixed a {\n    pointer-events: auto; }\n  .CompareIp .codrops-header {\n    position: relative;\n    z-index: 100;\n    display: flex;\n    flex-direction: row;\n    align-items: flex-start;\n    align-items: center;\n    align-self: start;\n    grid-area: header;\n    justify-self: start; }\n  .CompareIp .codrops-header__title {\n    font-size: 1.15em;\n    font-weight: normal;\n    margin: 0 0 0 1em;\n    padding: 0.75em 0; }\n  .CompareIp .slideshow {\n    position: absolute !important;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0; }\n  .CompareIp .slide {\n    position: absolute !important;\n    width: 100vw;\n    height: 100vh;\n    top: 0;\n    left: 0 !important;\n    display: flex;\n    flex-direction: column;\n    align-content: center;\n    justify-content: center;\n    align-items: center;\n    pointer-events: none;\n    opacity: 0;\n    z-index: 1; }\n    .CompareIp .slide .description {\n      height: auto; }\n      .CompareIp .slide .description .img-container {\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n        .CompareIp .slide .description .img-container div {\n          display: block;\n          background-position: center;\n          background-repeat: no-repeat;\n          background-size: contain;\n          width: 50px;\n          height: 50px;\n          margin-left: 20px;\n          margin-right: 20px;\n          margin-top: 20px; }\n        .CompareIp .slide .description .img-container div:nth-child(1) {\n          background-image: url(/imgs/skills/backand/laravel3.png);\n          width: 80px !important;\n          height: 80px !important;\n          background-size: contain; }\n        .CompareIp .slide .description .img-container div:nth-child(2) {\n          background-image: url(/imgs/skills/frontend/js1.png); }\n        .CompareIp .slide .description .img-container div:nth-child(3) {\n          background-image: url(/imgs/history/mysql.svg); }\n        .CompareIp .slide .description .img-container div:nth-child(4) {\n          background-image: url(/imgs/welhome/spreadsheet.svg);\n          background-size: contain;\n          width: 150px !important; }\n  .CompareIp .slide--current {\n    opacity: 1;\n    pointer-events: auto;\n    z-index: 100; }\n  .CompareIp .slide__bg {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0; }\n  .CompareIp .slide__bg--6 {\n    background: var(--color-bg-slide-6); }\n  .CompareIp .slidenav {\n    position: relative;\n    margin: 16em 0 0 0;\n    z-index: 200; }\n  .CompareIp .slidenav__item {\n    background: none;\n    border: none;\n    font-size: 1.5em;\n    color: var(--color-nav);\n    margin: 1em; }\n  .CompareIp .slidenav__item:focus {\n    outline: none; }\n  .CompareIp .slidenav__item:hover {\n    opacity: 0.6; }\n  .CompareIp .slidenav__item--next .icon {\n    transform: rotate(180deg); }\n  .CompareIp .word {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    flex-wrap: wrap;\n    margin: 0 0 0.25em 0;\n    cursor: default;\n    -webkit-touch-callout: none;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n    grid-area: title;\n    font-size: 10vw;\n    font-weight: 400; }\n  .CompareIp .word span {\n    display: block;\n    position: relative;\n    flex: none;\n    white-space: pre; }\n  .CompareIp .word--6 {\n    font-family: 'Hammersmith One', sans-serif; }\n  .CompareIp .word--6 .char1,\n  .CompareIp .word--6 .char8 {\n    color: #dc2e2e; }\n  .CompareIp .shapes {\n    position: fixed;\n    pointer-events: none;\n    top: 0;\n    left: 0; }\n  @media screen and (max-width: 40em) {\n    .CompareIp .slide .word {\n      font-size: 2.7em; } }\n  .CompareIp .hide {\n    opacity: 0; }\n  .CompareIp .description {\n    font-size: 16px !important; }\n  .CompareIp .draw-border {\n    margin-top: 40px;\n    background: none;\n    border: none;\n    cursor: pointer;\n    line-height: 1.5;\n    font: 700 1.2rem 'Roboto Slab', sans-serif;\n    padding: 1em 2em;\n    letter-spacing: 0.05rem;\n    box-shadow: inset 0 0 0 4px #d6d1d1;\n    color: #d6d1d1;\n    transition: color 0.25s 0.08333s;\n    position: relative; }\n    .CompareIp .draw-border:focus {\n      outline: 2px dotted #dc2e2e; }\n    .CompareIp .draw-border::before, .CompareIp .draw-border::after {\n      border: 0 solid transparent;\n      box-sizing: border-box;\n      content: '';\n      pointer-events: none;\n      position: absolute;\n      width: 0;\n      height: 0;\n      bottom: 0;\n      right: 0; }\n    .CompareIp .draw-border::before {\n      border-bottom-width: 4px;\n      border-left-width: 4px; }\n    .CompareIp .draw-border::after {\n      border-top-width: 4px;\n      border-right-width: 4px; }\n    .CompareIp .draw-border:hover {\n      color: #dc2e2e; }\n      .CompareIp .draw-border:hover::before, .CompareIp .draw-border:hover::after {\n        border-color: #dc2e2e;\n        transition: border-color 0s, width 0.25s, height 0.25s;\n        width: 100%;\n        height: 100%; }\n      .CompareIp .draw-border:hover::before {\n        transition-delay: 0s, 0s, 0.25s; }\n      .CompareIp .draw-border:hover::after {\n        transition-delay: 0s, 0.25s, 0s; }\n\n@media (max-width: 500px) {\n  .CompareIp .word--6 {\n    max-width: 300px; } }\n\n@font-face {\n  font-family: \"YS Text\";\n  src: url(\"/fonts/yandex/YandexSansText-Light.eot\");\n  src: url(\"/fonts/yandex/YandexSansText-Light.eot?#iefix\") format(\"embedded-opentype\"), url(\"/fonts/yandex/YandexSansText-Light.woff2\") format(\"woff2\"), url(\"/fonts/yandex/YandexSansText-Light.woff\") format(\"woff\"), url(\"/fonts/yandex/YandexSansText-Light.ttf\") format(\"truetype\"), url(\"/fonts/yandex/YandexSansText-Light.svg#YSText-Light\") format(\"svg\");\n  font-weight: 300;\n  font-style: normal; }\n\n.Yandex {\n  background: #ecf0f1; }\n  .Yandex p, .Yandex span {\n    font-family: \"YS Text\";\n    font-weight: 300;\n    font-style: normal;\n    font-stretch: normal; }\n  .Yandex .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/yandex/js.svg); }\n  .Yandex .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-size: 130px !important;\n    background-image: url(/imgs/yandex/webpack.png); }\n  .Yandex .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/yandex/less.svg);\n    background-size: 120px !important; }\n  .Yandex .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/yandex/jquery1.svg); }\n  .Yandex .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/yandex/svg.svg); }\n  .Yandex .technologies-container .description p {\n    font-size: 17px;\n    color: black;\n    text-align: center;\n    line-height: 30px;\n    font-style: italic; }\n    .Yandex .technologies-container .description p b {\n      color: #ED2025; }\n  .Yandex .technologies-container .rotate_button {\n    display: none; }\n  .Yandex .logo-container img {\n    width: 300px; }\n  .Yandex .logo-container p {\n    font-size: 17px;\n    color: black;\n    letter-spacing: 0.62px;\n    line-height: 42px;\n    font-weight: 300;\n    text-align: center;\n    z-index: 100;\n    font-style: italic; }\n    .Yandex .logo-container p b {\n      color: #ED2025; }\n  .Yandex .arrow {\n    display: block;\n    background-image: url(/imgs/down-arrow-red.svg);\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer; }\n  .Yandex .show {\n    background-image: url(/imgs/down-arrow-red.svg); }\n  .Yandex .hide {\n    background-image: url(/imgs/cancel.svg); }\n\n@media (max-height: 850px) {\n  .Yandex .technologies-container div {\n    justify-content: space-between !important; }\n  .Yandex .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .Yandex .technologies-container .technologies div div {\n      background-size: 50px !important;\n      width: 50px !important;\n      height: 50px !important; }\n    .Yandex .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n      background-size: 64px !important; }\n    .Yandex .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n      background-size: 64px !important; } }\n\n.Smoke_Zone {\n  background: black; }\n  .Smoke_Zone .technologies-container .technologies div div {\n    background-size: contain !important; }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/smoke-zone/apache.png);\n    background-size: 150px;\n    width: 150px;\n    height: 150px; }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/smoke-zone/javascript.svg); }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/smoke-zone/jq.svg); }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/smoke-zone/mvc.svg); }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/smoke-zone/mysql.svg); }\n  .Smoke_Zone .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/smoke-zone/php.svg); }\n  .Smoke_Zone .technologies-container .description p {\n    font-family: 'Roboto';\n    max-width: 600px;\n    font-size: 18px;\n    margin-top: 20px;\n    margin-bottom: 20px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: #C80085;\n    text-align: center; }\n  .Smoke_Zone .technologies-container .rotate_button {\n    display: none; }\n  .Smoke_Zone .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .Smoke_Zone .logo-container img {\n      width: 300px;\n      -webkit-filter: drop-shadow(0px 0px 15px #9937AC);\n      filter: drop-shadow(0px 0px 15px #9937AC); }\n    .Smoke_Zone .logo-container .header {\n      font-family: 'OpenSans';\n      text-transform: uppercase;\n      color: white;\n      font-size: 50px;\n      font-weight: 600;\n      text-shadow: #9937ac 5px 5px 8px;\n      z-index: 100;\n      margin-bottom: 0px;\n      text-align: center; }\n      @media (max-height: 400px) {\n        .Smoke_Zone .logo-container .header {\n          font-size: 30px; } }\n    .Smoke_Zone .logo-container .paragraph {\n      font-family: 'Roboto';\n      font-size: 20px;\n      color: #C80085;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      z-index: 100;\n      margin-top: 0px;\n      text-align: center; }\n  .Smoke_Zone .arrow {\n    display: block;\n    background-image: url(/imgs/down-arrow_white.svg);\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    -webkit-filter: drop-shadow(0px 0px 15px #9937AC);\n    filter: drop-shadow(0px 0px 15px #9937AC); }\n  .Smoke_Zone .show {\n    background-image: url(/imgs/down-arrow_white.svg); }\n  .Smoke_Zone .hide {\n    background-image: url(/imgs/cancel_white.svg); }\n\n@media (max-width: 500px) {\n  .Smoke_Zone .logo-container img {\n    max-width: 200px; }\n  .Smoke_Zone .logo-container .header {\n    font-size: 36px !important;\n    text-align: center; }\n  .Smoke_Zone .technologies-container .description p span {\n    display: none; }\n  .Smoke_Zone .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .Smoke_Zone .technologies-container .technologies div div {\n      width: 50px !important;\n      height: 50px !important; }\n    .Smoke_Zone .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n      width: 100px !important;\n      height: 100px !important; } }\n\n.History24 {\n  background: black; }\n  .History24 .technologies-container .technologies div div {\n    background-size: contain !important; }\n  .History24 .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/history/Bootstrap.png); }\n  .History24 .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/history/gulp.svg);\n    background-size: 50px !important; }\n  .History24 .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/history/jq.svg); }\n  .History24 .technologies-container .technologies div:nth-child(1) div:nth-child(4) {\n    background-image: url(/imgs/history/js.svg); }\n  .History24 .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/history/laravel.svg);\n    background-size: 80px; }\n  .History24 .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/history/mysql.svg); }\n  .History24 .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/history/php.svg); }\n  .History24 .technologies-container .technologies div:nth-child(2) div:nth-child(4) {\n    background-image: url(/imgs/history/sass.svg); }\n  .History24 .technologies-container .description p {\n    font-family: 'Roboto';\n    max-width: 600px;\n    font-size: 20px;\n    margin-top: 50px;\n    margin-bottom: 50px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: white;\n    text-align: center;\n    font-weight: 100; }\n  .History24 .technologies-container .rotate_button {\n    display: none; }\n  .History24 .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .History24 .logo-container img {\n      width: 300px;\n      -webkit-filter: drop-shadow(0px 0px 15px black);\n      filter: drop-shadow(0px 0px 15px black); }\n    .History24 .logo-container .header {\n      font-family: 'OpenSans', 'Condensed';\n      text-transform: uppercase;\n      color: white;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-align: center; }\n      @media (max-height: 400px) {\n        .History24 .logo-container .header {\n          font-size: 30px; } }\n    .History24 .logo-container .paragraph {\n      font-family: 'Roboto';\n      font-size: 20px;\n      color: white;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      text-align: center;\n      z-index: 100; }\n  .History24 .arrow {\n    display: block;\n    background-image: url(/imgs/down-arrow_white.svg);\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    -webkit-filter: drop-shadow(0px 0px 15px black);\n    filter: drop-shadow(0px 0px 15px black); }\n  .History24 .show {\n    background-image: url(/imgs/down-arrow_white.svg); }\n  .History24 .hide {\n    background-image: url(/imgs/cancel_white.svg); }\n\n@media (max-width: 500px) {\n  .History24 .logo-container img {\n    max-width: 200px; }\n  .History24 .logo-container .header {\n    font-size: 36px !important;\n    text-align: center; }\n  .History24 .technologies-container .description p span {\n    display: none; }\n  .History24 .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .History24 .technologies-container .technologies div div {\n      width: 40px !important;\n      height: 40px !important; } }\n\n.WellHome {\n  background: white; }\n  .WellHome .technologies-container .technologies div div {\n    background-size: contain !important; }\n  .WellHome .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/welhome/sugar.png); }\n  .WellHome .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/welhome/php_w.png); }\n  .WellHome .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/welhome/zend_w.png); }\n  .WellHome .technologies-container .technologies div:nth-child(1) div:nth-child(4) {\n    background-image: url(/imgs/welhome/mysql_w.png); }\n  .WellHome .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/welhome/nginx_w.png); }\n  .WellHome .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/welhome/js_w.png); }\n  .WellHome .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/welhome/jquery_w.png);\n    background-size: 150px !important;\n    width: 150px !important;\n    height: 150px !important; }\n  .WellHome .technologies-container .description p {\n    font-family: 'Roboto';\n    max-width: 600px;\n    font-size: 18px;\n    margin-top: 10px;\n    margin-bottom: 10px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: black;\n    text-align: center;\n    font-weight: 100; }\n  .WellHome .technologies-container .description a {\n    color: black;\n    text-decoration: none; }\n  .WellHome .technologies-container .rotate_button {\n    display: none; }\n  .WellHome .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    text-align: center; }\n    .WellHome .logo-container img {\n      width: 300px; }\n    .WellHome .logo-container .header {\n      font-family: 'OpenSans', 'Condensed';\n      text-transform: uppercase;\n      color: black;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px; }\n      @media (max-height: 400px) {\n        .WellHome .logo-container .header {\n          font-size: 40px; } }\n    .WellHome .logo-container .paragraph {\n      font-family: 'Roboto';\n      font-size: 20px;\n      color: black;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      z-index: 100; }\n  .WellHome .arrow {\n    display: block;\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    position: relative; }\n  .WellHome .show {\n    background-image: url(/imgs/down-arrow.svg); }\n  .WellHome .hide {\n    background-image: url(/imgs/cancel.svg); }\n\n@media (max-width: 500px) {\n  .WellHome .logo-container .header {\n    font-size: 36px !important;\n    text-align: center; }\n  .WellHome .technologies-container .description p span {\n    display: none; }\n  .WellHome .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .WellHome .technologies-container .technologies div div {\n      width: 40px !important;\n      height: 40px !important; }\n    .WellHome .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n      background-size: contain !important;\n      width: 40px !important;\n      height: 40px !important; } }\n\n.C2Corner {\n  background: #373B44;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #4286f4, #373B44);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #4286f4, #373B44);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .C2Corner .technologies-container .technologies div div {\n    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5)); }\n  .C2Corner .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/c2corner/angularJs.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/skills/frontend/js1.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/c2corner/stripe.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(1) div:nth-child(4) {\n    background-image: url(/imgs/c2corner/bower.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/c2corner/laravel.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/c2corner/api.png); }\n  .C2Corner .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/c2corner/gulp.jpg); }\n  .C2Corner .technologies-container .technologies div:nth-child(2) div:nth-child(4) {\n    background-image: url(/imgs/c2corner/npm.png); }\n  .C2Corner .technologies-container .description p {\n    filter: drop-shadow(0px 0px 15px black);\n    font-family: 'Roboto';\n    max-width: 600px;\n    font-size: 20px;\n    margin-top: 50px;\n    margin-bottom: 50px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: white;\n    text-align: center; }\n  .C2Corner .technologies-container .rotate_button figure span {\n    border: 5px solid white; }\n  .C2Corner .technologies-container .rotate_button figure span:nth-child(1) {\n    color: white; }\n  .C2Corner .technologies-container .rotate_button figure span:nth-child(2) {\n    color: white;\n    background: #597BDF; }\n  .C2Corner .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .C2Corner .logo-container img {\n      width: 300px;\n      -webkit-filter: drop-shadow(0px 0px 15px black);\n      filter: drop-shadow(0px 0px 15px black); }\n    .C2Corner .logo-container .header {\n      font-family: 'Open Sans', 'Condensed';\n      text-transform: uppercase;\n      color: white;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-align: center; }\n    .C2Corner .logo-container .paragraph {\n      font-family: 'Roboto';\n      font-size: 20px;\n      color: white;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      text-align: center;\n      z-index: 100;\n      max-width: 500px; }\n  .C2Corner .arrow {\n    display: block;\n    background-image: url(/imgs/down-arrow_white.svg);\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    -webkit-filter: drop-shadow(0px 0px 15px black);\n    filter: drop-shadow(0px 0px 15px black); }\n  .C2Corner .show {\n    background-image: url(/imgs/down-arrow_white.svg); }\n  .C2Corner .hide {\n    background-image: url(/imgs/cancel_white.svg); }\n\n.CherryPick {\n  background: #F00000;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #DC281E, #F00000);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #DC281E, #F00000);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .CherryPick .technologies-container .technologies div div {\n    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5)); }\n  .CherryPick .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/cheryPick/angular.png); }\n  .CherryPick .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/cheryPick/laravel.png); }\n  .CherryPick .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/cheryPick/mysql.png); }\n  .CherryPick .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/cheryPick/php.png); }\n  .CherryPick .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/cheryPick/js.png); }\n  .CherryPick .technologies-container .description p {\n    font-family: 'Hammersmith One', sans-serif;\n    max-width: 600px;\n    font-size: 18px;\n    margin-top: 10px;\n    margin-bottom: 10px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: black;\n    text-align: center; }\n  .CherryPick .technologies-container .description a {\n    color: black;\n    text-decoration: none; }\n  .CherryPick .technologies-container .rotate_button {\n    display: none; }\n  .CherryPick .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    text-align: center; }\n    .CherryPick .logo-container img {\n      width: 200px; }\n    .CherryPick .logo-container .header {\n      font-family: 'Open Sans', 'Condensed';\n      text-transform: uppercase;\n      color: black;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px; }\n    .CherryPick .logo-container .paragraph {\n      display: inline-block;\n      font-family: 'Hammersmith One', sans-serif;\n      font-size: 20px;\n      color: black;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      z-index: 100; }\n  .CherryPick .arrow {\n    display: block;\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    position: relative; }\n  .CherryPick .show {\n    background-image: url(/imgs/down-arrow.svg); }\n  .CherryPick .hide {\n    background-image: url(/imgs/cancel.svg); }\n\n@media (max-width: 500px) {\n  .Smoke_Zone .technologies-container .technologies {\n    flex-direction: column;\n    margin-bottom: 50px; }\n    .Smoke_Zone .technologies-container .technologies div div {\n      background-size: 50px !important;\n      width: 50px !important;\n      height: 50px !important; }\n    .Smoke_Zone .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n      background-size: 100px !important;\n      width: 100px !important;\n      height: 100px !important; } }\n\n.Houses {\n  background-image: url(/imgs/city.jpg);\n  background-size: cover; }\n  .Houses .technologies-container .technologies div div {\n    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5)); }\n  .Houses .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/houses/vue.png); }\n  .Houses .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/houses/laravel.png); }\n  .Houses .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/houses/js.png); }\n  .Houses .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/houses/mysql.svg); }\n  .Houses .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/houses/unit.png); }\n  .Houses .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/houses/php.png); }\n  .Houses .technologies-container .description p {\n    font-family: 'Hammersmith One', sans-serif;\n    max-width: 600px;\n    font-size: 20px;\n    margin-top: 50px;\n    margin-bottom: 50px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: white;\n    text-align: center;\n    filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5)); }\n  .Houses .technologies-container .rotate_button {\n    display: none; }\n  .Houses .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .Houses .logo-container img {\n      width: 300px;\n      -webkit-filter: drop-shadow(0px 0px 15px black);\n      filter: drop-shadow(0px 0px 15px black); }\n    .Houses .logo-container .header {\n      font-family: 'Open Sans', 'Condensed';\n      text-transform: uppercase;\n      color: white;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-align: center;\n      filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5)); }\n    .Houses .logo-container .paragraph {\n      font-family: 'Hammersmith One', sans-serif;\n      font-size: 20px;\n      color: white;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      text-align: center;\n      z-index: 100;\n      filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.5)); }\n  .Houses .arrow {\n    display: block;\n    background-image: url(/imgs/down-arrow_white.svg);\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    -webkit-filter: drop-shadow(0px 0px 15px black);\n    filter: drop-shadow(0px 0px 15px black); }\n  .Houses .show {\n    background-image: url(/imgs/down-arrow_white.svg); }\n  .Houses .hide {\n    background-image: url(/imgs/cancel_white.svg); }\n\n.Arcbazar {\n  background: #9796f0;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #fbc7d4, #9796f0);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #fbc7d4, #9796f0);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .Arcbazar .technologies-container .technologies div div {\n    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));\n    background-size: contain !important; }\n  .Arcbazar .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/arcbazar/yii.png); }\n  .Arcbazar .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/arcbazar/jq.png); }\n  .Arcbazar .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/arcbazar/mysql.svg); }\n  .Arcbazar .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/arcbazar/elasticsearch-logo.png); }\n  .Arcbazar .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/arcbazar/php.png); }\n  .Arcbazar .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/arcbazar/js.png); }\n  .Arcbazar .technologies-container .description {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column; }\n    .Arcbazar .technologies-container .description .first {\n      margin-top: 40px; }\n    .Arcbazar .technologies-container .description .last {\n      margin-bottom: 10px; }\n    .Arcbazar .technologies-container .description p {\n      padding-top: 5px;\n      padding-bottom: 5px;\n      font-family: 'Hammersmith One', sans-serif;\n      line-height: 28px;\n      max-width: 600px;\n      font-size: 18px;\n      padding-left: 20px;\n      padding-right: 20px;\n      color: black;\n      text-align: center;\n      font-weight: normal;\n      width: fit-content;\n      margin-top: 0px;\n      margin-bottom: 0px; }\n    .Arcbazar .technologies-container .description a {\n      color: black;\n      text-decoration: none; }\n  .Arcbazar .technologies-container .rotate_button figure span {\n    border: 5px solid black; }\n  .Arcbazar .technologies-container .rotate_button figure span:nth-child(1) {\n    color: black; }\n  .Arcbazar .technologies-container .rotate_button figure span:nth-child(2) {\n    color: #a696c8;\n    background: black; }\n  .Arcbazar .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    text-align: center; }\n    .Arcbazar .logo-container img {\n      width: 400px; }\n      @media (max-height: 400px) {\n        .Arcbazar .logo-container img {\n          width: 180px !important; } }\n    .Arcbazar .logo-container .header {\n      font-family: 'Open Sans', 'Condensed';\n      text-transform: uppercase;\n      color: black;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px; }\n    .Arcbazar .logo-container .paragraph {\n      background: black;\n      padding-left: 20px;\n      padding-right: 20px;\n      padding-top: 5px;\n      padding-bottom: 5px;\n      font-family: 'Hammersmith One', sans-serif;\n      font-size: 20px;\n      color: #a696c8;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      z-index: 100; }\n  .Arcbazar .arrow {\n    display: block;\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    position: relative; }\n  .Arcbazar .show {\n    background-image: url(/imgs/down-arrow.svg); }\n  .Arcbazar .hide {\n    background-image: url(/imgs/cancel.svg); }\n\n@media (max-width: 500px) {\n  .Arcbazar .technologies-container .description p {\n    margin-top: 0 !important;\n    margin-bottom: 0px !important; }\n  .Arcbazar .logo-container img {\n    width: 100%;\n    max-width: 300px; } }\n\n.Factoringvergelijken {\n  background-image: linear-gradient(to right top, #2F2541, #6E3C5F, #B0576A, #E38065, #FEB85F, #F9F871); }\n  .Factoringvergelijken .technologies-container .technologies div div {\n    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5)); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(1) div:nth-child(1) {\n    background-image: url(/imgs/factoringvergelijken/yii2.png); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(1) div:nth-child(2) {\n    background-image: url(/imgs/factoringvergelijken/php.png); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(1) div:nth-child(3) {\n    background-image: url(/imgs/factoringvergelijken/mysql.png); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(2) div:nth-child(1) {\n    background-image: url(/imgs/factoringvergelijken/bootstrap.png); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(2) div:nth-child(2) {\n    background-image: url(/imgs/factoringvergelijken/js.png); }\n  .Factoringvergelijken .technologies-container .technologies div:nth-child(2) div:nth-child(3) {\n    background-image: url(/imgs/factoringvergelijken/less.png); }\n  .Factoringvergelijken .technologies-container .description p {\n    padding-top: 5px;\n    padding-bottom: 5px;\n    font-family: 'Hammersmith One', sans-serif;\n    line-height: 28px;\n    max-width: 600px;\n    font-size: 18px;\n    padding-left: 20px;\n    padding-right: 20px;\n    color: black;\n    text-align: center;\n    font-weight: normal;\n    margin-top: 40px;\n    margin-bottom: 10px; }\n  .Factoringvergelijken .technologies-container .description a {\n    color: black;\n    text-decoration: none; }\n  .Factoringvergelijken .technologies-container .rotate_button figure span {\n    border: 5px solid black; }\n  .Factoringvergelijken .technologies-container .rotate_button figure span:nth-child(1) {\n    color: #2F2541;\n    background: transparent; }\n  .Factoringvergelijken .technologies-container .rotate_button figure span:nth-child(2) {\n    color: #2F2541;\n    background: transparent; }\n  .Factoringvergelijken .logo-container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    text-align: center; }\n    .Factoringvergelijken .logo-container img {\n      width: 400px; }\n      @media (max-height: 400px) {\n        .Factoringvergelijken .logo-container img {\n          width: 220px !important; } }\n    .Factoringvergelijken .logo-container .header {\n      font-family: 'Open Sans', 'Condensed';\n      text-transform: uppercase;\n      color: black;\n      font-size: 50px;\n      font-weight: 600;\n      z-index: 100;\n      text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px; }\n    .Factoringvergelijken .logo-container .paragraph {\n      padding-left: 20px;\n      padding-right: 20px;\n      padding-top: 5px;\n      padding-bottom: 5px;\n      font-family: 'Hammersmith One', sans-serif;\n      font-size: 20px;\n      color: black;\n      letter-spacing: 0.62px;\n      line-height: 30px;\n      font-weight: 300;\n      z-index: 100; }\n  .Factoringvergelijken .arrow {\n    display: block;\n    background-position: center;\n    background-size: 80px;\n    width: 80px;\n    height: 80px;\n    margin: auto;\n    cursor: pointer;\n    position: relative; }\n  .Factoringvergelijken .show {\n    background-image: url(/imgs/down-arrow.svg); }\n  .Factoringvergelijken .hide {\n    background-image: url(/imgs/cancel.svg); }\n\n@media (max-width: 500px) {\n  .Factoringvergelijken .logo-container img {\n    width: 100%;\n    max-width: 300px; } }\n\n.linkful {\n  background: #0b0812; }\n  .linkful a {\n    text-decoration: none;\n    color: inherit;\n    outline: none; }\n  .linkful .mt-50 {\n    margin-top: 50px !important; }\n  .linkful .linkful-container {\n    height: 100%;\n    width: 100%;\n    z-index: 10000;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .linkful .linkful-container .arrow {\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: contain;\n      width: 50px;\n      height: 50px;\n      -webkit-filter: drop-shadow(0px 0px 15px #B9EDF8);\n      filter: drop-shadow(0px 0px 3px #B9EDF8);\n      cursor: pointer; }\n    .linkful .linkful-container .arrow-up {\n      background-image: url(/imgs/linkful/arrow-up.svg); }\n    .linkful .linkful-container .arrow-down {\n      background-image: url(/imgs/linkful/arrow-down.svg); }\n    .linkful .linkful-container .description {\n      font-family: Roboto,sans-serif;\n      font-size: 20px;\n      max-width: 400px;\n      text-align: center;\n      margin-top: 20px;\n      margin-bottom: 20px;\n      color: #a3daff;\n      text-shadow: #B9EDF8 0px 0px 5px; }\n    .linkful .linkful-container .header {\n      width: 100%;\n      display: flex;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center; }\n      .linkful .linkful-container .header .logo {\n        background-position: center;\n        background-repeat: no-repeat;\n        background-size: contain;\n        width: 200px;\n        height: 200px;\n        background-image: url(/imgs/linkful/logo-color.png);\n        -webkit-filter: drop-shadow(0px 0px 15px #B9EDF8);\n        filter: drop-shadow(0px 0px 3px #B9EDF8);\n        opacity: 0.9; }\n    .linkful .linkful-container .d-flex {\n      display: flex; }\n    .linkful .linkful-container .d-none {\n      display: none; }\n    .linkful .linkful-container .info-container {\n      width: 100%;\n      min-height: 200px;\n      z-index: 10000;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center;\n      font-family: Roboto,sans-serif;\n      font-size: 20px;\n      max-width: 400px;\n      text-align: justify;\n      color: #a3daff;\n      text-shadow: #B9EDF8 0px 0px 5px; }\n    .linkful .linkful-container .tzie-small {\n      font-size: 15px !important; }\n    .linkful .linkful-container .tech-container {\n      width: 100%;\n      min-height: 200px;\n      z-index: 10000;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center; }\n      .linkful .linkful-container .tech-container .row {\n        display: flex;\n        flex-direction: row;\n        width: 550px;\n        height: 100px;\n        align-items: center;\n        justify-content: space-between; }\n        .linkful .linkful-container .tech-container .row div {\n          background-position: center;\n          background-repeat: no-repeat;\n          background-size: contain;\n          width: 70px;\n          height: 70px; }\n        .linkful .linkful-container .tech-container .row .react {\n          background-image: url(/imgs/linkful/react.png); }\n        .linkful .linkful-container .tech-container .row .redux-saga {\n          background-image: url(/imgs/linkful/redux-saga.png); }\n        .linkful .linkful-container .tech-container .row .flow {\n          background-image: url(/imgs/linkful/flow.png); }\n        .linkful .linkful-container .tech-container .row .webpack {\n          background-image: url(/imgs/linkful/webpack.png); }\n        .linkful .linkful-container .tech-container .row .laravel {\n          background-image: url(/imgs/linkful/larvel.png); }\n        .linkful .linkful-container .tech-container .row .nova {\n          background-image: url(/imgs/linkful/nova.png); }\n        .linkful .linkful-container .tech-container .row .vue {\n          background-image: url(/imgs/linkful/vue.png); }\n        .linkful .linkful-container .tech-container .row .php-unit {\n          background-image: url(/imgs/linkful/phpunit.png); }\n        .linkful .linkful-container .tech-container .row .docker {\n          background-image: url(/imgs/linkful/docker.png); }\n        .linkful .linkful-container .tech-container .row .mongo {\n          background-image: url(/imgs/linkful/mongo.png); }\n        .linkful .linkful-container .tech-container .row .mysql {\n          background-image: url(/imgs/linkful/mysql.png); }\n        .linkful .linkful-container .tech-container .row .apache {\n          background-image: url(/imgs/linkful/apache.png); }\n\n@media (max-width: 650px) {\n  .linkful .info-container {\n    max-width: 300px !important; }\n  .linkful .description {\n    font-size: 16px !important;\n    max-width: 350px !important;\n    margin-top: 20px !important;\n    margin-bottom: 20px !important; }\n  .linkful .header .logo {\n    width: 150px !important;\n    height: 150px !important; }\n  .linkful .row {\n    width: 400px !important;\n    height: 80px !important; }\n    .linkful .row div {\n      width: 50px !important;\n      height: 50px !important; } }\n\n@media (max-width: 530px) {\n  .linkful .row {\n    width: 300px !important;\n    height: 70px !important; }\n    .linkful .row div {\n      width: 35px !important;\n      height: 35px !important; } }\n\n@media (max-width: 400px) {\n  .linkful .info-container {\n    max-width: 250px !important; }\n  .linkful .row {\n    width: 240px !important;\n    height: 60px !important; }\n    .linkful .row div {\n      width: 28px !important;\n      height: 28px !important; } }\n\n.smsplaza {\n  background: #0b0812; }\n  .smsplaza .frame {\n    background: rgba(0, 0, 0, 0.5);\n    box-shadow: 0 0 100px black; }\n  .smsplaza a {\n    text-decoration: none;\n    color: inherit;\n    outline: none; }\n  .smsplaza .mt-50 {\n    margin-top: 50px !important; }\n  .smsplaza .smspalza-container {\n    width: 100%;\n    height: 100%;\n    z-index: 10000;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .smsplaza .smspalza-container .arrow {\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: contain;\n      width: 50px;\n      height: 50px;\n      cursor: pointer; }\n    .smsplaza .smspalza-container .arrow-up {\n      background-image: url(/imgs/smsplaza/arrow-up.svg); }\n    .smsplaza .smspalza-container .arrow-down {\n      background-image: url(/imgs/smsplaza/arrow-down.svg); }\n    .smsplaza .smspalza-container .description {\n      font-family: Roboto, sans-serif;\n      font-size: 20px;\n      max-width: 400px;\n      text-align: center;\n      margin-top: 20px;\n      margin-bottom: 20px;\n      color: #41B883; }\n    .smsplaza .smspalza-container .header {\n      width: 100%;\n      display: flex;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center; }\n      .smsplaza .smspalza-container .header .logo {\n        color: #41B883;\n        text-shadow: #36495D 4px 4px 0px;\n        z-index: 100;\n        font-size: 65px;\n        font-family: 'Luckiest Guy', cursive;\n        line-height: 1; }\n    .smsplaza .smspalza-container .d-flex {\n      display: flex; }\n    .smsplaza .smspalza-container .d-none {\n      display: none; }\n    .smsplaza .smspalza-container .info-container {\n      width: 100%;\n      min-height: 300px;\n      z-index: 10000;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center;\n      font-family: Roboto, sans-serif;\n      font-size: 20px;\n      max-width: 400px;\n      text-align: justify;\n      color: #41B883; }\n    .smsplaza .smspalza-container .tzie-small {\n      font-size: 18px !important; }\n    .smsplaza .smspalza-container .tech-container {\n      width: 100%;\n      min-height: 300px;\n      z-index: 10000;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center; }\n      .smsplaza .smspalza-container .tech-container .row {\n        display: flex;\n        flex-direction: row;\n        width: 300px;\n        height: 100px;\n        align-items: center;\n        justify-content: space-between; }\n        .smsplaza .smspalza-container .tech-container .row div {\n          background-position: center;\n          background-repeat: no-repeat;\n          background-size: contain;\n          width: 70px;\n          height: 70px; }\n        .smsplaza .smspalza-container .tech-container .row .vue {\n          background-image: url(/imgs/smsplaza/vue.png); }\n        .smsplaza .smspalza-container .tech-container .row .nuxt {\n          background-image: url(/imgs/smsplaza/nuxt.png); }\n        .smsplaza .smspalza-container .tech-container .row .vuex {\n          background-image: url(/imgs/smsplaza/vuex.png); }\n        .smsplaza .smspalza-container .tech-container .row .vuetify {\n          background-image: url(/imgs/smsplaza/vuetify.png); }\n        .smsplaza .smspalza-container .tech-container .row .webpack {\n          background-image: url(/imgs/smsplaza/webpack.png); }\n        .smsplaza .smspalza-container .tech-container .row .laravel {\n          background-image: url(/imgs/smsplaza/larvel.png); }\n        .smsplaza .smspalza-container .tech-container .row .nova {\n          background-image: url(/imgs/smsplaza/nova.png); }\n        .smsplaza .smspalza-container .tech-container .row .php-unit {\n          background-image: url(/imgs/smsplaza/phpunit.png); }\n        .smsplaza .smspalza-container .tech-container .row .mysql {\n          background-image: url(/imgs/smsplaza/mysql.png); }\n        .smsplaza .smspalza-container .tech-container .row .apache {\n          background-image: url(/imgs/smsplaza/apache.png); }\n\n@media (max-width: 650px) {\n  .smsplaza .info-container {\n    max-width: 300px !important; }\n  .smsplaza .description {\n    font-size: 16px !important;\n    max-width: 350px !important;\n    margin-top: 20px !important;\n    margin-bottom: 20px !important; }\n  .smsplaza .row {\n    width: 200px !important;\n    height: 80px !important; }\n    .smsplaza .row div {\n      width: 50px !important;\n      height: 50px !important; } }\n\n@media (max-width: 530px) {\n  .smsplaza .header .logo {\n    font-size: 45px !important; }\n  .smsplaza .row {\n    width: 150px !important;\n    height: 70px !important; }\n    .smsplaza .row div {\n      width: 35px !important;\n      height: 35px !important; } }\n\n@media (max-width: 400px) {\n  .smsplaza .info-container {\n    max-width: 250px !important; }\n  .smsplaza .row {\n    width: 240px !important;\n    height: 60px !important; }\n    .smsplaza .row div {\n      width: 28px !important;\n      height: 28px !important; } }\n\n.abirix {\n  background: #0b0812; }\n  .abirix a {\n    text-decoration: none;\n    color: inherit;\n    outline: none; }\n  .abirix .mt-50 {\n    margin-top: 50px !important; }\n  .abirix .abirix-container {\n    width: 100%;\n    height: 100%;\n    z-index: 10000;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .abirix .abirix-container .arrow {\n      background-position: center;\n      background-repeat: no-repeat;\n      background-size: contain;\n      width: 50px;\n      height: 50px;\n      cursor: pointer; }\n    .abirix .abirix-container .arrow-up {\n      background-image: url(/imgs/abirix/arrow-up.svg); }\n    .abirix .abirix-container .arrow-down {\n      background-image: url(/imgs/abirix/arrow-down.svg); }\n    .abirix .abirix-container .description {\n      font-family: Roboto, sans-serif;\n      font-size: 20px;\n      max-width: 400px;\n      text-align: center;\n      margin-top: 20px;\n      margin-bottom: 20px;\n      color: #f0ea42; }\n    .abirix .abirix-container .header {\n      width: 100%;\n      display: flex;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center; }\n      .abirix .abirix-container .header .logo {\n        color: #f0ea42;\n        text-shadow: #ce8c32 4px 4px 0px;\n        z-index: 100;\n        font-size: 65px;\n        font-family: 'Alfa Slab One', cursive;\n        line-height: 1; }\n    .abirix .abirix-container .d-flex {\n      display: flex; }\n    .abirix .abirix-container .d-none {\n      display: none; }\n    .abirix .abirix-container .info-container {\n      width: 100%;\n      min-height: 300px;\n      z-index: 10000;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center;\n      font-family: Roboto, sans-serif;\n      font-size: 20px;\n      max-width: 400px;\n      text-align: justify;\n      color: #f0ea42;\n      background: rgba(0, 0, 0, 0.5);\n      border-radius: 50%;\n      box-shadow: 0px 0px 100px black; }\n    .abirix .abirix-container .tzie-small {\n      font-size: 18px !important; }\n    .abirix .abirix-container .tech-container {\n      width: 100%;\n      min-height: 300px;\n      z-index: 10000;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center; }\n      .abirix .abirix-container .tech-container .row {\n        display: flex;\n        flex-direction: row;\n        width: 300px;\n        height: 100px;\n        align-items: center;\n        justify-content: space-between; }\n        .abirix .abirix-container .tech-container .row div {\n          background-position: center;\n          background-repeat: no-repeat;\n          background-size: contain;\n          width: 70px;\n          height: 70px; }\n        .abirix .abirix-container .tech-container .row .angular {\n          background-image: url(/imgs/abirix/angular.png); }\n        .abirix .abirix-container .tech-container .row .rxjs {\n          background-image: url(/imgs/abirix/rxjs.png); }\n        .abirix .abirix-container .tech-container .row .clarity {\n          background-image: url(/imgs/abirix/clarity.png); }\n        .abirix .abirix-container .tech-container .row .laravel {\n          background-image: url(/imgs/abirix/larvel.png); }\n        .abirix .abirix-container .tech-container .row .php-unit {\n          background-image: url(/imgs/abirix/phpunit.png); }\n        .abirix .abirix-container .tech-container .row .mysql {\n          background-image: url(/imgs/abirix/mysql.png); }\n\n@media (max-width: 650px) {\n  .abirix .info-container {\n    max-width: 300px !important; }\n  .abirix .description {\n    font-size: 16px !important;\n    max-width: 350px !important;\n    margin-top: 20px !important;\n    margin-bottom: 20px !important; }\n  .abirix .row {\n    width: 200px !important;\n    height: 80px !important; }\n    .abirix .row div {\n      width: 50px !important;\n      height: 50px !important; } }\n\n@media (max-width: 530px) {\n  .abirix .header .logo {\n    font-size: 45px !important; }\n  .abirix .row {\n    width: 150px !important;\n    height: 70px !important; }\n    .abirix .row div {\n      width: 35px !important;\n      height: 35px !important; } }\n\n@media (max-width: 400px) {\n  .abirix .info-container {\n    max-width: 250px !important; }\n  .abirix .row {\n    width: 240px !important;\n    height: 60px !important; }\n    .abirix .row div {\n      width: 28px !important;\n      height: 28px !important; } }\n", ""]);
 
 // exports
 
@@ -64691,10 +64750,1246 @@ exports.push([module.i, ".flex {\n  display: flex !important; }\n\n.none {\n  di
 /* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
+exports = module.exports = __webpack_require__(6)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Alfa+Slab+One|Luckiest+Guy);", ""]);
+
+// module
+exports.push([module.i, "article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block;}audio,canvas,video{display:inline-block;}audio:not([controls]){display:none;height:0;}[hidden]{display:none;}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}body{margin:0;}a:focus{outline:thin dotted;}a:active,a:hover{outline:0;}h1{font-size:2em;margin:0.67em 0;}abbr[title]{border-bottom:1px dotted;}b,strong{font-weight:bold;}dfn{font-style:italic;}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0;}mark{background:#ff0;color:#000;}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em;}pre{white-space:pre-wrap;}q{quotes:\"\\201C\" \"\\201D\" \"\\2018\" \"\\2019\";}small{font-size:80%;}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}sup{top:-0.5em;}sub{bottom:-0.25em;}img{border:0;}svg:not(:root){overflow:hidden;}figure{margin:0;}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:0.35em 0.625em 0.75em;}legend{border:0;padding:0;}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0;}button,input{line-height:normal;}button,select{text-transform:none;}button,html input[type=\"button\"],input[type=\"reset\"],input[type=\"submit\"]{-webkit-appearance:button;cursor:pointer;}button[disabled],html input[disabled]{cursor:default;}input[type=\"checkbox\"],input[type=\"radio\"]{box-sizing:border-box;padding:0;}input[type=\"search\"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}input[type=\"search\"]::-webkit-search-cancel-button,input[type=\"search\"]::-webkit-search-decoration{-webkit-appearance:none;}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}textarea{overflow:auto;vertical-align:top;}table{border-collapse:collapse;border-spacing:0;}\r\n*,\r\n*::after,\r\n*::before {\r\n\tbox-sizing: border-box;\r\n}\r\n\r\n.linkful {\r\n\tbackground: #000;\r\n\tfont-family: Didot, \"Didot LT STD\", \"Bodoni MT\", \"ltc-bodoni-175\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif;\r\n\tmin-height: 100vh;\r\n\tcolor: #57585c;\r\n\tcolor: var(--color-text);\r\n\tbackground-color: #000;\r\n\toverflow: hidden;\r\n}\r\n\r\n/* Color schemes */\r\n.demo-1 {\r\n\t--color-text: #86eae7;\r\n\t--color-link: #fff;\r\n\t--color-link-hover: #86eae7;\r\n\t--color-title: #fff;\r\n}\r\n\r\n.demo-2 {\r\n\t--color-text: #ff53ff;\r\n\t--color-link: #3c48fa;\r\n\t--color-link-hover: #fff;\r\n\t--color-title: #fff;\r\n}\r\n\r\n.demo-3 {\r\n\t--color-text: #1ed97c;\r\n\t--color-link: #fff;\r\n\t--color-link-hover: #fff;\r\n\t--color-title: #fff;\r\n}\r\n\r\n.demo-4 {\r\n\t--color-text: #f0ea42;\r\n\t--color-link: #ce8c32;\r\n\t--color-link-hover: #fff;\r\n\t--color-title: #ce8c32;\r\n}\r\n\r\n.demo-5 {\r\n\t--color-text: #41B883;\r\n\t--color-link: #0ab5e4;\r\n\t--color-link-hover: #fff;\r\n\t--color-title: #0ab5e4;\r\n}\r\n\r\na {\r\n\ttext-decoration: none;\r\n\tcolor: var(--color-link);\r\n\toutline: none;\r\n}\r\n\r\na:hover,\r\na:focus {\r\n\tcolor: var(--color-link-hover);\r\n\toutline: none;\r\n}\r\n\r\n.frame {\r\n\tpadding: 3rem 5vw;\r\n\ttext-align: center;\r\n\tposition: relative;\r\n\tz-index: 1000;\r\n}\r\n\r\n.frame__title {\r\n\tfont-size: 1rem;\r\n\tmargin: 0 0 1rem;\r\n\tfont-weight: normal;\r\n}\r\n\r\n.frame__links {\r\n\tdisplay: inline;\r\n}\r\n\r\n.frame__github,\r\n.frame__links a:not(:last-child),\r\n.frame__demos a:not(:last-child) {\r\n\tmargin-right: 1rem;\r\n}\r\n\r\n.frame__demos {\r\n\tmargin: 1rem 0;\r\n}\r\n\r\n.frame__demo--current,\r\n.frame__demo--current:hover {\r\n\ttext-decoration: underline;\r\n\tcolor: var(--color-link);\r\n}\r\n\r\n.content {\r\n\tdisplay: flex;\r\n\tflex-direction: column;\r\n\twidth: 100vw;\r\n\theight: calc(100vh - 13rem);\r\n\tposition: relative;\r\n\tjustify-content: flex-start;\r\n\talign-items: center;\r\n}\r\n\r\n.content__title {\r\n\tposition: absolute;\r\n\ttop: 50%;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\ttext-align: center;\r\n\tmargin: -5.5vw 0 0 0;\r\n\tz-index: 100;\r\n\tfont-size: 10vw;\r\n\tcolor: var(--color-title);\r\n\tline-height: 1;\r\n}\r\n\r\n@media screen and (min-width: 53em) {\r\n\t.message {\r\n\t\tdisplay: none;\r\n\t}\r\n\t.frame {\r\n\t\tposition: fixed;\r\n\t\ttext-align: left;\r\n\t\tz-index: 10000;\r\n\t\tleft: 0;\r\n\t\tdisplay: grid;\r\n\t\talign-content: space-between;\r\n\t\twidth: 100%;\r\n\t\tmax-width: none;\r\n\t\theight: 100vh;\r\n\t\tpadding: 2rem 2.25rem;\r\n\t\tpointer-events: none;\r\n\t\tgrid-template-columns: 25% 50% 25%;\r\n\t\tgrid-template-rows: auto auto auto;\r\n\t\tgrid-template-areas: 'title title ... '\r\n\t\t\t\t\t\t\t'... ... ...'\r\n\t\t\t\t\t\t\t'github demos links';\r\n\t}\r\n\t.frame__title-wrap {\r\n\t\tgrid-area: title;\r\n\t\tdisplay: flex;\r\n\t}\r\n\t.frame__title {\r\n\t\tmargin: 0;\r\n\t}\r\n\t.frame__github {\r\n\t\tgrid-area: github;\r\n\t\tjustify-self: start;\r\n\t\tmargin: 0;\r\n\t}\r\n\t.frame__demos {\r\n\t\tmargin: 0;\r\n\t\tgrid-area: demos;\r\n\t\tjustify-self: center;\r\n\t}\r\n\t.frame__links {\r\n\t\tgrid-area: links;\r\n\t\tpadding: 0;\r\n\t\tjustify-self: end;\r\n\t}\r\n\t.frame a {\r\n\t\tpointer-events: auto;\r\n\t}\r\n\t.content {\r\n\t\theight: 100vh;\r\n\t\tjustify-content: center;\r\n\t}\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 380 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+(function () {
+    var enterModule = __webpack_require__(0).enterModule;
+
+    enterModule && enterModule(module);
+})();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(381);
+
+var _constants = __webpack_require__(11);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(function () {
+    var enterModule = __webpack_require__(0).enterModule;
+
+    enterModule && enterModule(module);
+})();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Linkful = function (_Component) {
+    _inherits(Linkful, _Component);
+
+    function Linkful(props) {
+        _classCallCheck(this, Linkful);
+
+        var _this = _possibleConstructorReturn(this, (Linkful.__proto__ || Object.getPrototypeOf(Linkful)).call(this, props));
+
+        _this.toggle = _this.toggle.bind(_this);
+
+        _this.state = {
+            info: false
+        };
+        return _this;
+    }
+
+    _createClass(Linkful, [{
+        key: 'toggle',
+        value: function toggle() {
+
+            if (this.state.info) {
+
+                $('.info-container').removeClass('d-flex').addClass('d-none');
+
+                $('.tech-container').removeClass('d-none').addClass('d-flex');
+
+                $('.arrow').removeClass('arrow-up').addClass('arrow-down');
+
+                this.setState({
+                    info: false
+                });
+            } else {
+
+                $('.info-container').removeClass('d-none').addClass('d-flex');
+
+                $('.tech-container').removeClass('d-flex').addClass('d-none');
+
+                $('.arrow').removeClass('arrow-down').addClass('arrow-up');
+
+                this.setState({
+                    info: true
+                });
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'demo-2 linkful' },
+                _react2.default.createElement(
+                    'main',
+                    null,
+                    _react2.default.createElement('div', { className: 'frame' }),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'content content--canvas-linkful' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'linkful-container' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'header' },
+                                _react2.default.createElement(
+                                    'a',
+                                    {
+                                        target: '_blank',
+                                        href: _constants2.default.linksfulUrl
+                                    },
+                                    _react2.default.createElement('div', { className: 'logo' })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'description' },
+                                    _react2.default.createElement(
+                                        'a',
+                                        {
+                                            target: '_blank',
+                                            href: _constants2.default.linksfulUrl
+                                        },
+                                        'LINKFUL - A STUNNING WAY TO CREATE A\xA0PERFECT ABOUT\xA0ME PAGE!'
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'tech-container d-flex' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    _react2.default.createElement('div', { className: 'react' }),
+                                    _react2.default.createElement('div', { className: 'redux-saga' }),
+                                    _react2.default.createElement('div', { className: 'flow' }),
+                                    _react2.default.createElement('div', { className: 'webpack' }),
+                                    _react2.default.createElement('div', { className: 'laravel' }),
+                                    _react2.default.createElement('div', { className: 'nova' })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    _react2.default.createElement('div', { className: 'vue' }),
+                                    _react2.default.createElement('div', { className: 'php-unit' }),
+                                    _react2.default.createElement('div', { className: 'docker' }),
+                                    _react2.default.createElement('div', { className: 'mongo' }),
+                                    _react2.default.createElement('div', { className: 'mysql' }),
+                                    _react2.default.createElement('div', { className: 'apache' })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'info-container tzie-small d-none' },
+                                'I have created, designed and developed this project. I built the application using the most powerful and popular technologies. The frontend of the user dashboard was built using React and Redux, and also used Saga to manage the asynchronous actions. The administration panel is built with Nova, and separate components with Vue were also developed. The backend is based on Laravel, the Mysql and Mongo database for storing statistics. The system is fully tested. Infrastructure works on the basis of Docker and Continues Delivery.'
+                            ),
+                            _react2.default.createElement('div', { className: 'arrow arrow-down', onClick: this.toggle }),
+                            _react2.default.createElement(
+                                'a',
+                                {
+                                    className: 'mt-50 description',
+                                    target: '_blank',
+                                    href: _constants2.default.linksfulUrl
+                                },
+                                'CHECK IT OUT'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: '__reactstandin__regenerateByEval',
+        // @ts-ignore
+        value: function __reactstandin__regenerateByEval(key, code) {
+            // @ts-ignore
+            this[key] = eval(code);
+        }
+    }]);
+
+    return Linkful;
+}(_react.Component);
+
+var _default = Linkful;
+var _default2 = _default;
+exports.default = _default2;
+;
+
+(function () {
+    var reactHotLoader = __webpack_require__(0).default;
+
+    var leaveModule = __webpack_require__(0).leaveModule;
+
+    if (!reactHotLoader) {
+        return;
+    }
+
+    reactHotLoader.register(Linkful, 'Linkful', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/Linkful.js');
+    reactHotLoader.register(_default, 'default', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/Linkful.js');
+    leaveModule(module);
+})();
+
+;
+;
+
+(function () {
+    var reactHotLoader = __webpack_require__(0).default;
+
+    var leaveModule = __webpack_require__(0).leaveModule;
+
+    if (!reactHotLoader) {
+        return;
+    }
+
+    reactHotLoader.register(Linkful, 'Linkful', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/Linkful.js');
+    reactHotLoader.register(_default2, 'default', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/Linkful.js');
+    leaveModule(module);
+})();
+
+;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+
+/***/ }),
+/* 381 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+(function () {
+  var enterModule = __webpack_require__(0).enterModule;
+
+  enterModule && enterModule(module);
+})();
+
+var _simplexNoise = __webpack_require__(382);
+
+var _simplexNoise2 = _interopRequireDefault(_simplexNoise);
+
+var _util = __webpack_require__(383);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(function () {
+  var enterModule = __webpack_require__(0).enterModule;
+
+  enterModule && enterModule(module);
+})();
+
+var particleCount = 700;
+var particlePropCount = 9;
+var particlePropsLength = particleCount * particlePropCount;
+var rangeY = 100;
+var baseTTL = 50;
+var rangeTTL = 150;
+var baseSpeed = 0.1;
+var rangeSpeed = 2;
+var baseRadius = 1;
+var rangeRadius = 4;
+var baseHue = 220;
+var rangeHue = 100;
+var noiseSteps = 8;
+var xOff = 0.00125;
+var yOff = 0.00125;
+var zOff = 0.0005;
+var backgroundColor = 'hsla(260,40%,5%,1)';
+
+var container = void 0;
+var canvas = void 0;
+var ctx = void 0;
+var center = void 0;
+var gradient = void 0;
+var tick = void 0;
+var simplex = void 0;
+var particleProps = void 0;
+var positions = void 0;
+var velocities = void 0;
+var lifeSpans = void 0;
+var speeds = void 0;
+var sizes = void 0;
+var hues = void 0;
+
+function setup() {
+  createCanvas();
+  resize();
+  initParticles();
+  draw();
+}
+
+function initParticles() {
+  tick = 0;
+  simplex = new _simplexNoise2.default();
+  particleProps = new Float32Array(particlePropsLength);
+
+  var i = void 0;
+
+  for (i = 0; i < particlePropsLength; i += particlePropCount) {
+    initParticle(i);
+  }
+}
+
+function initParticle(i) {
+  var x = void 0,
+      y = void 0,
+      vx = void 0,
+      vy = void 0,
+      life = void 0,
+      ttl = void 0,
+      speed = void 0,
+      radius = void 0,
+      hue = void 0;
+
+  x = (0, _util.rand)(canvas.a.width);
+  y = center[1] + (0, _util.randRange)(rangeY);
+  vx = 0;
+  vy = 0;
+  life = 0;
+  ttl = baseTTL + (0, _util.rand)(rangeTTL);
+  speed = baseSpeed + (0, _util.rand)(rangeSpeed);
+  radius = baseRadius + (0, _util.rand)(rangeRadius);
+  hue = baseHue + (0, _util.rand)(rangeHue);
+
+  particleProps.set([x, y, vx, vy, life, ttl, speed, radius, hue], i);
+}
+
+function drawParticles() {
+  var i = void 0;
+
+  for (i = 0; i < particlePropsLength; i += particlePropCount) {
+    updateParticle(i);
+  }
+}
+
+function updateParticle(i) {
+  var i2 = 1 + i,
+      i3 = 2 + i,
+      i4 = 3 + i,
+      i5 = 4 + i,
+      i6 = 5 + i,
+      i7 = 6 + i,
+      i8 = 7 + i,
+      i9 = 8 + i;
+  var n = void 0,
+      x = void 0,
+      y = void 0,
+      vx = void 0,
+      vy = void 0,
+      life = void 0,
+      ttl = void 0,
+      speed = void 0,
+      x2 = void 0,
+      y2 = void 0,
+      radius = void 0,
+      hue = void 0;
+
+  x = particleProps[i];
+  y = particleProps[i2];
+  n = simplex.noise3D(x * xOff, y * yOff, tick * zOff) * noiseSteps * _util.TAU;
+  vx = (0, _util.lerp)(particleProps[i3], (0, _util.cos)(n), 0.5);
+  vy = (0, _util.lerp)(particleProps[i4], (0, _util.sin)(n), 0.5);
+  life = particleProps[i5];
+  ttl = particleProps[i6];
+  speed = particleProps[i7];
+  x2 = x + vx * speed;
+  y2 = y + vy * speed;
+  radius = particleProps[i8];
+  hue = particleProps[i9];
+
+  drawParticle(x, y, x2, y2, life, ttl, radius, hue);
+
+  life++;
+
+  particleProps[i] = x2;
+  particleProps[i2] = y2;
+  particleProps[i3] = vx;
+  particleProps[i4] = vy;
+  particleProps[i5] = life;
+
+  (checkBounds(x, y) || life > ttl) && initParticle(i);
+}
+
+function drawParticle(x, y, x2, y2, life, ttl, radius, hue) {
+  ctx.a.save();
+  ctx.a.lineCap = 'round';
+  ctx.a.lineWidth = radius;
+  ctx.a.strokeStyle = 'hsla(' + hue + ',100%,60%,' + (0, _util.fadeInOut)(life, ttl) + ')';
+  ctx.a.beginPath();
+  ctx.a.moveTo(x, y);
+  ctx.a.lineTo(x2, y2);
+  ctx.a.stroke();
+  ctx.a.closePath();
+  ctx.a.restore();
+}
+
+function checkBounds(x, y) {
+  return x > canvas.a.width || x < 0 || y > canvas.a.height || y < 0;
+}
+
+function createCanvas() {
+
+  container = document.querySelector('.content--canvas-linkful');
+  canvas = {
+    a: document.createElement('canvas'),
+    b: document.createElement('canvas')
+  };
+  canvas.b.style = '\n\t\tposition: fixed;\n\t\tleft: 0;\n\t\twidth: 100%;\n\t';
+  container.appendChild(canvas.b);
+  ctx = {
+    a: canvas.a.getContext('2d'),
+    b: canvas.b.getContext('2d')
+  };
+  center = [];
+}
+
+function resize() {
+  var _window = window,
+      innerWidth = _window.innerWidth,
+      innerHeight = _window.innerHeight;
+
+
+  canvas.a.width = innerWidth;
+  canvas.a.height = innerHeight;
+
+  ctx.a.drawImage(canvas.b, 0, 0);
+
+  canvas.b.width = innerWidth;
+  canvas.b.height = innerHeight;
+
+  ctx.b.drawImage(canvas.a, 0, 0);
+
+  center[0] = 0.5 * canvas.a.width;
+  center[1] = 0.5 * canvas.a.height;
+}
+
+function renderGlow() {
+  ctx.b.save();
+  ctx.b.filter = 'blur(8px) brightness(200%)';
+  ctx.b.globalCompositeOperation = 'lighter';
+  ctx.b.drawImage(canvas.a, 0, 0);
+  ctx.b.restore();
+
+  ctx.b.save();
+  ctx.b.filter = 'blur(4px) brightness(200%)';
+  ctx.b.globalCompositeOperation = 'lighter';
+  ctx.b.drawImage(canvas.a, 0, 0);
+  ctx.b.restore();
+}
+
+function renderToScreen() {
+  ctx.b.save();
+  ctx.b.globalCompositeOperation = 'lighter';
+  ctx.b.drawImage(canvas.a, 0, 0);
+  ctx.b.restore();
+}
+
+function draw() {
+  tick++;
+
+  ctx.a.clearRect(0, 0, canvas.a.width, canvas.a.height);
+
+  ctx.b.fillStyle = backgroundColor;
+  ctx.b.fillRect(0, 0, canvas.a.width, canvas.a.height);
+
+  drawParticles();
+  renderGlow();
+  renderToScreen();
+
+  window.requestAnimationFrame(draw);
+}
+
+window.addEventListener('load', setup);
+window.addEventListener('resize', resize);
+;
+
+(function () {
+  var reactHotLoader = __webpack_require__(0).default;
+
+  var leaveModule = __webpack_require__(0).leaveModule;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(particleCount, 'particleCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(particlePropCount, 'particlePropCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(particlePropsLength, 'particlePropsLength', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(rangeY, 'rangeY', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(baseTTL, 'baseTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(rangeTTL, 'rangeTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(baseSpeed, 'baseSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(rangeSpeed, 'rangeSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(baseRadius, 'baseRadius', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(rangeRadius, 'rangeRadius', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(baseHue, 'baseHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(rangeHue, 'rangeHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(noiseSteps, 'noiseSteps', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(xOff, 'xOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(yOff, 'yOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(zOff, 'zOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(backgroundColor, 'backgroundColor', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(container, 'container', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(canvas, 'canvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(ctx, 'ctx', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(center, 'center', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(gradient, 'gradient', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(tick, 'tick', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(simplex, 'simplex', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(particleProps, 'particleProps', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(positions, 'positions', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(velocities, 'velocities', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(lifeSpans, 'lifeSpans', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(speeds, 'speeds', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(sizes, 'sizes', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(hues, 'hues', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(setup, 'setup', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(initParticles, 'initParticles', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(initParticle, 'initParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(drawParticles, 'drawParticles', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(updateParticle, 'updateParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(drawParticle, 'drawParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(checkBounds, 'checkBounds', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(createCanvas, 'createCanvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(resize, 'resize', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(renderGlow, 'renderGlow', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(renderToScreen, 'renderToScreen', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(draw, 'draw', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  leaveModule(module);
+})();
+
+;
+;
+
+(function () {
+  var reactHotLoader = __webpack_require__(0).default;
+
+  var leaveModule = __webpack_require__(0).leaveModule;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(setup, 'setup', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(initParticles, 'initParticles', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(initParticle, 'initParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(drawParticles, 'drawParticles', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(updateParticle, 'updateParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(drawParticle, 'drawParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(checkBounds, 'checkBounds', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(createCanvas, 'createCanvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(resize, 'resize', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(renderGlow, 'renderGlow', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(renderToScreen, 'renderToScreen', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(draw, 'draw', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(particleCount, 'particleCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(particlePropCount, 'particlePropCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(particlePropsLength, 'particlePropsLength', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(rangeY, 'rangeY', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(baseTTL, 'baseTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(rangeTTL, 'rangeTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(baseSpeed, 'baseSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(rangeSpeed, 'rangeSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(baseRadius, 'baseRadius', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(rangeRadius, 'rangeRadius', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(baseHue, 'baseHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(rangeHue, 'rangeHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(noiseSteps, 'noiseSteps', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(xOff, 'xOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(yOff, 'yOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(zOff, 'zOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(backgroundColor, 'backgroundColor', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(container, 'container', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(canvas, 'canvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(ctx, 'ctx', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(center, 'center', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(gradient, 'gradient', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(tick, 'tick', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(simplex, 'simplex', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(particleProps, 'particleProps', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(positions, 'positions', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(velocities, 'velocities', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(lifeSpans, 'lifeSpans', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(speeds, 'speeds', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(sizes, 'sizes', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  reactHotLoader.register(hues, 'hues', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Linkful/lib/swirl.js');
+  leaveModule(module);
+})();
+
+;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+
+/***/ }),
+/* 382 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_RESULT__;/*
+ * A fast javascript implementation of simplex noise by Jonas Wagner
+
+Based on a speed-improved simplex noise algorithm for 2D, 3D and 4D in Java.
+Which is based on example code by Stefan Gustavson (stegu@itn.liu.se).
+With Optimisations by Peter Eastman (peastman@drizzle.stanford.edu).
+Better rank ordering method by Stefan Gustavson in 2012.
+
+
+ Copyright (c) 2018 Jonas Wagner
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+(function() {
+  'use strict';
+
+  var F2 = 0.5 * (Math.sqrt(3.0) - 1.0);
+  var G2 = (3.0 - Math.sqrt(3.0)) / 6.0;
+  var F3 = 1.0 / 3.0;
+  var G3 = 1.0 / 6.0;
+  var F4 = (Math.sqrt(5.0) - 1.0) / 4.0;
+  var G4 = (5.0 - Math.sqrt(5.0)) / 20.0;
+
+  function SimplexNoise(randomOrSeed) {
+    var random;
+    if (typeof randomOrSeed == 'function') {
+      random = randomOrSeed;
+    }
+    else if (randomOrSeed) {
+      random = alea(randomOrSeed);
+    } else {
+      random = Math.random;
+    }
+    this.p = buildPermutationTable(random);
+    this.perm = new Uint8Array(512);
+    this.permMod12 = new Uint8Array(512);
+    for (var i = 0; i < 512; i++) {
+      this.perm[i] = this.p[i & 255];
+      this.permMod12[i] = this.perm[i] % 12;
+    }
+
+  }
+  SimplexNoise.prototype = {
+    grad3: new Float32Array([1, 1, 0,
+      -1, 1, 0,
+      1, -1, 0,
+
+      -1, -1, 0,
+      1, 0, 1,
+      -1, 0, 1,
+
+      1, 0, -1,
+      -1, 0, -1,
+      0, 1, 1,
+
+      0, -1, 1,
+      0, 1, -1,
+      0, -1, -1]),
+    grad4: new Float32Array([0, 1, 1, 1, 0, 1, 1, -1, 0, 1, -1, 1, 0, 1, -1, -1,
+      0, -1, 1, 1, 0, -1, 1, -1, 0, -1, -1, 1, 0, -1, -1, -1,
+      1, 0, 1, 1, 1, 0, 1, -1, 1, 0, -1, 1, 1, 0, -1, -1,
+      -1, 0, 1, 1, -1, 0, 1, -1, -1, 0, -1, 1, -1, 0, -1, -1,
+      1, 1, 0, 1, 1, 1, 0, -1, 1, -1, 0, 1, 1, -1, 0, -1,
+      -1, 1, 0, 1, -1, 1, 0, -1, -1, -1, 0, 1, -1, -1, 0, -1,
+      1, 1, 1, 0, 1, 1, -1, 0, 1, -1, 1, 0, 1, -1, -1, 0,
+      -1, 1, 1, 0, -1, 1, -1, 0, -1, -1, 1, 0, -1, -1, -1, 0]),
+    noise2D: function(xin, yin) {
+      var permMod12 = this.permMod12;
+      var perm = this.perm;
+      var grad3 = this.grad3;
+      var n0 = 0; // Noise contributions from the three corners
+      var n1 = 0;
+      var n2 = 0;
+      // Skew the input space to determine which simplex cell we're in
+      var s = (xin + yin) * F2; // Hairy factor for 2D
+      var i = Math.floor(xin + s);
+      var j = Math.floor(yin + s);
+      var t = (i + j) * G2;
+      var X0 = i - t; // Unskew the cell origin back to (x,y) space
+      var Y0 = j - t;
+      var x0 = xin - X0; // The x,y distances from the cell origin
+      var y0 = yin - Y0;
+      // For the 2D case, the simplex shape is an equilateral triangle.
+      // Determine which simplex we are in.
+      var i1, j1; // Offsets for second (middle) corner of simplex in (i,j) coords
+      if (x0 > y0) {
+        i1 = 1;
+        j1 = 0;
+      } // lower triangle, XY order: (0,0)->(1,0)->(1,1)
+      else {
+        i1 = 0;
+        j1 = 1;
+      } // upper triangle, YX order: (0,0)->(0,1)->(1,1)
+      // A step of (1,0) in (i,j) means a step of (1-c,-c) in (x,y), and
+      // a step of (0,1) in (i,j) means a step of (-c,1-c) in (x,y), where
+      // c = (3-sqrt(3))/6
+      var x1 = x0 - i1 + G2; // Offsets for middle corner in (x,y) unskewed coords
+      var y1 = y0 - j1 + G2;
+      var x2 = x0 - 1.0 + 2.0 * G2; // Offsets for last corner in (x,y) unskewed coords
+      var y2 = y0 - 1.0 + 2.0 * G2;
+      // Work out the hashed gradient indices of the three simplex corners
+      var ii = i & 255;
+      var jj = j & 255;
+      // Calculate the contribution from the three corners
+      var t0 = 0.5 - x0 * x0 - y0 * y0;
+      if (t0 >= 0) {
+        var gi0 = permMod12[ii + perm[jj]] * 3;
+        t0 *= t0;
+        n0 = t0 * t0 * (grad3[gi0] * x0 + grad3[gi0 + 1] * y0); // (x,y) of grad3 used for 2D gradient
+      }
+      var t1 = 0.5 - x1 * x1 - y1 * y1;
+      if (t1 >= 0) {
+        var gi1 = permMod12[ii + i1 + perm[jj + j1]] * 3;
+        t1 *= t1;
+        n1 = t1 * t1 * (grad3[gi1] * x1 + grad3[gi1 + 1] * y1);
+      }
+      var t2 = 0.5 - x2 * x2 - y2 * y2;
+      if (t2 >= 0) {
+        var gi2 = permMod12[ii + 1 + perm[jj + 1]] * 3;
+        t2 *= t2;
+        n2 = t2 * t2 * (grad3[gi2] * x2 + grad3[gi2 + 1] * y2);
+      }
+      // Add contributions from each corner to get the final noise value.
+      // The result is scaled to return values in the interval [-1,1].
+      return 70.0 * (n0 + n1 + n2);
+    },
+    // 3D simplex noise
+    noise3D: function(xin, yin, zin) {
+      var permMod12 = this.permMod12;
+      var perm = this.perm;
+      var grad3 = this.grad3;
+      var n0, n1, n2, n3; // Noise contributions from the four corners
+      // Skew the input space to determine which simplex cell we're in
+      var s = (xin + yin + zin) * F3; // Very nice and simple skew factor for 3D
+      var i = Math.floor(xin + s);
+      var j = Math.floor(yin + s);
+      var k = Math.floor(zin + s);
+      var t = (i + j + k) * G3;
+      var X0 = i - t; // Unskew the cell origin back to (x,y,z) space
+      var Y0 = j - t;
+      var Z0 = k - t;
+      var x0 = xin - X0; // The x,y,z distances from the cell origin
+      var y0 = yin - Y0;
+      var z0 = zin - Z0;
+      // For the 3D case, the simplex shape is a slightly irregular tetrahedron.
+      // Determine which simplex we are in.
+      var i1, j1, k1; // Offsets for second corner of simplex in (i,j,k) coords
+      var i2, j2, k2; // Offsets for third corner of simplex in (i,j,k) coords
+      if (x0 >= y0) {
+        if (y0 >= z0) {
+          i1 = 1;
+          j1 = 0;
+          k1 = 0;
+          i2 = 1;
+          j2 = 1;
+          k2 = 0;
+        } // X Y Z order
+        else if (x0 >= z0) {
+          i1 = 1;
+          j1 = 0;
+          k1 = 0;
+          i2 = 1;
+          j2 = 0;
+          k2 = 1;
+        } // X Z Y order
+        else {
+          i1 = 0;
+          j1 = 0;
+          k1 = 1;
+          i2 = 1;
+          j2 = 0;
+          k2 = 1;
+        } // Z X Y order
+      }
+      else { // x0<y0
+        if (y0 < z0) {
+          i1 = 0;
+          j1 = 0;
+          k1 = 1;
+          i2 = 0;
+          j2 = 1;
+          k2 = 1;
+        } // Z Y X order
+        else if (x0 < z0) {
+          i1 = 0;
+          j1 = 1;
+          k1 = 0;
+          i2 = 0;
+          j2 = 1;
+          k2 = 1;
+        } // Y Z X order
+        else {
+          i1 = 0;
+          j1 = 1;
+          k1 = 0;
+          i2 = 1;
+          j2 = 1;
+          k2 = 0;
+        } // Y X Z order
+      }
+      // A step of (1,0,0) in (i,j,k) means a step of (1-c,-c,-c) in (x,y,z),
+      // a step of (0,1,0) in (i,j,k) means a step of (-c,1-c,-c) in (x,y,z), and
+      // a step of (0,0,1) in (i,j,k) means a step of (-c,-c,1-c) in (x,y,z), where
+      // c = 1/6.
+      var x1 = x0 - i1 + G3; // Offsets for second corner in (x,y,z) coords
+      var y1 = y0 - j1 + G3;
+      var z1 = z0 - k1 + G3;
+      var x2 = x0 - i2 + 2.0 * G3; // Offsets for third corner in (x,y,z) coords
+      var y2 = y0 - j2 + 2.0 * G3;
+      var z2 = z0 - k2 + 2.0 * G3;
+      var x3 = x0 - 1.0 + 3.0 * G3; // Offsets for last corner in (x,y,z) coords
+      var y3 = y0 - 1.0 + 3.0 * G3;
+      var z3 = z0 - 1.0 + 3.0 * G3;
+      // Work out the hashed gradient indices of the four simplex corners
+      var ii = i & 255;
+      var jj = j & 255;
+      var kk = k & 255;
+      // Calculate the contribution from the four corners
+      var t0 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0;
+      if (t0 < 0) n0 = 0.0;
+      else {
+        var gi0 = permMod12[ii + perm[jj + perm[kk]]] * 3;
+        t0 *= t0;
+        n0 = t0 * t0 * (grad3[gi0] * x0 + grad3[gi0 + 1] * y0 + grad3[gi0 + 2] * z0);
+      }
+      var t1 = 0.6 - x1 * x1 - y1 * y1 - z1 * z1;
+      if (t1 < 0) n1 = 0.0;
+      else {
+        var gi1 = permMod12[ii + i1 + perm[jj + j1 + perm[kk + k1]]] * 3;
+        t1 *= t1;
+        n1 = t1 * t1 * (grad3[gi1] * x1 + grad3[gi1 + 1] * y1 + grad3[gi1 + 2] * z1);
+      }
+      var t2 = 0.6 - x2 * x2 - y2 * y2 - z2 * z2;
+      if (t2 < 0) n2 = 0.0;
+      else {
+        var gi2 = permMod12[ii + i2 + perm[jj + j2 + perm[kk + k2]]] * 3;
+        t2 *= t2;
+        n2 = t2 * t2 * (grad3[gi2] * x2 + grad3[gi2 + 1] * y2 + grad3[gi2 + 2] * z2);
+      }
+      var t3 = 0.6 - x3 * x3 - y3 * y3 - z3 * z3;
+      if (t3 < 0) n3 = 0.0;
+      else {
+        var gi3 = permMod12[ii + 1 + perm[jj + 1 + perm[kk + 1]]] * 3;
+        t3 *= t3;
+        n3 = t3 * t3 * (grad3[gi3] * x3 + grad3[gi3 + 1] * y3 + grad3[gi3 + 2] * z3);
+      }
+      // Add contributions from each corner to get the final noise value.
+      // The result is scaled to stay just inside [-1,1]
+      return 32.0 * (n0 + n1 + n2 + n3);
+    },
+    // 4D simplex noise, better simplex rank ordering method 2012-03-09
+    noise4D: function(x, y, z, w) {
+      var perm = this.perm;
+      var grad4 = this.grad4;
+
+      var n0, n1, n2, n3, n4; // Noise contributions from the five corners
+      // Skew the (x,y,z,w) space to determine which cell of 24 simplices we're in
+      var s = (x + y + z + w) * F4; // Factor for 4D skewing
+      var i = Math.floor(x + s);
+      var j = Math.floor(y + s);
+      var k = Math.floor(z + s);
+      var l = Math.floor(w + s);
+      var t = (i + j + k + l) * G4; // Factor for 4D unskewing
+      var X0 = i - t; // Unskew the cell origin back to (x,y,z,w) space
+      var Y0 = j - t;
+      var Z0 = k - t;
+      var W0 = l - t;
+      var x0 = x - X0; // The x,y,z,w distances from the cell origin
+      var y0 = y - Y0;
+      var z0 = z - Z0;
+      var w0 = w - W0;
+      // For the 4D case, the simplex is a 4D shape I won't even try to describe.
+      // To find out which of the 24 possible simplices we're in, we need to
+      // determine the magnitude ordering of x0, y0, z0 and w0.
+      // Six pair-wise comparisons are performed between each possible pair
+      // of the four coordinates, and the results are used to rank the numbers.
+      var rankx = 0;
+      var ranky = 0;
+      var rankz = 0;
+      var rankw = 0;
+      if (x0 > y0) rankx++;
+      else ranky++;
+      if (x0 > z0) rankx++;
+      else rankz++;
+      if (x0 > w0) rankx++;
+      else rankw++;
+      if (y0 > z0) ranky++;
+      else rankz++;
+      if (y0 > w0) ranky++;
+      else rankw++;
+      if (z0 > w0) rankz++;
+      else rankw++;
+      var i1, j1, k1, l1; // The integer offsets for the second simplex corner
+      var i2, j2, k2, l2; // The integer offsets for the third simplex corner
+      var i3, j3, k3, l3; // The integer offsets for the fourth simplex corner
+      // simplex[c] is a 4-vector with the numbers 0, 1, 2 and 3 in some order.
+      // Many values of c will never occur, since e.g. x>y>z>w makes x<z, y<w and x<w
+      // impossible. Only the 24 indices which have non-zero entries make any sense.
+      // We use a thresholding to set the coordinates in turn from the largest magnitude.
+      // Rank 3 denotes the largest coordinate.
+      i1 = rankx >= 3 ? 1 : 0;
+      j1 = ranky >= 3 ? 1 : 0;
+      k1 = rankz >= 3 ? 1 : 0;
+      l1 = rankw >= 3 ? 1 : 0;
+      // Rank 2 denotes the second largest coordinate.
+      i2 = rankx >= 2 ? 1 : 0;
+      j2 = ranky >= 2 ? 1 : 0;
+      k2 = rankz >= 2 ? 1 : 0;
+      l2 = rankw >= 2 ? 1 : 0;
+      // Rank 1 denotes the second smallest coordinate.
+      i3 = rankx >= 1 ? 1 : 0;
+      j3 = ranky >= 1 ? 1 : 0;
+      k3 = rankz >= 1 ? 1 : 0;
+      l3 = rankw >= 1 ? 1 : 0;
+      // The fifth corner has all coordinate offsets = 1, so no need to compute that.
+      var x1 = x0 - i1 + G4; // Offsets for second corner in (x,y,z,w) coords
+      var y1 = y0 - j1 + G4;
+      var z1 = z0 - k1 + G4;
+      var w1 = w0 - l1 + G4;
+      var x2 = x0 - i2 + 2.0 * G4; // Offsets for third corner in (x,y,z,w) coords
+      var y2 = y0 - j2 + 2.0 * G4;
+      var z2 = z0 - k2 + 2.0 * G4;
+      var w2 = w0 - l2 + 2.0 * G4;
+      var x3 = x0 - i3 + 3.0 * G4; // Offsets for fourth corner in (x,y,z,w) coords
+      var y3 = y0 - j3 + 3.0 * G4;
+      var z3 = z0 - k3 + 3.0 * G4;
+      var w3 = w0 - l3 + 3.0 * G4;
+      var x4 = x0 - 1.0 + 4.0 * G4; // Offsets for last corner in (x,y,z,w) coords
+      var y4 = y0 - 1.0 + 4.0 * G4;
+      var z4 = z0 - 1.0 + 4.0 * G4;
+      var w4 = w0 - 1.0 + 4.0 * G4;
+      // Work out the hashed gradient indices of the five simplex corners
+      var ii = i & 255;
+      var jj = j & 255;
+      var kk = k & 255;
+      var ll = l & 255;
+      // Calculate the contribution from the five corners
+      var t0 = 0.6 - x0 * x0 - y0 * y0 - z0 * z0 - w0 * w0;
+      if (t0 < 0) n0 = 0.0;
+      else {
+        var gi0 = (perm[ii + perm[jj + perm[kk + perm[ll]]]] % 32) * 4;
+        t0 *= t0;
+        n0 = t0 * t0 * (grad4[gi0] * x0 + grad4[gi0 + 1] * y0 + grad4[gi0 + 2] * z0 + grad4[gi0 + 3] * w0);
+      }
+      var t1 = 0.6 - x1 * x1 - y1 * y1 - z1 * z1 - w1 * w1;
+      if (t1 < 0) n1 = 0.0;
+      else {
+        var gi1 = (perm[ii + i1 + perm[jj + j1 + perm[kk + k1 + perm[ll + l1]]]] % 32) * 4;
+        t1 *= t1;
+        n1 = t1 * t1 * (grad4[gi1] * x1 + grad4[gi1 + 1] * y1 + grad4[gi1 + 2] * z1 + grad4[gi1 + 3] * w1);
+      }
+      var t2 = 0.6 - x2 * x2 - y2 * y2 - z2 * z2 - w2 * w2;
+      if (t2 < 0) n2 = 0.0;
+      else {
+        var gi2 = (perm[ii + i2 + perm[jj + j2 + perm[kk + k2 + perm[ll + l2]]]] % 32) * 4;
+        t2 *= t2;
+        n2 = t2 * t2 * (grad4[gi2] * x2 + grad4[gi2 + 1] * y2 + grad4[gi2 + 2] * z2 + grad4[gi2 + 3] * w2);
+      }
+      var t3 = 0.6 - x3 * x3 - y3 * y3 - z3 * z3 - w3 * w3;
+      if (t3 < 0) n3 = 0.0;
+      else {
+        var gi3 = (perm[ii + i3 + perm[jj + j3 + perm[kk + k3 + perm[ll + l3]]]] % 32) * 4;
+        t3 *= t3;
+        n3 = t3 * t3 * (grad4[gi3] * x3 + grad4[gi3 + 1] * y3 + grad4[gi3 + 2] * z3 + grad4[gi3 + 3] * w3);
+      }
+      var t4 = 0.6 - x4 * x4 - y4 * y4 - z4 * z4 - w4 * w4;
+      if (t4 < 0) n4 = 0.0;
+      else {
+        var gi4 = (perm[ii + 1 + perm[jj + 1 + perm[kk + 1 + perm[ll + 1]]]] % 32) * 4;
+        t4 *= t4;
+        n4 = t4 * t4 * (grad4[gi4] * x4 + grad4[gi4 + 1] * y4 + grad4[gi4 + 2] * z4 + grad4[gi4 + 3] * w4);
+      }
+      // Sum up and scale the result to cover the range [-1,1]
+      return 27.0 * (n0 + n1 + n2 + n3 + n4);
+    }
+  };
+
+  function buildPermutationTable(random) {
+    var i;
+    var p = new Uint8Array(256);
+    for (i = 0; i < 256; i++) {
+      p[i] = i;
+    }
+    for (i = 0; i < 255; i++) {
+      var r = i + ~~(random() * (256 - i));
+      var aux = p[i];
+      p[i] = p[r];
+      p[r] = aux;
+    }
+    return p;
+  }
+  SimplexNoise._buildPermutationTable = buildPermutationTable;
+
+  function alea() {
+    // Johannes Baagøe <baagoe@baagoe.com>, 2010
+    var s0 = 0;
+    var s1 = 0;
+    var s2 = 0;
+    var c = 1;
+
+    var mash = masher();
+    s0 = mash(' ');
+    s1 = mash(' ');
+    s2 = mash(' ');
+
+    for (var i = 0; i < arguments.length; i++) {
+      s0 -= mash(arguments[i]);
+      if (s0 < 0) {
+        s0 += 1;
+      }
+      s1 -= mash(arguments[i]);
+      if (s1 < 0) {
+        s1 += 1;
+      }
+      s2 -= mash(arguments[i]);
+      if (s2 < 0) {
+        s2 += 1;
+      }
+    }
+    mash = null;
+    return function() {
+      var t = 2091639 * s0 + c * 2.3283064365386963e-10; // 2^-32
+      s0 = s1;
+      s1 = s2;
+      return s2 = t - (c = t | 0);
+    };
+  }
+  function masher() {
+    var n = 0xefc8249d;
+    return function(data) {
+      data = data.toString();
+      for (var i = 0; i < data.length; i++) {
+        n += data.charCodeAt(i);
+        var h = 0.02519603282416938 * n;
+        n = h >>> 0;
+        h -= n;
+        h *= n;
+        n = h >>> 0;
+        h -= n;
+        n += h * 0x100000000; // 2^32
+      }
+      return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
+    };
+  }
+
+  // amd
+  if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {return SimplexNoise;}).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  // common js
+  if (true) exports.SimplexNoise = SimplexNoise;
+  // browser
+  else if (typeof window !== 'undefined') window.SimplexNoise = SimplexNoise;
+  // nodejs
+  if (true) {
+    module.exports = SimplexNoise;
+  }
+
+})();
+
+
+/***/ }),
+/* 383 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+(function () {
+	var enterModule = __webpack_require__(0).enterModule;
+
+	enterModule && enterModule(module);
+})();
+
+(function () {
+	var enterModule = __webpack_require__(0).enterModule;
+
+	enterModule && enterModule(module);
+})();
+
+var PI = Math.PI,
+    cos = Math.cos,
+    sin = Math.sin,
+    abs = Math.abs,
+    sqrt = Math.sqrt,
+    pow = Math.pow,
+    round = Math.round,
+    random = Math.random,
+    atan2 = Math.atan2;
+exports.PI = PI;
+exports.cos = cos;
+exports.sin = sin;
+exports.abs = abs;
+exports.sqrt = sqrt;
+exports.pow = pow;
+exports.round = round;
+exports.random = random;
+exports.atan2 = atan2;
+var HALF_PI = exports.HALF_PI = 0.5 * PI;
+var TAU = exports.TAU = 2 * PI;
+var TO_RAD = exports.TO_RAD = PI / 180;
+var floor = exports.floor = function floor(n) {
+	return n | 0;
+};
+var rand = exports.rand = function rand(n) {
+	return n * random();
+};
+var randIn = exports.randIn = function randIn(min, max) {
+	return rand(max - min) + min;
+};
+var randRange = exports.randRange = function randRange(n) {
+	return n - rand(2 * n);
+};
+var fadeIn = exports.fadeIn = function fadeIn(t, m) {
+	return t / m;
+};
+var fadeOut = exports.fadeOut = function fadeOut(t, m) {
+	return (m - t) / m;
+};
+var fadeInOut = exports.fadeInOut = function fadeInOut(t, m) {
+	var hm = 0.5 * m;
+	return abs((t + hm) % m - hm) / hm;
+};
+var dist = exports.dist = function dist(x1, y1, x2, y2) {
+	return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+};
+var angle = exports.angle = function angle(x1, y1, x2, y2) {
+	return atan2(y2 - y1, x2 - x1);
+};
+var lerp = exports.lerp = function lerp(n1, n2, speed) {
+	return (1 - speed) * n1 + speed * n2;
+};
+;
+
+(function () {
+	var reactHotLoader = __webpack_require__(0).default;
+
+	var leaveModule = __webpack_require__(0).leaveModule;
+
+	if (!reactHotLoader) {
+		return;
+	}
+
+	reactHotLoader.register(PI, "PI", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(cos, "cos", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(sin, "sin", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(abs, "abs", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(sqrt, "sqrt", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(pow, "pow", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(round, "round", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(random, "random", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(atan2, "atan2", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(HALF_PI, "HALF_PI", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(TAU, "TAU", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(TO_RAD, "TO_RAD", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(floor, "floor", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(rand, "rand", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(randIn, "randIn", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(randRange, "randRange", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(fadeIn, "fadeIn", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(fadeOut, "fadeOut", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(fadeInOut, "fadeInOut", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(dist, "dist", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(angle, "angle", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(lerp, "lerp", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	leaveModule(module);
+})();
+
+;
+;
+
+(function () {
+	var reactHotLoader = __webpack_require__(0).default;
+
+	var leaveModule = __webpack_require__(0).leaveModule;
+
+	if (!reactHotLoader) {
+		return;
+	}
+
+	reactHotLoader.register(PI, "PI", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(cos, "cos", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(sin, "sin", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(abs, "abs", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(sqrt, "sqrt", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(pow, "pow", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(round, "round", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(random, "random", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(atan2, "atan2", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(HALF_PI, "HALF_PI", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(TAU, "TAU", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(TO_RAD, "TO_RAD", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(floor, "floor", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(rand, "rand", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(randIn, "randIn", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(randRange, "randRange", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(fadeIn, "fadeIn", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(fadeOut, "fadeOut", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(fadeInOut, "fadeInOut", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(dist, "dist", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(angle, "angle", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	reactHotLoader.register(lerp, "lerp", "/var/www/portfolio/resources/assets/js/components/Portfolio/sections/common/util.js");
+	leaveModule(module);
+})();
+
+;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+
+/***/ }),
+/* 384 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(380);
+var content = __webpack_require__(385);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -64719,22 +66014,22 @@ if(false) {
 }
 
 /***/ }),
-/* 380 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(381);
-exports = module.exports = __webpack_require__(8)(false);
+var escape = __webpack_require__(386);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
 
 
 // module
-exports.push([module.i, "/* required styles */\r\n\r\n.leaflet-pane,\r\n.leaflet-tile,\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow,\r\n.leaflet-tile-container,\r\n.leaflet-pane > svg,\r\n.leaflet-pane > canvas,\r\n.leaflet-zoom-box,\r\n.leaflet-image-layer,\r\n.leaflet-layer {\r\n\tposition: absolute;\r\n\tleft: 0;\r\n\ttop: 0;\r\n\t}\r\n.leaflet-container {\r\n\toverflow: hidden;\r\n\t}\r\n.leaflet-tile,\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow {\r\n\t-webkit-user-select: none;\r\n\t   -moz-user-select: none;\r\n\t        user-select: none;\r\n\t  -webkit-user-drag: none;\r\n\t}\r\n/* Safari renders non-retina tile on retina better with this, but Chrome is worse */\r\n.leaflet-safari .leaflet-tile {\r\n\timage-rendering: -webkit-optimize-contrast;\r\n\t}\r\n/* hack that prevents hw layers \"stretching\" when loading new tiles */\r\n.leaflet-safari .leaflet-tile-container {\r\n\twidth: 1600px;\r\n\theight: 1600px;\r\n\t-webkit-transform-origin: 0 0;\r\n\t}\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow {\r\n\tdisplay: block;\r\n\t}\r\n/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */\r\n/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */\r\n.leaflet-container .leaflet-overlay-pane svg,\r\n.leaflet-container .leaflet-marker-pane img,\r\n.leaflet-container .leaflet-shadow-pane img,\r\n.leaflet-container .leaflet-tile-pane img,\r\n.leaflet-container img.leaflet-image-layer,\r\n.leaflet-container .leaflet-tile {\r\n\tmax-width: none !important;\r\n\tmax-height: none !important;\r\n\t}\r\n\r\n.leaflet-container.leaflet-touch-zoom {\r\n\t-ms-touch-action: pan-x pan-y;\r\n\ttouch-action: pan-x pan-y;\r\n\t}\r\n.leaflet-container.leaflet-touch-drag {\r\n\t-ms-touch-action: pinch-zoom;\r\n\t/* Fallback for FF which doesn't support pinch-zoom */\r\n\ttouch-action: none;\r\n\ttouch-action: pinch-zoom;\r\n}\r\n.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.leaflet-container {\r\n\t-webkit-tap-highlight-color: transparent;\r\n}\r\n.leaflet-container a {\r\n\t-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);\r\n}\r\n.leaflet-tile {\r\n\tfilter: inherit;\r\n\tvisibility: hidden;\r\n\t}\r\n.leaflet-tile-loaded {\r\n\tvisibility: inherit;\r\n\t}\r\n.leaflet-zoom-box {\r\n\twidth: 0;\r\n\theight: 0;\r\n\t-moz-box-sizing: border-box;\r\n\t     box-sizing: border-box;\r\n\tz-index: 800;\r\n\t}\r\n/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */\r\n.leaflet-overlay-pane svg {\r\n\t-moz-user-select: none;\r\n\t}\r\n\r\n.leaflet-pane         { z-index: 400; }\r\n\r\n.leaflet-tile-pane    { z-index: 200; }\r\n.leaflet-overlay-pane { z-index: 400; }\r\n.leaflet-shadow-pane  { z-index: 500; }\r\n.leaflet-marker-pane  { z-index: 600; }\r\n.leaflet-tooltip-pane   { z-index: 650; }\r\n.leaflet-popup-pane   { z-index: 700; }\r\n\r\n.leaflet-map-pane canvas { z-index: 100; }\r\n.leaflet-map-pane svg    { z-index: 200; }\r\n\r\n.leaflet-vml-shape {\r\n\twidth: 1px;\r\n\theight: 1px;\r\n\t}\r\n.lvml {\r\n\tbehavior: url(#default#VML);\r\n\tdisplay: inline-block;\r\n\tposition: absolute;\r\n\t}\r\n\r\n\r\n/* control positioning */\r\n\r\n.leaflet-control {\r\n\tposition: relative;\r\n\tz-index: 800;\r\n\tpointer-events: visiblePainted; /* IE 9-10 doesn't have auto */\r\n\tpointer-events: auto;\r\n\t}\r\n.leaflet-top,\r\n.leaflet-bottom {\r\n\tposition: absolute;\r\n\tz-index: 1000;\r\n\tpointer-events: none;\r\n\t}\r\n.leaflet-top {\r\n\ttop: 0;\r\n\t}\r\n.leaflet-right {\r\n\tright: 0;\r\n\t}\r\n.leaflet-bottom {\r\n\tbottom: 0;\r\n\t}\r\n.leaflet-left {\r\n\tleft: 0;\r\n\t}\r\n.leaflet-control {\r\n\tfloat: left;\r\n\tclear: both;\r\n\t}\r\n.leaflet-right .leaflet-control {\r\n\tfloat: right;\r\n\t}\r\n.leaflet-top .leaflet-control {\r\n\tmargin-top: 10px;\r\n\t}\r\n.leaflet-bottom .leaflet-control {\r\n\tmargin-bottom: 10px;\r\n\t}\r\n.leaflet-left .leaflet-control {\r\n\tmargin-left: 10px;\r\n\t}\r\n.leaflet-right .leaflet-control {\r\n\tmargin-right: 10px;\r\n\t}\r\n\r\n\r\n/* zoom and fade animations */\r\n\r\n.leaflet-fade-anim .leaflet-tile {\r\n\twill-change: opacity;\r\n\t}\r\n.leaflet-fade-anim .leaflet-popup {\r\n\topacity: 0;\r\n\t-webkit-transition: opacity 0.2s linear;\r\n\t   -moz-transition: opacity 0.2s linear;\r\n\t        transition: opacity 0.2s linear;\r\n\t}\r\n.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {\r\n\topacity: 1;\r\n\t}\r\n.leaflet-zoom-animated {\r\n\t-webkit-transform-origin: 0 0;\r\n\t    -ms-transform-origin: 0 0;\r\n\t        transform-origin: 0 0;\r\n\t}\r\n.leaflet-zoom-anim .leaflet-zoom-animated {\r\n\twill-change: transform;\r\n\t}\r\n.leaflet-zoom-anim .leaflet-zoom-animated {\r\n\t-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t}\r\n.leaflet-zoom-anim .leaflet-tile,\r\n.leaflet-pan-anim .leaflet-tile {\r\n\t-webkit-transition: none;\r\n\t   -moz-transition: none;\r\n\t        transition: none;\r\n\t}\r\n\r\n.leaflet-zoom-anim .leaflet-zoom-hide {\r\n\tvisibility: hidden;\r\n\t}\r\n\r\n\r\n/* cursors */\r\n\r\n.leaflet-interactive {\r\n\tcursor: pointer;\r\n\t}\r\n.leaflet-grab {\r\n\tcursor: -webkit-grab;\r\n\tcursor:    -moz-grab;\r\n\tcursor:         grab;\r\n\t}\r\n.leaflet-crosshair,\r\n.leaflet-crosshair .leaflet-interactive {\r\n\tcursor: crosshair;\r\n\t}\r\n.leaflet-popup-pane,\r\n.leaflet-control {\r\n\tcursor: auto;\r\n\t}\r\n.leaflet-dragging .leaflet-grab,\r\n.leaflet-dragging .leaflet-grab .leaflet-interactive,\r\n.leaflet-dragging .leaflet-marker-draggable {\r\n\tcursor: move;\r\n\tcursor: -webkit-grabbing;\r\n\tcursor:    -moz-grabbing;\r\n\tcursor:         grabbing;\r\n\t}\r\n\r\n/* marker & overlays interactivity */\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow,\r\n.leaflet-image-layer,\r\n.leaflet-pane > svg path,\r\n.leaflet-tile-container {\r\n\tpointer-events: none;\r\n\t}\r\n\r\n.leaflet-marker-icon.leaflet-interactive,\r\n.leaflet-image-layer.leaflet-interactive,\r\n.leaflet-pane > svg path.leaflet-interactive {\r\n\tpointer-events: visiblePainted; /* IE 9-10 doesn't have auto */\r\n\tpointer-events: auto;\r\n\t}\r\n\r\n/* visual tweaks */\r\n\r\n.leaflet-container {\r\n\tbackground: #ddd;\r\n\toutline: 0;\r\n\t}\r\n.leaflet-container a {\r\n\tcolor: #0078A8;\r\n\t}\r\n.leaflet-container a.leaflet-active {\r\n\toutline: 2px solid orange;\r\n\t}\r\n.leaflet-zoom-box {\r\n\tborder: 2px dotted #38f;\r\n\tbackground: rgba(255,255,255,0.5);\r\n\t}\r\n\r\n\r\n/* general typography */\r\n.leaflet-container {\r\n\tfont: 12px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif;\r\n\t}\r\n\r\n\r\n/* general toolbar styles */\r\n\r\n.leaflet-bar {\r\n\tbox-shadow: 0 1px 5px rgba(0,0,0,0.65);\r\n\tborder-radius: 4px;\r\n\t}\r\n.leaflet-bar a,\r\n.leaflet-bar a:hover {\r\n\tbackground-color: #fff;\r\n\tborder-bottom: 1px solid #ccc;\r\n\twidth: 26px;\r\n\theight: 26px;\r\n\tline-height: 26px;\r\n\tdisplay: block;\r\n\ttext-align: center;\r\n\ttext-decoration: none;\r\n\tcolor: black;\r\n\t}\r\n.leaflet-bar a,\r\n.leaflet-control-layers-toggle {\r\n\tbackground-position: 50% 50%;\r\n\tbackground-repeat: no-repeat;\r\n\tdisplay: block;\r\n\t}\r\n.leaflet-bar a:hover {\r\n\tbackground-color: #f4f4f4;\r\n\t}\r\n.leaflet-bar a:first-child {\r\n\tborder-top-left-radius: 4px;\r\n\tborder-top-right-radius: 4px;\r\n\t}\r\n.leaflet-bar a:last-child {\r\n\tborder-bottom-left-radius: 4px;\r\n\tborder-bottom-right-radius: 4px;\r\n\tborder-bottom: none;\r\n\t}\r\n.leaflet-bar a.leaflet-disabled {\r\n\tcursor: default;\r\n\tbackground-color: #f4f4f4;\r\n\tcolor: #bbb;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-bar a {\r\n\twidth: 30px;\r\n\theight: 30px;\r\n\tline-height: 30px;\r\n\t}\r\n.leaflet-touch .leaflet-bar a:first-child {\r\n\tborder-top-left-radius: 2px;\r\n\tborder-top-right-radius: 2px;\r\n\t}\r\n.leaflet-touch .leaflet-bar a:last-child {\r\n\tborder-bottom-left-radius: 2px;\r\n\tborder-bottom-right-radius: 2px;\r\n\t}\r\n\r\n/* zoom control */\r\n\r\n.leaflet-control-zoom-in,\r\n.leaflet-control-zoom-out {\r\n\tfont: bold 18px 'Lucida Console', Monaco, monospace;\r\n\ttext-indent: 1px;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {\r\n\tfont-size: 22px;\r\n\t}\r\n\r\n\r\n/* layers control */\r\n\r\n.leaflet-control-layers {\r\n\tbox-shadow: 0 1px 5px rgba(0,0,0,0.4);\r\n\tbackground: #fff;\r\n\tborder-radius: 5px;\r\n\t}\r\n.leaflet-control-layers-toggle {\r\n\tbackground-image: url(" + escape(__webpack_require__(382)) + ");\r\n\twidth: 36px;\r\n\theight: 36px;\r\n\t}\r\n.leaflet-retina .leaflet-control-layers-toggle {\r\n\tbackground-image: url(" + escape(__webpack_require__(383)) + ");\r\n\tbackground-size: 26px 26px;\r\n\t}\r\n.leaflet-touch .leaflet-control-layers-toggle {\r\n\twidth: 44px;\r\n\theight: 44px;\r\n\t}\r\n.leaflet-control-layers .leaflet-control-layers-list,\r\n.leaflet-control-layers-expanded .leaflet-control-layers-toggle {\r\n\tdisplay: none;\r\n\t}\r\n.leaflet-control-layers-expanded .leaflet-control-layers-list {\r\n\tdisplay: block;\r\n\tposition: relative;\r\n\t}\r\n.leaflet-control-layers-expanded {\r\n\tpadding: 6px 10px 6px 6px;\r\n\tcolor: #333;\r\n\tbackground: #fff;\r\n\t}\r\n.leaflet-control-layers-scrollbar {\r\n\toverflow-y: scroll;\r\n\toverflow-x: hidden;\r\n\tpadding-right: 5px;\r\n\t}\r\n.leaflet-control-layers-selector {\r\n\tmargin-top: 2px;\r\n\tposition: relative;\r\n\ttop: 1px;\r\n\t}\r\n.leaflet-control-layers label {\r\n\tdisplay: block;\r\n\t}\r\n.leaflet-control-layers-separator {\r\n\theight: 0;\r\n\tborder-top: 1px solid #ddd;\r\n\tmargin: 5px -10px 5px -6px;\r\n\t}\r\n\r\n/* Default icon URLs */\r\n.leaflet-default-icon-path {\r\n\tbackground-image: url(" + escape(__webpack_require__(384)) + ");\r\n\t}\r\n\r\n\r\n/* attribution and scale controls */\r\n\r\n.leaflet-container .leaflet-control-attribution {\r\n\tbackground: #fff;\r\n\tbackground: rgba(255, 255, 255, 0.7);\r\n\tmargin: 0;\r\n\t}\r\n.leaflet-control-attribution,\r\n.leaflet-control-scale-line {\r\n\tpadding: 0 5px;\r\n\tcolor: #333;\r\n\t}\r\n.leaflet-control-attribution a {\r\n\ttext-decoration: none;\r\n\t}\r\n.leaflet-control-attribution a:hover {\r\n\ttext-decoration: underline;\r\n\t}\r\n.leaflet-container .leaflet-control-attribution,\r\n.leaflet-container .leaflet-control-scale {\r\n\tfont-size: 11px;\r\n\t}\r\n.leaflet-left .leaflet-control-scale {\r\n\tmargin-left: 5px;\r\n\t}\r\n.leaflet-bottom .leaflet-control-scale {\r\n\tmargin-bottom: 5px;\r\n\t}\r\n.leaflet-control-scale-line {\r\n\tborder: 2px solid #777;\r\n\tborder-top: none;\r\n\tline-height: 1.1;\r\n\tpadding: 2px 5px 1px;\r\n\tfont-size: 11px;\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n\t-moz-box-sizing: border-box;\r\n\t     box-sizing: border-box;\r\n\r\n\tbackground: #fff;\r\n\tbackground: rgba(255, 255, 255, 0.5);\r\n\t}\r\n.leaflet-control-scale-line:not(:first-child) {\r\n\tborder-top: 2px solid #777;\r\n\tborder-bottom: none;\r\n\tmargin-top: -2px;\r\n\t}\r\n.leaflet-control-scale-line:not(:first-child):not(:last-child) {\r\n\tborder-bottom: 2px solid #777;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-control-attribution,\r\n.leaflet-touch .leaflet-control-layers,\r\n.leaflet-touch .leaflet-bar {\r\n\tbox-shadow: none;\r\n\t}\r\n.leaflet-touch .leaflet-control-layers,\r\n.leaflet-touch .leaflet-bar {\r\n\tborder: 2px solid rgba(0,0,0,0.2);\r\n\tbackground-clip: padding-box;\r\n\t}\r\n\r\n\r\n/* popup */\r\n\r\n.leaflet-popup {\r\n\tposition: absolute;\r\n\ttext-align: center;\r\n\tmargin-bottom: 20px;\r\n\t}\r\n.leaflet-popup-content-wrapper {\r\n\tpadding: 1px;\r\n\ttext-align: left;\r\n\tborder-radius: 12px;\r\n\t}\r\n.leaflet-popup-content {\r\n\tmargin: 13px 19px;\r\n\tline-height: 1.4;\r\n\t}\r\n.leaflet-popup-content p {\r\n\tmargin: 18px 0;\r\n\t}\r\n.leaflet-popup-tip-container {\r\n\twidth: 40px;\r\n\theight: 20px;\r\n\tposition: absolute;\r\n\tleft: 50%;\r\n\tmargin-left: -20px;\r\n\toverflow: hidden;\r\n\tpointer-events: none;\r\n\t}\r\n.leaflet-popup-tip {\r\n\twidth: 17px;\r\n\theight: 17px;\r\n\tpadding: 1px;\r\n\r\n\tmargin: -10px auto 0;\r\n\r\n\t-webkit-transform: rotate(45deg);\r\n\t   -moz-transform: rotate(45deg);\r\n\t    -ms-transform: rotate(45deg);\r\n\t        transform: rotate(45deg);\r\n\t}\r\n.leaflet-popup-content-wrapper,\r\n.leaflet-popup-tip {\r\n\tbackground: white;\r\n\tcolor: #333;\r\n\tbox-shadow: 0 3px 14px rgba(0,0,0,0.4);\r\n\t}\r\n.leaflet-container a.leaflet-popup-close-button {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tright: 0;\r\n\tpadding: 4px 4px 0 0;\r\n\tborder: none;\r\n\ttext-align: center;\r\n\twidth: 18px;\r\n\theight: 14px;\r\n\tfont: 16px/14px Tahoma, Verdana, sans-serif;\r\n\tcolor: #c3c3c3;\r\n\ttext-decoration: none;\r\n\tfont-weight: bold;\r\n\tbackground: transparent;\r\n\t}\r\n.leaflet-container a.leaflet-popup-close-button:hover {\r\n\tcolor: #999;\r\n\t}\r\n.leaflet-popup-scrolled {\r\n\toverflow: auto;\r\n\tborder-bottom: 1px solid #ddd;\r\n\tborder-top: 1px solid #ddd;\r\n\t}\r\n\r\n.leaflet-oldie .leaflet-popup-content-wrapper {\r\n\tzoom: 1;\r\n\t}\r\n.leaflet-oldie .leaflet-popup-tip {\r\n\twidth: 24px;\r\n\tmargin: 0 auto;\r\n\r\n\t-ms-filter: \"progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)\";\r\n\tfilter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);\r\n\t}\r\n.leaflet-oldie .leaflet-popup-tip-container {\r\n\tmargin-top: -1px;\r\n\t}\r\n\r\n.leaflet-oldie .leaflet-control-zoom,\r\n.leaflet-oldie .leaflet-control-layers,\r\n.leaflet-oldie .leaflet-popup-content-wrapper,\r\n.leaflet-oldie .leaflet-popup-tip {\r\n\tborder: 1px solid #999;\r\n\t}\r\n\r\n\r\n/* div icon */\r\n\r\n.leaflet-div-icon {\r\n\tbackground: #fff;\r\n\tborder: 1px solid #666;\r\n\t}\r\n\r\n\r\n/* Tooltip */\r\n/* Base styles for the element that has a tooltip */\r\n.leaflet-tooltip {\r\n\tposition: absolute;\r\n\tpadding: 6px;\r\n\tbackground-color: #fff;\r\n\tborder: 1px solid #fff;\r\n\tborder-radius: 3px;\r\n\tcolor: #222;\r\n\twhite-space: nowrap;\r\n\t-webkit-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\tpointer-events: none;\r\n\tbox-shadow: 0 1px 3px rgba(0,0,0,0.4);\r\n\t}\r\n.leaflet-tooltip.leaflet-clickable {\r\n\tcursor: pointer;\r\n\tpointer-events: auto;\r\n\t}\r\n.leaflet-tooltip-top:before,\r\n.leaflet-tooltip-bottom:before,\r\n.leaflet-tooltip-left:before,\r\n.leaflet-tooltip-right:before {\r\n\tposition: absolute;\r\n\tpointer-events: none;\r\n\tborder: 6px solid transparent;\r\n\tbackground: transparent;\r\n\tcontent: \"\";\r\n\t}\r\n\r\n/* Directions */\r\n\r\n.leaflet-tooltip-bottom {\r\n\tmargin-top: 6px;\r\n}\r\n.leaflet-tooltip-top {\r\n\tmargin-top: -6px;\r\n}\r\n.leaflet-tooltip-bottom:before,\r\n.leaflet-tooltip-top:before {\r\n\tleft: 50%;\r\n\tmargin-left: -6px;\r\n\t}\r\n.leaflet-tooltip-top:before {\r\n\tbottom: 0;\r\n\tmargin-bottom: -12px;\r\n\tborder-top-color: #fff;\r\n\t}\r\n.leaflet-tooltip-bottom:before {\r\n\ttop: 0;\r\n\tmargin-top: -12px;\r\n\tmargin-left: -6px;\r\n\tborder-bottom-color: #fff;\r\n\t}\r\n.leaflet-tooltip-left {\r\n\tmargin-left: -6px;\r\n}\r\n.leaflet-tooltip-right {\r\n\tmargin-left: 6px;\r\n}\r\n.leaflet-tooltip-left:before,\r\n.leaflet-tooltip-right:before {\r\n\ttop: 50%;\r\n\tmargin-top: -6px;\r\n\t}\r\n.leaflet-tooltip-left:before {\r\n\tright: 0;\r\n\tmargin-right: -12px;\r\n\tborder-left-color: #fff;\r\n\t}\r\n.leaflet-tooltip-right:before {\r\n\tleft: 0;\r\n\tmargin-left: -12px;\r\n\tborder-right-color: #fff;\r\n\t}\r\n", ""]);
+exports.push([module.i, "/* required styles */\r\n\r\n.leaflet-pane,\r\n.leaflet-tile,\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow,\r\n.leaflet-tile-container,\r\n.leaflet-pane > svg,\r\n.leaflet-pane > canvas,\r\n.leaflet-zoom-box,\r\n.leaflet-image-layer,\r\n.leaflet-layer {\r\n\tposition: absolute;\r\n\tleft: 0;\r\n\ttop: 0;\r\n\t}\r\n.leaflet-container {\r\n\toverflow: hidden;\r\n\t}\r\n.leaflet-tile,\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow {\r\n\t-webkit-user-select: none;\r\n\t   -moz-user-select: none;\r\n\t        user-select: none;\r\n\t  -webkit-user-drag: none;\r\n\t}\r\n/* Safari renders non-retina tile on retina better with this, but Chrome is worse */\r\n.leaflet-safari .leaflet-tile {\r\n\timage-rendering: -webkit-optimize-contrast;\r\n\t}\r\n/* hack that prevents hw layers \"stretching\" when loading new tiles */\r\n.leaflet-safari .leaflet-tile-container {\r\n\twidth: 1600px;\r\n\theight: 1600px;\r\n\t-webkit-transform-origin: 0 0;\r\n\t}\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow {\r\n\tdisplay: block;\r\n\t}\r\n/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */\r\n/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */\r\n.leaflet-container .leaflet-overlay-pane svg,\r\n.leaflet-container .leaflet-marker-pane img,\r\n.leaflet-container .leaflet-shadow-pane img,\r\n.leaflet-container .leaflet-tile-pane img,\r\n.leaflet-container img.leaflet-image-layer,\r\n.leaflet-container .leaflet-tile {\r\n\tmax-width: none !important;\r\n\tmax-height: none !important;\r\n\t}\r\n\r\n.leaflet-container.leaflet-touch-zoom {\r\n\t-ms-touch-action: pan-x pan-y;\r\n\ttouch-action: pan-x pan-y;\r\n\t}\r\n.leaflet-container.leaflet-touch-drag {\r\n\t-ms-touch-action: pinch-zoom;\r\n\t/* Fallback for FF which doesn't support pinch-zoom */\r\n\ttouch-action: none;\r\n\ttouch-action: pinch-zoom;\r\n}\r\n.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.leaflet-container {\r\n\t-webkit-tap-highlight-color: transparent;\r\n}\r\n.leaflet-container a {\r\n\t-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);\r\n}\r\n.leaflet-tile {\r\n\tfilter: inherit;\r\n\tvisibility: hidden;\r\n\t}\r\n.leaflet-tile-loaded {\r\n\tvisibility: inherit;\r\n\t}\r\n.leaflet-zoom-box {\r\n\twidth: 0;\r\n\theight: 0;\r\n\t-moz-box-sizing: border-box;\r\n\t     box-sizing: border-box;\r\n\tz-index: 800;\r\n\t}\r\n/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */\r\n.leaflet-overlay-pane svg {\r\n\t-moz-user-select: none;\r\n\t}\r\n\r\n.leaflet-pane         { z-index: 400; }\r\n\r\n.leaflet-tile-pane    { z-index: 200; }\r\n.leaflet-overlay-pane { z-index: 400; }\r\n.leaflet-shadow-pane  { z-index: 500; }\r\n.leaflet-marker-pane  { z-index: 600; }\r\n.leaflet-tooltip-pane   { z-index: 650; }\r\n.leaflet-popup-pane   { z-index: 700; }\r\n\r\n.leaflet-map-pane canvas { z-index: 100; }\r\n.leaflet-map-pane svg    { z-index: 200; }\r\n\r\n.leaflet-vml-shape {\r\n\twidth: 1px;\r\n\theight: 1px;\r\n\t}\r\n.lvml {\r\n\tbehavior: url(#default#VML);\r\n\tdisplay: inline-block;\r\n\tposition: absolute;\r\n\t}\r\n\r\n\r\n/* control positioning */\r\n\r\n.leaflet-control {\r\n\tposition: relative;\r\n\tz-index: 800;\r\n\tpointer-events: visiblePainted; /* IE 9-10 doesn't have auto */\r\n\tpointer-events: auto;\r\n\t}\r\n.leaflet-top,\r\n.leaflet-bottom {\r\n\tposition: absolute;\r\n\tz-index: 1000;\r\n\tpointer-events: none;\r\n\t}\r\n.leaflet-top {\r\n\ttop: 0;\r\n\t}\r\n.leaflet-right {\r\n\tright: 0;\r\n\t}\r\n.leaflet-bottom {\r\n\tbottom: 0;\r\n\t}\r\n.leaflet-left {\r\n\tleft: 0;\r\n\t}\r\n.leaflet-control {\r\n\tfloat: left;\r\n\tclear: both;\r\n\t}\r\n.leaflet-right .leaflet-control {\r\n\tfloat: right;\r\n\t}\r\n.leaflet-top .leaflet-control {\r\n\tmargin-top: 10px;\r\n\t}\r\n.leaflet-bottom .leaflet-control {\r\n\tmargin-bottom: 10px;\r\n\t}\r\n.leaflet-left .leaflet-control {\r\n\tmargin-left: 10px;\r\n\t}\r\n.leaflet-right .leaflet-control {\r\n\tmargin-right: 10px;\r\n\t}\r\n\r\n\r\n/* zoom and fade animations */\r\n\r\n.leaflet-fade-anim .leaflet-tile {\r\n\twill-change: opacity;\r\n\t}\r\n.leaflet-fade-anim .leaflet-popup {\r\n\topacity: 0;\r\n\t-webkit-transition: opacity 0.2s linear;\r\n\t   -moz-transition: opacity 0.2s linear;\r\n\t        transition: opacity 0.2s linear;\r\n\t}\r\n.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {\r\n\topacity: 1;\r\n\t}\r\n.leaflet-zoom-animated {\r\n\t-webkit-transform-origin: 0 0;\r\n\t    -ms-transform-origin: 0 0;\r\n\t        transform-origin: 0 0;\r\n\t}\r\n.leaflet-zoom-anim .leaflet-zoom-animated {\r\n\twill-change: transform;\r\n\t}\r\n.leaflet-zoom-anim .leaflet-zoom-animated {\r\n\t-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t}\r\n.leaflet-zoom-anim .leaflet-tile,\r\n.leaflet-pan-anim .leaflet-tile {\r\n\t-webkit-transition: none;\r\n\t   -moz-transition: none;\r\n\t        transition: none;\r\n\t}\r\n\r\n.leaflet-zoom-anim .leaflet-zoom-hide {\r\n\tvisibility: hidden;\r\n\t}\r\n\r\n\r\n/* cursors */\r\n\r\n.leaflet-interactive {\r\n\tcursor: pointer;\r\n\t}\r\n.leaflet-grab {\r\n\tcursor: -webkit-grab;\r\n\tcursor:    -moz-grab;\r\n\tcursor:         grab;\r\n\t}\r\n.leaflet-crosshair,\r\n.leaflet-crosshair .leaflet-interactive {\r\n\tcursor: crosshair;\r\n\t}\r\n.leaflet-popup-pane,\r\n.leaflet-control {\r\n\tcursor: auto;\r\n\t}\r\n.leaflet-dragging .leaflet-grab,\r\n.leaflet-dragging .leaflet-grab .leaflet-interactive,\r\n.leaflet-dragging .leaflet-marker-draggable {\r\n\tcursor: move;\r\n\tcursor: -webkit-grabbing;\r\n\tcursor:    -moz-grabbing;\r\n\tcursor:         grabbing;\r\n\t}\r\n\r\n/* marker & overlays interactivity */\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow,\r\n.leaflet-image-layer,\r\n.leaflet-pane > svg path,\r\n.leaflet-tile-container {\r\n\tpointer-events: none;\r\n\t}\r\n\r\n.leaflet-marker-icon.leaflet-interactive,\r\n.leaflet-image-layer.leaflet-interactive,\r\n.leaflet-pane > svg path.leaflet-interactive {\r\n\tpointer-events: visiblePainted; /* IE 9-10 doesn't have auto */\r\n\tpointer-events: auto;\r\n\t}\r\n\r\n/* visual tweaks */\r\n\r\n.leaflet-container {\r\n\tbackground: #ddd;\r\n\toutline: 0;\r\n\t}\r\n.leaflet-container a {\r\n\tcolor: #0078A8;\r\n\t}\r\n.leaflet-container a.leaflet-active {\r\n\toutline: 2px solid orange;\r\n\t}\r\n.leaflet-zoom-box {\r\n\tborder: 2px dotted #38f;\r\n\tbackground: rgba(255,255,255,0.5);\r\n\t}\r\n\r\n\r\n/* general typography */\r\n.leaflet-container {\r\n\tfont: 12px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif;\r\n\t}\r\n\r\n\r\n/* general toolbar styles */\r\n\r\n.leaflet-bar {\r\n\tbox-shadow: 0 1px 5px rgba(0,0,0,0.65);\r\n\tborder-radius: 4px;\r\n\t}\r\n.leaflet-bar a,\r\n.leaflet-bar a:hover {\r\n\tbackground-color: #fff;\r\n\tborder-bottom: 1px solid #ccc;\r\n\twidth: 26px;\r\n\theight: 26px;\r\n\tline-height: 26px;\r\n\tdisplay: block;\r\n\ttext-align: center;\r\n\ttext-decoration: none;\r\n\tcolor: black;\r\n\t}\r\n.leaflet-bar a,\r\n.leaflet-control-layers-toggle {\r\n\tbackground-position: 50% 50%;\r\n\tbackground-repeat: no-repeat;\r\n\tdisplay: block;\r\n\t}\r\n.leaflet-bar a:hover {\r\n\tbackground-color: #f4f4f4;\r\n\t}\r\n.leaflet-bar a:first-child {\r\n\tborder-top-left-radius: 4px;\r\n\tborder-top-right-radius: 4px;\r\n\t}\r\n.leaflet-bar a:last-child {\r\n\tborder-bottom-left-radius: 4px;\r\n\tborder-bottom-right-radius: 4px;\r\n\tborder-bottom: none;\r\n\t}\r\n.leaflet-bar a.leaflet-disabled {\r\n\tcursor: default;\r\n\tbackground-color: #f4f4f4;\r\n\tcolor: #bbb;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-bar a {\r\n\twidth: 30px;\r\n\theight: 30px;\r\n\tline-height: 30px;\r\n\t}\r\n.leaflet-touch .leaflet-bar a:first-child {\r\n\tborder-top-left-radius: 2px;\r\n\tborder-top-right-radius: 2px;\r\n\t}\r\n.leaflet-touch .leaflet-bar a:last-child {\r\n\tborder-bottom-left-radius: 2px;\r\n\tborder-bottom-right-radius: 2px;\r\n\t}\r\n\r\n/* zoom control */\r\n\r\n.leaflet-control-zoom-in,\r\n.leaflet-control-zoom-out {\r\n\tfont: bold 18px 'Lucida Console', Monaco, monospace;\r\n\ttext-indent: 1px;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {\r\n\tfont-size: 22px;\r\n\t}\r\n\r\n\r\n/* layers control */\r\n\r\n.leaflet-control-layers {\r\n\tbox-shadow: 0 1px 5px rgba(0,0,0,0.4);\r\n\tbackground: #fff;\r\n\tborder-radius: 5px;\r\n\t}\r\n.leaflet-control-layers-toggle {\r\n\tbackground-image: url(" + escape(__webpack_require__(387)) + ");\r\n\twidth: 36px;\r\n\theight: 36px;\r\n\t}\r\n.leaflet-retina .leaflet-control-layers-toggle {\r\n\tbackground-image: url(" + escape(__webpack_require__(388)) + ");\r\n\tbackground-size: 26px 26px;\r\n\t}\r\n.leaflet-touch .leaflet-control-layers-toggle {\r\n\twidth: 44px;\r\n\theight: 44px;\r\n\t}\r\n.leaflet-control-layers .leaflet-control-layers-list,\r\n.leaflet-control-layers-expanded .leaflet-control-layers-toggle {\r\n\tdisplay: none;\r\n\t}\r\n.leaflet-control-layers-expanded .leaflet-control-layers-list {\r\n\tdisplay: block;\r\n\tposition: relative;\r\n\t}\r\n.leaflet-control-layers-expanded {\r\n\tpadding: 6px 10px 6px 6px;\r\n\tcolor: #333;\r\n\tbackground: #fff;\r\n\t}\r\n.leaflet-control-layers-scrollbar {\r\n\toverflow-y: scroll;\r\n\toverflow-x: hidden;\r\n\tpadding-right: 5px;\r\n\t}\r\n.leaflet-control-layers-selector {\r\n\tmargin-top: 2px;\r\n\tposition: relative;\r\n\ttop: 1px;\r\n\t}\r\n.leaflet-control-layers label {\r\n\tdisplay: block;\r\n\t}\r\n.leaflet-control-layers-separator {\r\n\theight: 0;\r\n\tborder-top: 1px solid #ddd;\r\n\tmargin: 5px -10px 5px -6px;\r\n\t}\r\n\r\n/* Default icon URLs */\r\n.leaflet-default-icon-path {\r\n\tbackground-image: url(" + escape(__webpack_require__(389)) + ");\r\n\t}\r\n\r\n\r\n/* attribution and scale controls */\r\n\r\n.leaflet-container .leaflet-control-attribution {\r\n\tbackground: #fff;\r\n\tbackground: rgba(255, 255, 255, 0.7);\r\n\tmargin: 0;\r\n\t}\r\n.leaflet-control-attribution,\r\n.leaflet-control-scale-line {\r\n\tpadding: 0 5px;\r\n\tcolor: #333;\r\n\t}\r\n.leaflet-control-attribution a {\r\n\ttext-decoration: none;\r\n\t}\r\n.leaflet-control-attribution a:hover {\r\n\ttext-decoration: underline;\r\n\t}\r\n.leaflet-container .leaflet-control-attribution,\r\n.leaflet-container .leaflet-control-scale {\r\n\tfont-size: 11px;\r\n\t}\r\n.leaflet-left .leaflet-control-scale {\r\n\tmargin-left: 5px;\r\n\t}\r\n.leaflet-bottom .leaflet-control-scale {\r\n\tmargin-bottom: 5px;\r\n\t}\r\n.leaflet-control-scale-line {\r\n\tborder: 2px solid #777;\r\n\tborder-top: none;\r\n\tline-height: 1.1;\r\n\tpadding: 2px 5px 1px;\r\n\tfont-size: 11px;\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n\t-moz-box-sizing: border-box;\r\n\t     box-sizing: border-box;\r\n\r\n\tbackground: #fff;\r\n\tbackground: rgba(255, 255, 255, 0.5);\r\n\t}\r\n.leaflet-control-scale-line:not(:first-child) {\r\n\tborder-top: 2px solid #777;\r\n\tborder-bottom: none;\r\n\tmargin-top: -2px;\r\n\t}\r\n.leaflet-control-scale-line:not(:first-child):not(:last-child) {\r\n\tborder-bottom: 2px solid #777;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-control-attribution,\r\n.leaflet-touch .leaflet-control-layers,\r\n.leaflet-touch .leaflet-bar {\r\n\tbox-shadow: none;\r\n\t}\r\n.leaflet-touch .leaflet-control-layers,\r\n.leaflet-touch .leaflet-bar {\r\n\tborder: 2px solid rgba(0,0,0,0.2);\r\n\tbackground-clip: padding-box;\r\n\t}\r\n\r\n\r\n/* popup */\r\n\r\n.leaflet-popup {\r\n\tposition: absolute;\r\n\ttext-align: center;\r\n\tmargin-bottom: 20px;\r\n\t}\r\n.leaflet-popup-content-wrapper {\r\n\tpadding: 1px;\r\n\ttext-align: left;\r\n\tborder-radius: 12px;\r\n\t}\r\n.leaflet-popup-content {\r\n\tmargin: 13px 19px;\r\n\tline-height: 1.4;\r\n\t}\r\n.leaflet-popup-content p {\r\n\tmargin: 18px 0;\r\n\t}\r\n.leaflet-popup-tip-container {\r\n\twidth: 40px;\r\n\theight: 20px;\r\n\tposition: absolute;\r\n\tleft: 50%;\r\n\tmargin-left: -20px;\r\n\toverflow: hidden;\r\n\tpointer-events: none;\r\n\t}\r\n.leaflet-popup-tip {\r\n\twidth: 17px;\r\n\theight: 17px;\r\n\tpadding: 1px;\r\n\r\n\tmargin: -10px auto 0;\r\n\r\n\t-webkit-transform: rotate(45deg);\r\n\t   -moz-transform: rotate(45deg);\r\n\t    -ms-transform: rotate(45deg);\r\n\t        transform: rotate(45deg);\r\n\t}\r\n.leaflet-popup-content-wrapper,\r\n.leaflet-popup-tip {\r\n\tbackground: white;\r\n\tcolor: #333;\r\n\tbox-shadow: 0 3px 14px rgba(0,0,0,0.4);\r\n\t}\r\n.leaflet-container a.leaflet-popup-close-button {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tright: 0;\r\n\tpadding: 4px 4px 0 0;\r\n\tborder: none;\r\n\ttext-align: center;\r\n\twidth: 18px;\r\n\theight: 14px;\r\n\tfont: 16px/14px Tahoma, Verdana, sans-serif;\r\n\tcolor: #c3c3c3;\r\n\ttext-decoration: none;\r\n\tfont-weight: bold;\r\n\tbackground: transparent;\r\n\t}\r\n.leaflet-container a.leaflet-popup-close-button:hover {\r\n\tcolor: #999;\r\n\t}\r\n.leaflet-popup-scrolled {\r\n\toverflow: auto;\r\n\tborder-bottom: 1px solid #ddd;\r\n\tborder-top: 1px solid #ddd;\r\n\t}\r\n\r\n.leaflet-oldie .leaflet-popup-content-wrapper {\r\n\tzoom: 1;\r\n\t}\r\n.leaflet-oldie .leaflet-popup-tip {\r\n\twidth: 24px;\r\n\tmargin: 0 auto;\r\n\r\n\t-ms-filter: \"progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)\";\r\n\tfilter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);\r\n\t}\r\n.leaflet-oldie .leaflet-popup-tip-container {\r\n\tmargin-top: -1px;\r\n\t}\r\n\r\n.leaflet-oldie .leaflet-control-zoom,\r\n.leaflet-oldie .leaflet-control-layers,\r\n.leaflet-oldie .leaflet-popup-content-wrapper,\r\n.leaflet-oldie .leaflet-popup-tip {\r\n\tborder: 1px solid #999;\r\n\t}\r\n\r\n\r\n/* div icon */\r\n\r\n.leaflet-div-icon {\r\n\tbackground: #fff;\r\n\tborder: 1px solid #666;\r\n\t}\r\n\r\n\r\n/* Tooltip */\r\n/* Base styles for the element that has a tooltip */\r\n.leaflet-tooltip {\r\n\tposition: absolute;\r\n\tpadding: 6px;\r\n\tbackground-color: #fff;\r\n\tborder: 1px solid #fff;\r\n\tborder-radius: 3px;\r\n\tcolor: #222;\r\n\twhite-space: nowrap;\r\n\t-webkit-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\tpointer-events: none;\r\n\tbox-shadow: 0 1px 3px rgba(0,0,0,0.4);\r\n\t}\r\n.leaflet-tooltip.leaflet-clickable {\r\n\tcursor: pointer;\r\n\tpointer-events: auto;\r\n\t}\r\n.leaflet-tooltip-top:before,\r\n.leaflet-tooltip-bottom:before,\r\n.leaflet-tooltip-left:before,\r\n.leaflet-tooltip-right:before {\r\n\tposition: absolute;\r\n\tpointer-events: none;\r\n\tborder: 6px solid transparent;\r\n\tbackground: transparent;\r\n\tcontent: \"\";\r\n\t}\r\n\r\n/* Directions */\r\n\r\n.leaflet-tooltip-bottom {\r\n\tmargin-top: 6px;\r\n}\r\n.leaflet-tooltip-top {\r\n\tmargin-top: -6px;\r\n}\r\n.leaflet-tooltip-bottom:before,\r\n.leaflet-tooltip-top:before {\r\n\tleft: 50%;\r\n\tmargin-left: -6px;\r\n\t}\r\n.leaflet-tooltip-top:before {\r\n\tbottom: 0;\r\n\tmargin-bottom: -12px;\r\n\tborder-top-color: #fff;\r\n\t}\r\n.leaflet-tooltip-bottom:before {\r\n\ttop: 0;\r\n\tmargin-top: -12px;\r\n\tmargin-left: -6px;\r\n\tborder-bottom-color: #fff;\r\n\t}\r\n.leaflet-tooltip-left {\r\n\tmargin-left: -6px;\r\n}\r\n.leaflet-tooltip-right {\r\n\tmargin-left: 6px;\r\n}\r\n.leaflet-tooltip-left:before,\r\n.leaflet-tooltip-right:before {\r\n\ttop: 50%;\r\n\tmargin-top: -6px;\r\n\t}\r\n.leaflet-tooltip-left:before {\r\n\tright: 0;\r\n\tmargin-right: -12px;\r\n\tborder-left-color: #fff;\r\n\t}\r\n.leaflet-tooltip-right:before {\r\n\tleft: 0;\r\n\tmargin-left: -12px;\r\n\tborder-right-color: #fff;\r\n\t}\r\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 381 */
+/* 386 */
 /***/ (function(module, exports) {
 
 module.exports = function escape(url) {
@@ -64756,31 +66051,31 @@ module.exports = function escape(url) {
 
 
 /***/ }),
-/* 382 */
+/* 387 */
 /***/ (function(module, exports) {
 
 module.exports = "/images/vendor/leaflet/dist/layers.png?a6137456ed160d7606981aa57c559898";
 
 /***/ }),
-/* 383 */
+/* 388 */
 /***/ (function(module, exports) {
 
 module.exports = "/images/vendor/leaflet/dist/layers-2x.png?4f0283c6ce28e888000e978e537a6a56";
 
 /***/ }),
-/* 384 */
+/* 389 */
 /***/ (function(module, exports) {
 
 module.exports = "/images/vendor/leaflet/dist/marker-icon.png?2273e3d8ad9264b7daa5bdbf8e6b47f8";
 
 /***/ }),
-/* 385 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(386);
+var content = __webpack_require__(391);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -64805,10 +66100,10 @@ if(false) {
 }
 
 /***/ }),
-/* 386 */
+/* 391 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
 
 
@@ -64819,7 +66114,7 @@ exports.push([module.i, ".main-dark {\n  transition-duration: 0.5s;\n  opacity: 
 
 
 /***/ }),
-/* 387 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64841,13 +66136,13 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Loading = __webpack_require__(388);
+var _Loading = __webpack_require__(393);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
 var _reactRedux = __webpack_require__(13);
 
-__webpack_require__(390);
+__webpack_require__(395);
 
 var _urls = __webpack_require__(34);
 
@@ -64965,7 +66260,7 @@ exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 388 */
+/* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64983,7 +66278,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
     enterModule && enterModule(module);
 })();
 
-var _PathLoader = __webpack_require__(389);
+var _PathLoader = __webpack_require__(394);
 
 var _PathLoader2 = _interopRequireDefault(_PathLoader);
 
@@ -65245,7 +66540,7 @@ exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 389 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65354,13 +66649,13 @@ exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 390 */
+/* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(391);
+var content = __webpack_require__(396);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -65385,10 +66680,10 @@ if(false) {
 }
 
 /***/ }),
-/* 391 */
+/* 396 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
 
 
@@ -65399,7 +66694,7 @@ exports.push([module.i, ".ip-header {\n  position: fixed;\n  top: 0;\n  z-index:
 
 
 /***/ }),
-/* 392 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65421,7 +66716,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _SVGMenu = __webpack_require__(393);
+var _SVGMenu = __webpack_require__(398);
 
 var _SVGMenu2 = _interopRequireDefault(_SVGMenu);
 
@@ -65433,7 +66728,7 @@ var _page = __webpack_require__(56);
 
 var _redux = __webpack_require__(14);
 
-__webpack_require__(394);
+__webpack_require__(399);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65733,7 +67028,7 @@ exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 393 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66029,13 +67324,13 @@ exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 394 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(395);
+var content = __webpack_require__(400);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -66060,10 +67355,10 @@ if(false) {
 }
 
 /***/ }),
-/* 395 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
 
 
@@ -66074,7 +67369,7 @@ exports.push([module.i, "@font-face {\n  font-family: \"Font Awesome 5 Free\";\n
 
 
 /***/ }),
-/* 396 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66090,19 +67385,19 @@ Object.defineProperty(exports, "__esModule", {
     enterModule && enterModule(module);
 })();
 
-var _contact = __webpack_require__(397);
+var _contact = __webpack_require__(402);
 
 var _contact2 = _interopRequireDefault(_contact);
 
-var _menu = __webpack_require__(398);
+var _menu = __webpack_require__(403);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _page = __webpack_require__(399);
+var _page = __webpack_require__(404);
 
 var _page2 = _interopRequireDefault(_page);
 
-var _preloader = __webpack_require__(400);
+var _preloader = __webpack_require__(405);
 
 var _preloader2 = _interopRequireDefault(_preloader);
 
@@ -66163,7 +67458,7 @@ exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 397 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66257,7 +67552,7 @@ exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 398 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66350,7 +67645,7 @@ exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 399 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66456,7 +67751,7 @@ exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 400 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66545,13 +67840,13 @@ exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 401 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(402);
+var content = __webpack_require__(407);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -66576,10 +67871,10 @@ if(false) {
 }
 
 /***/ }),
-/* 402 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // imports
 
 
@@ -66590,7 +67885,7 @@ exports.push([module.i, "*, *:after, *:before {\n  -webkit-box-sizing: border-bo
 
 
 /***/ }),
-/* 403 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66608,7 +67903,7 @@ exports.push([module.i, "*, *:after, *:before {\n  -webkit-box-sizing: border-bo
   enterModule && enterModule(module);
 })();
 
-window._ = __webpack_require__(404);
+window._ = __webpack_require__(409);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -66617,9 +67912,9 @@ window._ = __webpack_require__(404);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(405);
+  window.$ = window.jQuery = __webpack_require__(410);
 
-  __webpack_require__(406);
+  __webpack_require__(411);
 } catch (e) {}
 
 /**
@@ -66628,7 +67923,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(407);
+window.axios = __webpack_require__(412);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -66695,7 +67990,7 @@ if (token) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 404 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -83810,7 +85105,7 @@ if (token) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35), __webpack_require__(3)(module)))
 
 /***/ }),
-/* 405 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -94181,7 +95476,7 @@ return jQuery;
 
 
 /***/ }),
-/* 406 */
+/* 411 */
 /***/ (function(module, exports) {
 
 /*!
@@ -96767,21 +98062,21 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 407 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(408);
+module.exports = __webpack_require__(413);
 
 /***/ }),
-/* 408 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 var bind = __webpack_require__(144);
-var Axios = __webpack_require__(410);
+var Axios = __webpack_require__(415);
 var defaults = __webpack_require__(94);
 
 /**
@@ -96816,14 +98111,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(148);
-axios.CancelToken = __webpack_require__(425);
+axios.CancelToken = __webpack_require__(430);
 axios.isCancel = __webpack_require__(147);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(426);
+axios.spread = __webpack_require__(431);
 
 module.exports = axios;
 
@@ -96832,7 +98127,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 409 */
+/* 414 */
 /***/ (function(module, exports) {
 
 /*!
@@ -96859,18 +98154,18 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 410 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var defaults = __webpack_require__(94);
-var utils = __webpack_require__(7);
-var InterceptorManager = __webpack_require__(420);
-var dispatchRequest = __webpack_require__(421);
-var isAbsoluteURL = __webpack_require__(423);
-var combineURLs = __webpack_require__(424);
+var utils = __webpack_require__(8);
+var InterceptorManager = __webpack_require__(425);
+var dispatchRequest = __webpack_require__(426);
+var isAbsoluteURL = __webpack_require__(428);
+var combineURLs = __webpack_require__(429);
 
 /**
  * Create a new instance of Axios
@@ -96952,7 +98247,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 411 */
+/* 416 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -97142,13 +98437,13 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 412 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -97161,7 +98456,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 413 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97194,7 +98489,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 414 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97222,13 +98517,13 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 415 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -97297,13 +98592,13 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 416 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 
 /**
  * Parse headers into an object
@@ -97341,13 +98636,13 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 417 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -97416,7 +98711,7 @@ module.exports = (
 
 
 /***/ }),
-/* 418 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97459,13 +98754,13 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 419 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -97519,13 +98814,13 @@ module.exports = (
 
 
 /***/ }),
-/* 420 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -97578,14 +98873,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 421 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(7);
-var transformData = __webpack_require__(422);
+var utils = __webpack_require__(8);
+var transformData = __webpack_require__(427);
 var isCancel = __webpack_require__(147);
 var defaults = __webpack_require__(94);
 
@@ -97664,13 +98959,13 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 422 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(7);
+var utils = __webpack_require__(8);
 
 /**
  * Transform the data for a request or a response
@@ -97691,7 +98986,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 423 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97712,7 +99007,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 424 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97733,7 +99028,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 425 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97797,7 +99092,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 426 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97829,6 +99124,1102 @@ module.exports = function spread(callback) {
   };
 };
 
+
+/***/ }),
+/* 432 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+(function () {
+    var enterModule = __webpack_require__(0).enterModule;
+
+    enterModule && enterModule(module);
+})();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(433);
+
+var _constants = __webpack_require__(11);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(function () {
+    var enterModule = __webpack_require__(0).enterModule;
+
+    enterModule && enterModule(module);
+})();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Smsplaza = function (_Component) {
+    _inherits(Smsplaza, _Component);
+
+    function Smsplaza(props) {
+        _classCallCheck(this, Smsplaza);
+
+        var _this = _possibleConstructorReturn(this, (Smsplaza.__proto__ || Object.getPrototypeOf(Smsplaza)).call(this, props));
+
+        _this.toggle = _this.toggle.bind(_this);
+
+        _this.state = {
+            info: false
+        };
+        return _this;
+    }
+
+    _createClass(Smsplaza, [{
+        key: 'toggle',
+        value: function toggle() {
+
+            if (this.state.info) {
+
+                $('.info-container').removeClass('d-flex').addClass('d-none');
+
+                $('.tech-container').removeClass('d-none').addClass('d-flex');
+
+                $('.arrow').removeClass('arrow-up').addClass('arrow-down');
+
+                this.setState({
+                    info: false
+                });
+            } else {
+
+                $('.info-container').removeClass('d-none').addClass('d-flex');
+
+                $('.tech-container').removeClass('d-flex').addClass('d-none');
+
+                $('.arrow').removeClass('arrow-down').addClass('arrow-up');
+
+                this.setState({
+                    info: true
+                });
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'demo-5 smsplaza' },
+                _react2.default.createElement(
+                    'main',
+                    null,
+                    _react2.default.createElement('div', { className: 'frame' }),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'content content--canvas--smsplaza' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'smspalza-container' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'header' },
+                                _react2.default.createElement(
+                                    'a',
+                                    {
+                                        target: '_blank',
+                                        href: _constants2.default.smsplaza
+                                    },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'logo' },
+                                        'SMSPLAZA'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'description' },
+                                    _react2.default.createElement(
+                                        'a',
+                                        {
+                                            target: '_blank',
+                                            href: _constants2.default.smsplaza
+                                        },
+                                        'Receive SMS Online | Verification Service'
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'tech-container d-flex' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    _react2.default.createElement('div', { className: 'vue' }),
+                                    _react2.default.createElement('div', { className: 'nuxt' }),
+                                    _react2.default.createElement('div', { className: 'vuex' })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    _react2.default.createElement('div', { className: 'vuetify' }),
+                                    _react2.default.createElement('div', { className: 'webpack' }),
+                                    _react2.default.createElement('div', { className: 'laravel' })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    _react2.default.createElement('div', { className: 'mysql' }),
+                                    _react2.default.createElement('div', { className: 'php-unit' }),
+                                    _react2.default.createElement('div', { className: 'nova' })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'info-container tzie-small d-none' },
+                                'Development and teamleading the application with external smsbank equipment. Design architecture, development and code quality control. I used Nuxtjs as a front-end tool to build an interface. Laravel as a backend framework for building an API. Laravel Nova for building administration panel, with VueJs for building individual components. Coverage tests, and the development of infrastructure.'
+                            ),
+                            _react2.default.createElement('div', { className: 'arrow arrow-down', onClick: this.toggle }),
+                            _react2.default.createElement(
+                                'a',
+                                {
+                                    className: 'mt-50 description',
+                                    target: '_blank',
+                                    href: _constants2.default.smsplaza
+                                },
+                                'CHECK IT OUT'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: '__reactstandin__regenerateByEval',
+        // @ts-ignore
+        value: function __reactstandin__regenerateByEval(key, code) {
+            // @ts-ignore
+            this[key] = eval(code);
+        }
+    }]);
+
+    return Smsplaza;
+}(_react.Component);
+
+var _default = Smsplaza;
+var _default2 = _default;
+exports.default = _default2;
+;
+
+(function () {
+    var reactHotLoader = __webpack_require__(0).default;
+
+    var leaveModule = __webpack_require__(0).leaveModule;
+
+    if (!reactHotLoader) {
+        return;
+    }
+
+    reactHotLoader.register(Smsplaza, 'Smsplaza', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/Smsplaza.js');
+    reactHotLoader.register(_default, 'default', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/Smsplaza.js');
+    leaveModule(module);
+})();
+
+;
+;
+
+(function () {
+    var reactHotLoader = __webpack_require__(0).default;
+
+    var leaveModule = __webpack_require__(0).leaveModule;
+
+    if (!reactHotLoader) {
+        return;
+    }
+
+    reactHotLoader.register(Smsplaza, 'Smsplaza', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/Smsplaza.js');
+    reactHotLoader.register(_default2, 'default', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/Smsplaza.js');
+    leaveModule(module);
+})();
+
+;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+
+/***/ }),
+/* 433 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+(function () {
+    var enterModule = __webpack_require__(0).enterModule;
+
+    enterModule && enterModule(module);
+})();
+
+var _simplexNoise = __webpack_require__(382);
+
+var _simplexNoise2 = _interopRequireDefault(_simplexNoise);
+
+var _util = __webpack_require__(383);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(function () {
+    var enterModule = __webpack_require__(0).enterModule;
+
+    enterModule && enterModule(module);
+})();
+
+var pipeCount = 30;
+var pipePropCount = 8;
+var pipePropsLength = pipeCount * pipePropCount;
+var turnCount = 8;
+var turnAmount = 360 / turnCount * _util.TO_RAD;
+var turnChanceRange = 58;
+var baseSpeed = 0.5;
+var rangeSpeed = 1;
+var baseTTL = 100;
+var rangeTTL = 300;
+var baseWidth = 2;
+var rangeWidth = 4;
+var baseHue = 180;
+var rangeHue = 60;
+var backgroundColor = 'hsla(150,80%,1%,1)';
+
+var container = void 0;
+var canvas = void 0;
+var ctx = void 0;
+var center = void 0;
+var tick = void 0;
+var pipeProps = void 0;
+
+function setup() {
+    createCanvas();
+    resize();
+    initPipes();
+    draw();
+}
+
+function initPipes() {
+    pipeProps = new Float32Array(pipePropsLength);
+
+    var i = void 0;
+
+    for (i = 0; i < pipePropsLength; i += pipePropCount) {
+        initPipe(i);
+    }
+}
+
+function initPipe(i) {
+    var x = void 0,
+        y = void 0,
+        direction = void 0,
+        speed = void 0,
+        life = void 0,
+        ttl = void 0,
+        width = void 0,
+        hue = void 0;
+
+    x = (0, _util.rand)(canvas.a.width);
+    y = center[1];
+    direction = (0, _util.round)((0, _util.rand)(1)) ? _util.HALF_PI : _util.TAU - _util.HALF_PI;
+    speed = baseSpeed + (0, _util.rand)(rangeSpeed);
+    life = 0;
+    ttl = baseTTL + (0, _util.rand)(rangeTTL);
+    width = baseWidth + (0, _util.rand)(rangeWidth);
+    hue = baseHue + (0, _util.rand)(rangeHue);
+
+    pipeProps.set([x, y, direction, speed, life, ttl, width, hue], i);
+}
+
+function updatePipes() {
+    tick++;
+
+    var i = void 0;
+
+    for (i = 0; i < pipePropsLength; i += pipePropCount) {
+        updatePipe(i);
+    }
+}
+
+function updatePipe(i) {
+    var i2 = 1 + i,
+        i3 = 2 + i,
+        i4 = 3 + i,
+        i5 = 4 + i,
+        i6 = 5 + i,
+        i7 = 6 + i,
+        i8 = 7 + i;
+    var x = void 0,
+        y = void 0,
+        direction = void 0,
+        speed = void 0,
+        life = void 0,
+        ttl = void 0,
+        width = void 0,
+        hue = void 0,
+        turnChance = void 0,
+        turnBias = void 0;
+
+    x = pipeProps[i];
+    y = pipeProps[i2];
+    direction = pipeProps[i3];
+    speed = pipeProps[i4];
+    life = pipeProps[i5];
+    ttl = pipeProps[i6];
+    width = pipeProps[i7];
+    hue = pipeProps[i8];
+
+    drawPipe(x, y, life, ttl, width, hue);
+
+    life++;
+    x += (0, _util.cos)(direction) * speed;
+    y += (0, _util.sin)(direction) * speed;
+    turnChance = !(tick % (0, _util.round)((0, _util.rand)(turnChanceRange))) && (!((0, _util.round)(x) % 6) || !((0, _util.round)(y) % 6));
+    turnBias = (0, _util.round)((0, _util.rand)(1)) ? -1 : 1;
+    direction += turnChance ? turnAmount * turnBias : 0;
+
+    pipeProps[i] = x;
+    pipeProps[i2] = y;
+    pipeProps[i3] = direction;
+    pipeProps[i5] = life;
+
+    checkBounds(x, y);
+    life > ttl && initPipe(i);
+}
+
+function drawPipe(x, y, life, ttl, width, hue) {
+    ctx.a.save();
+    ctx.a.strokeStyle = 'hsla(' + hue + ',75%,50%,' + (0, _util.fadeInOut)(life, ttl) * 0.125 + ')';
+    ctx.a.beginPath();
+    ctx.a.arc(x, y, width, 0, _util.TAU);
+    ctx.a.stroke();
+    ctx.a.closePath();
+    ctx.a.restore();
+}
+
+function checkBounds(x, y) {
+    if (x > canvas.a.width) x = 0;
+    if (x < 0) x = canvas.a.width;
+    if (y > canvas.a.height) y = 0;
+    if (y < 0) y = canvas.a.height;
+}
+
+function createCanvas() {
+    container = document.querySelector('.content--canvas--smsplaza');
+    canvas = {
+        a: document.createElement('canvas'),
+        b: document.createElement('canvas')
+    };
+    canvas.b.style = '\n\t\tposition: fixed;\n\t\tleft: 0;\n\t\twidth: 100%;\n\t';
+    container.appendChild(canvas.b);
+    ctx = {
+        a: canvas.a.getContext('2d'),
+        b: canvas.b.getContext('2d')
+    };
+    center = [];
+    tick = 0;
+}
+
+function resize() {
+    var _window = window,
+        innerWidth = _window.innerWidth,
+        innerHeight = _window.innerHeight;
+
+
+    canvas.a.width = innerWidth;
+    canvas.a.height = innerHeight;
+
+    ctx.a.drawImage(canvas.b, 0, 0);
+
+    canvas.b.width = innerWidth;
+    canvas.b.height = innerHeight;
+
+    ctx.b.drawImage(canvas.a, 0, 0);
+
+    center[0] = 0.5 * canvas.a.width;
+    center[1] = 0.5 * canvas.a.height;
+}
+
+function render() {
+    ctx.b.save();
+    ctx.b.fillStyle = backgroundColor;
+    ctx.b.fillRect(0, 0, canvas.b.width, canvas.b.height);
+    ctx.b.restore();
+
+    ctx.b.save();
+    ctx.b.filter = 'blur(12px)';
+    ctx.b.drawImage(canvas.a, 0, 0);
+    ctx.b.restore();
+
+    ctx.b.save();
+    ctx.b.drawImage(canvas.a, 0, 0);
+    ctx.b.restore();
+}
+
+function draw() {
+    updatePipes();
+
+    render();
+
+    window.requestAnimationFrame(draw);
+}
+
+window.addEventListener('load', setup);
+window.addEventListener('resize', resize);
+;
+
+(function () {
+    var reactHotLoader = __webpack_require__(0).default;
+
+    var leaveModule = __webpack_require__(0).leaveModule;
+
+    if (!reactHotLoader) {
+        return;
+    }
+
+    reactHotLoader.register(pipeCount, 'pipeCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(pipePropCount, 'pipePropCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(pipePropsLength, 'pipePropsLength', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(turnCount, 'turnCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(turnAmount, 'turnAmount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(turnChanceRange, 'turnChanceRange', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(baseSpeed, 'baseSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(rangeSpeed, 'rangeSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(baseTTL, 'baseTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(rangeTTL, 'rangeTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(baseWidth, 'baseWidth', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(rangeWidth, 'rangeWidth', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(baseHue, 'baseHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(rangeHue, 'rangeHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(backgroundColor, 'backgroundColor', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(container, 'container', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(canvas, 'canvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(ctx, 'ctx', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(center, 'center', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(tick, 'tick', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(pipeProps, 'pipeProps', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(setup, 'setup', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(initPipes, 'initPipes', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(initPipe, 'initPipe', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(updatePipes, 'updatePipes', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(updatePipe, 'updatePipe', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(drawPipe, 'drawPipe', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(checkBounds, 'checkBounds', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(createCanvas, 'createCanvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(resize, 'resize', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(render, 'render', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(draw, 'draw', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    leaveModule(module);
+})();
+
+;
+;
+
+(function () {
+    var reactHotLoader = __webpack_require__(0).default;
+
+    var leaveModule = __webpack_require__(0).leaveModule;
+
+    if (!reactHotLoader) {
+        return;
+    }
+
+    reactHotLoader.register(setup, 'setup', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(initPipes, 'initPipes', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(initPipe, 'initPipe', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(updatePipes, 'updatePipes', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(updatePipe, 'updatePipe', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(drawPipe, 'drawPipe', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(checkBounds, 'checkBounds', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(createCanvas, 'createCanvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(resize, 'resize', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(render, 'render', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(draw, 'draw', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(pipeCount, 'pipeCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(pipePropCount, 'pipePropCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(pipePropsLength, 'pipePropsLength', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(turnCount, 'turnCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(turnAmount, 'turnAmount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(turnChanceRange, 'turnChanceRange', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(baseSpeed, 'baseSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(rangeSpeed, 'rangeSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(baseTTL, 'baseTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(rangeTTL, 'rangeTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(baseWidth, 'baseWidth', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(rangeWidth, 'rangeWidth', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(baseHue, 'baseHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(rangeHue, 'rangeHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(backgroundColor, 'backgroundColor', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(container, 'container', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(canvas, 'canvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(ctx, 'ctx', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(center, 'center', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(tick, 'tick', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    reactHotLoader.register(pipeProps, 'pipeProps', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Smsplaza/lib/pipeline.js');
+    leaveModule(module);
+})();
+
+;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+
+/***/ }),
+/* 434 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+(function () {
+    var enterModule = __webpack_require__(0).enterModule;
+
+    enterModule && enterModule(module);
+})();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(435);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(function () {
+    var enterModule = __webpack_require__(0).enterModule;
+
+    enterModule && enterModule(module);
+})();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Abirix = function (_Component) {
+    _inherits(Abirix, _Component);
+
+    function Abirix(props) {
+        _classCallCheck(this, Abirix);
+
+        var _this = _possibleConstructorReturn(this, (Abirix.__proto__ || Object.getPrototypeOf(Abirix)).call(this, props));
+
+        _this.toggle = _this.toggle.bind(_this);
+
+        _this.state = {
+            info: false
+        };
+        return _this;
+    }
+
+    _createClass(Abirix, [{
+        key: 'toggle',
+        value: function toggle() {
+
+            if (this.state.info) {
+
+                $('.info-container').removeClass('d-flex').addClass('d-none');
+
+                $('.tech-container').removeClass('d-none').addClass('d-flex');
+
+                $('.arrow').removeClass('arrow-up').addClass('arrow-down');
+
+                this.setState({
+                    info: false
+                });
+            } else {
+
+                $('.info-container').removeClass('d-none').addClass('d-flex');
+
+                $('.tech-container').removeClass('d-flex').addClass('d-none');
+
+                $('.arrow').removeClass('arrow-down').addClass('arrow-up');
+
+                this.setState({
+                    info: true
+                });
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'demo-4 abirix' },
+                _react2.default.createElement(
+                    'main',
+                    null,
+                    _react2.default.createElement('div', { className: 'frame' }),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'content content--canvas-abirix' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'abirix-container' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'header' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'logo' },
+                                    'ABIRIX CRM'
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'description' },
+                                    'crm system for sales company'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'tech-container d-flex' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    _react2.default.createElement('div', { className: 'angular' }),
+                                    _react2.default.createElement('div', { className: 'rxjs' }),
+                                    _react2.default.createElement('div', { className: 'clarity' })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'row' },
+                                    _react2.default.createElement('div', { className: 'laravel' }),
+                                    _react2.default.createElement('div', { className: 'php-unit' }),
+                                    _react2.default.createElement('div', { className: 'mysql' })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'info-container tzie-small d-none' },
+                                'Writing a crm system in a team as senior developer. Design and writing of main system entities, database development. Using Angular as an interface development tool and Laravel as a backend API. Careful test coverage. Development with strict flow based on Agile princes. Transfer data from older systems.'
+                            ),
+                            _react2.default.createElement('div', { className: 'arrow arrow-down', onClick: this.toggle })
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: '__reactstandin__regenerateByEval',
+        // @ts-ignore
+        value: function __reactstandin__regenerateByEval(key, code) {
+            // @ts-ignore
+            this[key] = eval(code);
+        }
+    }]);
+
+    return Abirix;
+}(_react.Component);
+
+var _default = Abirix;
+var _default2 = _default;
+exports.default = _default2;
+;
+
+(function () {
+    var reactHotLoader = __webpack_require__(0).default;
+
+    var leaveModule = __webpack_require__(0).leaveModule;
+
+    if (!reactHotLoader) {
+        return;
+    }
+
+    reactHotLoader.register(Abirix, 'Abirix', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/Abirix.js');
+    reactHotLoader.register(_default, 'default', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/Abirix.js');
+    leaveModule(module);
+})();
+
+;
+;
+
+(function () {
+    var reactHotLoader = __webpack_require__(0).default;
+
+    var leaveModule = __webpack_require__(0).leaveModule;
+
+    if (!reactHotLoader) {
+        return;
+    }
+
+    reactHotLoader.register(Abirix, 'Abirix', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/Abirix.js');
+    reactHotLoader.register(_default2, 'default', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/Abirix.js');
+    leaveModule(module);
+})();
+
+;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+
+/***/ }),
+/* 435 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+(function () {
+  var enterModule = __webpack_require__(0).enterModule;
+
+  enterModule && enterModule(module);
+})();
+
+var _util = __webpack_require__(383);
+
+(function () {
+  var enterModule = __webpack_require__(0).enterModule;
+
+  enterModule && enterModule(module);
+})();
+
+var particleCount = 700;
+var particlePropCount = 9;
+var particlePropsLength = particleCount * particlePropCount;
+var baseTTL = 100;
+var rangeTTL = 500;
+var baseSpeed = 0.1;
+var rangeSpeed = 1;
+var baseSize = 2;
+var rangeSize = 10;
+var baseHue = 10;
+var rangeHue = 100;
+var noiseSteps = 2;
+var xOff = 0.0025;
+var yOff = 0.005;
+var zOff = 0.0005;
+var backgroundColor = 'hsla(60,50%,3%,1)';
+
+var container = void 0;
+var canvas = void 0;
+var ctx = void 0;
+var center = void 0;
+var gradient = void 0;
+var tick = void 0;
+var particleProps = void 0;
+var positions = void 0;
+var velocities = void 0;
+var lifeSpans = void 0;
+var speeds = void 0;
+var sizes = void 0;
+var hues = void 0;
+
+function setup() {
+  createCanvas();
+  resize();
+  initParticles();
+  draw();
+}
+
+function initParticles() {
+  tick = 0;
+  particleProps = new Float32Array(particlePropsLength);
+
+  var i = void 0;
+
+  for (i = 0; i < particlePropsLength; i += particlePropCount) {
+    initParticle(i);
+  }
+}
+
+function initParticle(i) {
+  var theta = void 0,
+      x = void 0,
+      y = void 0,
+      vx = void 0,
+      vy = void 0,
+      life = void 0,
+      ttl = void 0,
+      speed = void 0,
+      size = void 0,
+      hue = void 0;
+
+  x = (0, _util.rand)(canvas.a.width);
+  y = (0, _util.rand)(canvas.a.height);
+  theta = (0, _util.angle)(x, y, center[0], center[1]);
+  vx = (0, _util.cos)(theta) * 6;
+  vy = (0, _util.sin)(theta) * 6;
+  life = 0;
+  ttl = baseTTL + (0, _util.rand)(rangeTTL);
+  speed = baseSpeed + (0, _util.rand)(rangeSpeed);
+  size = baseSize + (0, _util.rand)(rangeSize);
+  hue = baseHue + (0, _util.rand)(rangeHue);
+
+  particleProps.set([x, y, vx, vy, life, ttl, speed, size, hue], i);
+}
+
+function drawParticles() {
+  var i = void 0;
+
+  for (i = 0; i < particlePropsLength; i += particlePropCount) {
+    updateParticle(i);
+  }
+}
+
+function updateParticle(i) {
+  var i2 = 1 + i,
+      i3 = 2 + i,
+      i4 = 3 + i,
+      i5 = 4 + i,
+      i6 = 5 + i,
+      i7 = 6 + i,
+      i8 = 7 + i,
+      i9 = 8 + i;
+  var x = void 0,
+      y = void 0,
+      theta = void 0,
+      vx = void 0,
+      vy = void 0,
+      life = void 0,
+      ttl = void 0,
+      speed = void 0,
+      x2 = void 0,
+      y2 = void 0,
+      size = void 0,
+      hue = void 0;
+
+  x = particleProps[i];
+  y = particleProps[i2];
+  theta = (0, _util.angle)(x, y, center[0], center[1]) + 0.75 * _util.HALF_PI;
+  vx = (0, _util.lerp)(particleProps[i3], 2 * (0, _util.cos)(theta), 0.05);
+  vy = (0, _util.lerp)(particleProps[i4], 2 * (0, _util.sin)(theta), 0.05);
+  life = particleProps[i5];
+  ttl = particleProps[i6];
+  speed = particleProps[i7];
+  x2 = x + vx * speed;
+  y2 = y + vy * speed;
+  size = particleProps[i8];
+  hue = particleProps[i9];
+
+  drawParticle(x, y, theta, life, ttl, size, hue);
+
+  life++;
+
+  particleProps[i] = x2;
+  particleProps[i2] = y2;
+  particleProps[i3] = vx;
+  particleProps[i4] = vy;
+  particleProps[i5] = life;
+
+  life > ttl && initParticle(i);
+}
+
+function drawParticle(x, y, theta, life, ttl, size, hue) {
+  var xRel = x - 0.5 * size,
+      yRel = y - 0.5 * size;
+
+  ctx.a.save();
+  ctx.a.lineCap = 'round';
+  ctx.a.lineWidth = 1;
+  ctx.a.strokeStyle = 'hsla(' + hue + ',100%,60%,' + (0, _util.fadeInOut)(life, ttl) + ')';
+  ctx.a.beginPath();
+  ctx.a.translate(xRel, yRel);
+  ctx.a.rotate(theta);
+  ctx.a.translate(-xRel, -yRel);
+  ctx.a.strokeRect(xRel, yRel, size, size);
+  ctx.a.closePath();
+  ctx.a.restore();
+}
+
+function createCanvas() {
+  container = document.querySelector('.content--canvas-abirix');
+  canvas = {
+    a: document.createElement('canvas'),
+    b: document.createElement('canvas')
+  };
+  canvas.b.style = '\n\t\tposition: fixed;\n\t\tleft: 0;\n\t\twidth: 100%;\n\t';
+  container.appendChild(canvas.b);
+  ctx = {
+    a: canvas.a.getContext('2d'),
+    b: canvas.b.getContext('2d')
+  };
+  center = [];
+}
+
+function resize() {
+  var _window = window,
+      innerWidth = _window.innerWidth,
+      innerHeight = _window.innerHeight;
+
+
+  canvas.a.width = innerWidth;
+  canvas.a.height = innerHeight;
+
+  ctx.a.drawImage(canvas.b, 0, 0);
+
+  canvas.b.width = innerWidth;
+  canvas.b.height = innerHeight;
+
+  ctx.b.drawImage(canvas.a, 0, 0);
+
+  center[0] = 0.5 * canvas.a.width;
+  center[1] = 0.5 * canvas.a.height;
+}
+
+function renderGlow() {
+  ctx.b.save();
+  ctx.b.filter = 'blur(8px) brightness(200%)';
+  ctx.b.globalCompositeOperation = 'lighter';
+  ctx.b.drawImage(canvas.a, 0, 0);
+  ctx.b.restore();
+
+  ctx.b.save();
+  ctx.b.filter = 'blur(4px) brightness(200%)';
+  ctx.b.globalCompositeOperation = 'lighter';
+  ctx.b.drawImage(canvas.a, 0, 0);
+  ctx.b.restore();
+}
+
+function render() {
+  ctx.b.save();
+  ctx.b.globalCompositeOperation = 'lighter';
+  ctx.b.drawImage(canvas.a, 0, 0);
+  ctx.b.restore();
+}
+
+function draw() {
+  tick++;
+
+  ctx.a.clearRect(0, 0, canvas.a.width, canvas.a.height);
+
+  ctx.b.fillStyle = backgroundColor;
+  ctx.b.fillRect(0, 0, canvas.a.width, canvas.a.height);
+
+  drawParticles();
+  renderGlow();
+  render();
+
+  window.requestAnimationFrame(draw);
+}
+
+window.addEventListener('load', setup);
+window.addEventListener('resize', resize);
+;
+
+(function () {
+  var reactHotLoader = __webpack_require__(0).default;
+
+  var leaveModule = __webpack_require__(0).leaveModule;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(particleCount, 'particleCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(particlePropCount, 'particlePropCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(particlePropsLength, 'particlePropsLength', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(baseTTL, 'baseTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(rangeTTL, 'rangeTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(baseSpeed, 'baseSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(rangeSpeed, 'rangeSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(baseSize, 'baseSize', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(rangeSize, 'rangeSize', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(baseHue, 'baseHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(rangeHue, 'rangeHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(noiseSteps, 'noiseSteps', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(xOff, 'xOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(yOff, 'yOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(zOff, 'zOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(backgroundColor, 'backgroundColor', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(container, 'container', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(canvas, 'canvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(ctx, 'ctx', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(center, 'center', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(gradient, 'gradient', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(tick, 'tick', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(particleProps, 'particleProps', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(positions, 'positions', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(velocities, 'velocities', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(lifeSpans, 'lifeSpans', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(speeds, 'speeds', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(sizes, 'sizes', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(hues, 'hues', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(setup, 'setup', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(initParticles, 'initParticles', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(initParticle, 'initParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(drawParticles, 'drawParticles', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(updateParticle, 'updateParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(drawParticle, 'drawParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(createCanvas, 'createCanvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(resize, 'resize', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(renderGlow, 'renderGlow', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(render, 'render', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(draw, 'draw', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  leaveModule(module);
+})();
+
+;
+;
+
+(function () {
+  var reactHotLoader = __webpack_require__(0).default;
+
+  var leaveModule = __webpack_require__(0).leaveModule;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(setup, 'setup', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(initParticles, 'initParticles', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(initParticle, 'initParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(drawParticles, 'drawParticles', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(updateParticle, 'updateParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(drawParticle, 'drawParticle', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(createCanvas, 'createCanvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(resize, 'resize', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(renderGlow, 'renderGlow', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(render, 'render', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(draw, 'draw', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(particleCount, 'particleCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(particlePropCount, 'particlePropCount', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(particlePropsLength, 'particlePropsLength', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(baseTTL, 'baseTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(rangeTTL, 'rangeTTL', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(baseSpeed, 'baseSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(rangeSpeed, 'rangeSpeed', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(baseSize, 'baseSize', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(rangeSize, 'rangeSize', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(baseHue, 'baseHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(rangeHue, 'rangeHue', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(noiseSteps, 'noiseSteps', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(xOff, 'xOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(yOff, 'yOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(zOff, 'zOff', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(backgroundColor, 'backgroundColor', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(container, 'container', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(canvas, 'canvas', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(ctx, 'ctx', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(center, 'center', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(gradient, 'gradient', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(tick, 'tick', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(particleProps, 'particleProps', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(positions, 'positions', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(velocities, 'velocities', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(lifeSpans, 'lifeSpans', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(speeds, 'speeds', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(sizes, 'sizes', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  reactHotLoader.register(hues, 'hues', '/var/www/portfolio/resources/assets/js/components/Portfolio/sections/Abirix/lib/coalesce.js');
+  leaveModule(module);
+})();
+
+;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ })
 /******/ ]);

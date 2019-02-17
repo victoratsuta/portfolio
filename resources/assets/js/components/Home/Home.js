@@ -27,7 +27,7 @@ class Home extends Component {
             ? ''
             : <ReactRotatingText
                 typingInterval={100}
-                items={['Laravel', 'React', 'NodeJs']}
+                items={['Laravel', 'React', 'Angular', 'VueJs', 'NodeJs']}
             />
     }
 
@@ -36,8 +36,8 @@ class Home extends Component {
             <div className="ip-main for_fade">
 
                 <div className={'Preivew'}>
-                    <div className="Preivew__neon">VICTOR ATSUTA</div>
-                    <div className="Preivew__info">&lt; Fullstack web developer /&gt;</div>
+                    <div className="Preivew__neon">VIKTOR ATSUTA</div>
+                    <div className="Preivew__info">&lt; Senior Software Engineer /&gt;</div>
                     <div className="Preivew__info Preivew__label_tech">
 
                         <p>Working with technologies such as {this.drawReactRotatingText()}
@@ -47,11 +47,8 @@ class Home extends Component {
 
 
                 <div className="Icons__icon_container">
-                    <a href={Constants.git} target="_blank">
-                        <div
-                        />
-                    </a>
-                    <a href={Constants.codewars} target="_blank">
+
+                    <a href={Constants.instagramm} target="_blank">
                         <div
                         />
                     </a>
@@ -59,10 +56,12 @@ class Home extends Component {
                         <div
                         />
                     </a>
-                    <a href={Constants.telegramm}>
+                    <a href={Constants.linksful} target="_blank">
                         <div
                         />
                     </a>
+
+
                 </div>
 
             </div>

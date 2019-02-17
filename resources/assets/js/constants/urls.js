@@ -8,10 +8,13 @@ export const URLS = {
     smokezone: 'smoke-zone',
     yandex: 'yandex',
     compareip: 'compareip',
+    smsplaza : 'smsplaza',
+    abirix : 'abirix',
     first_slide: 'first-slide',
     c2corner : 'c2corner',
     cherryPick : 'cherry-pick',
     houses : 'houses',
+    linkful: 'linkful',
 
     arcbazar : 'arcbazar',
     factoringvergelijken : 'factoringvergelijken',

@@ -1,5 +1,7 @@
 $img-path : "/imgs";
 
+@import 'common/base.css';
+
 @import "Pattern";
 @import "ScrollButton";
 @import "sections/CompareIp";
@@ -12,3 +14,6 @@ $img-path : "/imgs";
 @import "sections/Houses";
 @import "sections/Arcbazar";
 @import "sections/Factoringvergelijken";
+@import "sections/Linksful/Linksful";
+@import "sections/Smsplaza";
+@import "sections/Abirix";
