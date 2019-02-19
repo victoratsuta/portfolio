@@ -3,14 +3,16 @@ import Slideshow from './lib/Slideshow';
 import Constants from "../../../../constants/constants";
 
 import './lib/wordFx';
+import {connect} from "react-redux";
+import {URLS} from "../../../../constants/urls";
 
 class CompareIp extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            visible: 0,
-            animateClass: 'hide'
+            visible: 1,
+            animateClass: 'hide',
         };
         this.showDescription = _ => {
 
@@ -23,18 +25,20 @@ class CompareIp extends Component {
         }
     }
 
-    componentDidUpdate(prevProps){
-        if(!this.props.preloader && prevProps.preloader){
+    // componentDidUpdate(prevProps){
+    //     if(!this.props.preloader && prevProps.preloader && this.props.page === URLS.compareip){
+    //
+    //     }
+    // }
 
-            this.setState(
-                {
-                    visible: 1,
-                }
-            )
+    componentWillReceiveProps(nextProps){
+
+        if(this.props.page.page !== URLS.compareip && nextProps.page.page === URLS.compareip){
 
             this.slideshow = new Slideshow(document.querySelector('.slideshow'), this.showDescription)
 
         }
+
     }
 
 
@@ -69,8 +73,14 @@ class CompareIp extends Component {
         )
     }
 }
+function mapStateToProps(state) {
+    return {
+        page : state.page,
+        preloader: state.preloader,
+    }
+}
 
-export default CompareIp;
+export default connect(mapStateToProps, {})(CompareIp);
 
 
 

@@ -28,7 +28,8 @@ class Pattern extends Component {
 
             <div className={'Pattern ' + this.props.classname}>
 
-                <div className={'technologies-container ' + (this.state.activeSide ? this.clasess.hide : this.clasess.show)}>
+                <div
+                    className={'technologies-container ' + (this.state.activeSide ? this.clasess.hide : this.clasess.show)}>
 
                     {this.props.technologies()}
                     {this.props.description()}
@@ -43,7 +44,10 @@ class Pattern extends Component {
 
                 <div className={'logo-container ' + (this.state.activeSide ? this.clasess.show : this.clasess.hide)}>
 
-                    <img src={this.props.logo}/>
+                    {this.props.logo ?
+                        <img src={this.props.logo}/>
+                        : <p className={'logoText'}>  {this.props.logoText}</p>
+                    }
 
                     {this.props.logoDescription()}
 
@@ -59,14 +63,15 @@ class Pattern extends Component {
 Pattern.propTypes = {
     classname: PropTypes.string,
     logo: PropTypes.string,
+    logoText: PropTypes.string,
     url: PropTypes.string,
     effectClassIn: PropTypes.string,
     effectClassOut: PropTypes.string,
 
-    technologies : PropTypes.func,
-    description : PropTypes.func,
-    figure : PropTypes.func,
-    logoDescription : PropTypes.func
+    technologies: PropTypes.func,
+    description: PropTypes.func,
+    figure: PropTypes.func,
+    logoDescription: PropTypes.func
 };
 
 export default Pattern;

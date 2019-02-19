@@ -20,44 +20,9 @@ class Linkful extends Component {
 
     toggle(){
 
-        if(this.state.info){
-
-            $('.info-container')
-                .removeClass('d-flex')
-                .addClass('d-none')
-
-            $('.tech-container')
-                .removeClass('d-none')
-                .addClass('d-flex')
-
-            $('.arrow')
-                .removeClass('arrow-up')
-                .addClass('arrow-down')
-
-
-            this.setState({
-                info : false
-            })
-
-        } else {
-
-            $('.info-container')
-                .removeClass('d-none')
-                .addClass('d-flex')
-
-            $('.tech-container')
-                .removeClass('d-flex')
-                .addClass('d-none')
-
-            $('.arrow')
-                .removeClass('arrow-down')
-                .addClass('arrow-up')
-
-            this.setState({
-                info : true
-            })
-
-        }
+        this.setState({
+            info: !this.state.info
+        })
 
     }
 
@@ -95,7 +60,7 @@ class Linkful extends Component {
 
                             </div>
 
-                            <div className={'tech-container d-flex'}>
+                            <div className={'tech-container ' + (this.state.info ? 'd-none' : 'd-flex')}>
                                 <div className={'row'}>
                                     <div className={'react'}></div>
                                     <div className={'redux-saga'}></div>
@@ -117,7 +82,7 @@ class Linkful extends Component {
                                 </div>
                             </div>
 
-                            <div className={'info-container tzie-small d-none'}>
+                            <div className={'info-container tzie-small ' + (this.state.info ? 'd-flex' : 'd-none')}>
 
                                 I have created, designed and developed this project.
                                 I built the application using the most powerful and popular technologies.
@@ -132,7 +97,7 @@ class Linkful extends Component {
 
                             </div>
 
-                            <div className={'arrow arrow-down'} onClick={this.toggle}></div>
+                            <div className={'arrow ' + (this.state.info ? 'arrow-up' : 'arrow-down')} onClick={this.toggle}></div>
 
                             <a
                                 className={'mt-50 description'}

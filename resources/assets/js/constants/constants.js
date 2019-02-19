@@ -7,12 +7,12 @@ const Constants = {
     'instagramm' : 'https://www.instagram.com/atsutavictor/',
     'linkedin' : 'https://www.linkedin.com/in/victor-atsuta-701727160/',
     'telegramm' : 'tg://resolve?domain=atsutaVictor',
-    'linksful' : 'https://linkful.me/examplelinkfulme',
+    'linksful' : 'https://linkful.me/atsuta',
 
      'mapUrl' : 'https://api.tiles.mapbox.com/v4/mapbox.dark/{z}/{x}/{y}.png',
      'accessToken' : '?access_token=pk.eyJ1IjoidmljdG9yYXRzdXRhIiwiYSI6ImNqOW9iNnJjczJnaW8zM3MyeDdrcXBuN3oifQ.gIWOmeqEuCRHKmWb_AMXFQ',
 
-     'yandex' : 'http://yandex.atsuta.ru',
+     'yandex' : 'https://yandex.atsuta.ru',
      'smokeZone' : 'http://smoke-zone.atsuta.ru',
      'history24' : 'http://history24.atsuta.ru/',
      'compareIp' : 'https://compareip.com/',

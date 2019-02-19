@@ -55,7 +55,6 @@ $yandex-red : #ED2025;
         color: black;
         text-align: center;
         line-height: 30px;
-        font-style: italic;
         b {
           color: $yandex-red;
         }
@@ -63,24 +62,22 @@ $yandex-red : #ED2025;
     }
     .rotate_button {
 
-      //figure {
-      //
-      //  span {
-      //
-      //    border: 5px solid $yandex-red;
-      //
-      //  }
-      //  span:nth-child(1) {
-      //    color: black;
-      //  }
-      //  span:nth-child(2) {
-      //    color: white;
-      //    background: $yandex-red;
-      //  }
-      //
-      //}
+      figure {
 
-      display: none;
+        span {
+
+          border: 5px solid $yandex-red;
+
+        }
+        span:nth-child(1) {
+          color: black;
+        }
+        span:nth-child(2) {
+          color: white;
+          background: $yandex-red;
+        }
+
+      }
 
     }
 
@@ -98,7 +95,6 @@ $yandex-red : #ED2025;
       font-weight: 300;
       text-align: center;
       z-index: 100;
-      font-style: italic;
       b {
         color: $yandex-red;
       }

@@ -20,44 +20,9 @@ class Smsplaza extends Component {
 
     toggle(){
 
-        if(this.state.info){
-
-            $('.info-container')
-                .removeClass('d-flex')
-                .addClass('d-none')
-
-            $('.tech-container')
-                .removeClass('d-none')
-                .addClass('d-flex')
-
-            $('.arrow')
-                .removeClass('arrow-up')
-                .addClass('arrow-down')
-
-
-            this.setState({
-                info : false
-            })
-
-        } else {
-
-            $('.info-container')
-                .removeClass('d-none')
-                .addClass('d-flex')
-
-            $('.tech-container')
-                .removeClass('d-flex')
-                .addClass('d-none')
-
-            $('.arrow')
-                .removeClass('arrow-down')
-                .addClass('arrow-up')
-
-            this.setState({
-                info : true
-            })
-
-        }
+        this.setState({
+            info: !this.state.info
+        })
 
     }
 
@@ -97,7 +62,7 @@ class Smsplaza extends Component {
 
                             </div>
 
-                            <div className={'tech-container d-flex'}>
+                            <div className={'tech-container ' + (this.state.info ? 'd-none' : 'd-flex')}>
                                 <div className={'row'}>
                                     <div className={'vue'}></div>
                                     <div className={'nuxt'}></div>
@@ -115,19 +80,19 @@ class Smsplaza extends Component {
                                 </div>
                             </div>
 
-                            <div className={'info-container tzie-small d-none'}>
+                            <div className={'info-container tzie-small ' + (this.state.info ? 'd-flex' : 'd-none')}>
 
-                                Development and teamleading the application with external smsbank equipment.
-                                Design architecture, development and code quality control.
-                                I used Nuxtjs as a front-end tool to build an interface.
-                                Laravel as a backend framework for building an API.
-                                Laravel Nova for building administration panel,
-                                with VueJs for building individual components.
-                                Coverage tests, and the development of infrastructure.
+                                I have been doing development and teamleading of the application with external smsbank equipment,
+                                design architecture, development and code quality control as well.
+                                I used Nuxtjs as a frontend tool to build the interface.
+                                I also used Laravel as a backend framework for building the API,
+                                Laravel Nova for building administration panel;
+                                VueJs for building individual components.
+                                I have done complete coverage tests and developed the infrastructure.
 
                             </div>
 
-                            <div className={'arrow arrow-down'} onClick={this.toggle}></div>
+                            <div className={'arrow' + (this.state.info ? 'arrow-up' : 'arrow-down')} onClick={this.toggle}></div>
 
                             <a
                                 className={'mt-50 description'}

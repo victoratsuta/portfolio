@@ -75,20 +75,23 @@
     text-align: center;
 
     img {
-      width: 300px;
+      width: 400px;
     }
 
     .header{
-      font-family: 'OpenSans', 'Condensed';
-      text-transform: uppercase;
-      color: black;
-      font-size: 50px;
-      font-weight: 600;
-      z-index: 100;
-      text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px;
-      @media (max-height: 400px) {
-        font-size: 40px;
-      }
+
+      display: none !important;
+
+      //font-family: 'OpenSans', 'Condensed';
+      //text-transform: uppercase;
+      //color: black;
+      //font-size: 50px;
+      //font-weight: 600;
+      //z-index: 100;
+      //text-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px;
+      //@media (max-height: 400px) {
+      //  font-size: 40px;
+      //}
     }
     .paragraph{
       font-family: 'Roboto';
@@ -98,6 +101,7 @@
       line-height: 30px;
       font-weight: 300;
       z-index: 100;
+      margin-top: 0px !important;
     }
   }
   .arrow {

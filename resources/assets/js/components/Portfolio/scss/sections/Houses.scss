@@ -40,7 +40,8 @@
     .description {
 
       p {
-        font-family: 'Hammersmith One', sans-serif;
+
+        font-family: 'Alfa Slab One', cursive;
         max-width: 600px;
         font-size: 20px;
         margin-top: 50px;
@@ -83,10 +84,15 @@
     align-items: center;
     justify-content: center;
 
-    img {
-      width: 300px;
-      -webkit-filter: drop-shadow(0px 0px 15px black);
-      filter: drop-shadow(0px 0px 15px black);
+    .logoText{
+
+      color: white;
+      font-family: 'Alfa Slab One', cursive;
+      text-shadow: black 4px 4px 0px;
+      z-index: 100;
+      font-size: 65px;
+      line-height: 0;
+
     }
 
     .header{
@@ -100,7 +106,8 @@
       filter: drop-shadow( 0px 0px 15px rgba(0,0,0,0.5) );
     }
     .paragraph{
-      font-family: 'Hammersmith One', sans-serif;
+
+      font-family: 'Alfa Slab One', cursive;
       font-size: 20px;
       color: white;
       letter-spacing: 0.62px;

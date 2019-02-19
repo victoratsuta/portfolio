@@ -19,44 +19,9 @@ class Abirix extends Component {
 
     toggle() {
 
-        if (this.state.info) {
-
-            $('.info-container')
-                .removeClass('d-flex')
-                .addClass('d-none')
-
-            $('.tech-container')
-                .removeClass('d-none')
-                .addClass('d-flex')
-
-            $('.arrow')
-                .removeClass('arrow-up')
-                .addClass('arrow-down')
-
-
-            this.setState({
-                info: false
-            })
-
-        } else {
-
-            $('.info-container')
-                .removeClass('d-none')
-                .addClass('d-flex')
-
-            $('.tech-container')
-                .removeClass('d-flex')
-                .addClass('d-none')
-
-            $('.arrow')
-                .removeClass('arrow-down')
-                .addClass('arrow-up')
-
-            this.setState({
-                info: true
-            })
-
-        }
+        this.setState({
+            info: !this.state.info
+        })
 
     }
 
@@ -87,7 +52,7 @@ class Abirix extends Component {
 
                             </div>
 
-                            <div className={'tech-container d-flex'}>
+                            <div className={'tech-container ' + (this.state.info ? 'd-none' : 'd-flex')}>
                                 <div className={'row'}>
                                     <div className={'angular'}></div>
                                     <div className={'rxjs'}></div>
@@ -100,19 +65,18 @@ class Abirix extends Component {
                                 </div>
                             </div>
 
-                            <div className={'info-container tzie-small d-none'}>
+                            <div className={'info-container tzie-small '  + (this.state.info ? 'd-flex' : 'd-none')}>
 
-
-                                Writing a crm system in a team as senior developer.
-                                Design and writing of main system entities, database development.
-                                Using Angular as an interface development tool and Laravel as a backend API.
-                                Careful test coverage.
-                                Development with strict flow based on Agile princes.
-                                Transfer data from older systems.
+                                I have completed writing the crm system in a team as senior developer,
+                                designed and wrote the main system components, developed the database.
+                                Used Angular as the interface development tool and Laravel as the backend API;
+                                Complete test coverage;
+                                Development with strict flow based on Agile princes;
+                                Transfer data from legacy systems.
 
                             </div>
 
-                            <div className={'arrow arrow-down'} onClick={this.toggle}></div>
+                            <div className={'arrow ' + (this.state.info ? 'arrow-up' : 'arrow-down')} onClick={this.toggle}></div>
 
 
                         </div>

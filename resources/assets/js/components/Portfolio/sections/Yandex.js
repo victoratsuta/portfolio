@@ -48,6 +48,8 @@ class Yandex extends Component {
                 figure={_ => (
 
                     <div>
+                        <span>Check it</span>
+                        <span>Check it</span>
                     </div>
                 )}
 

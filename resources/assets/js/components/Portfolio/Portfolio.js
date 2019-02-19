@@ -23,6 +23,7 @@ import {bindActionCreators} from "redux";
 import Linkful from "./sections/Linkful/Linkful";
 import Smsplaza from "./sections/Smsplaza/Smsplaza";
 import Abirix from "./sections/Abirix/Abirix";
+import Houses from "./sections/Houses";
 
 function mapStateToProps(state) {
     return {
@@ -45,16 +46,16 @@ class Portfolio extends Component {
             sectionClassName: 'section',
             anchors: [
 
-                URLS.abirix,
-                URLS.smsplaza,
                 URLS.linkful,
                 URLS.compareip,
                 URLS.c2corner,
-                URLS.arcbazar,
+                URLS.smsplaza,
                 URLS.factoringvergelijken,
-                // URLS.cherryPick,
-                // URLS.houses,
+                URLS.abirix,
+                URLS.arcbazar,
                 URLS.yandex,
+                // URLS.cherryPick,
+                URLS.houses,
                 URLS.smokezone,
                 URLS.history24,
                 URLS.welhome,
@@ -86,50 +87,60 @@ class Portfolio extends Component {
                 <ScrollToTopOnMount/>
                 <SectionsContainer className="container" {...this.options}>
 
-                    <Section>
-                        <Abirix/>
-                    </Section>
-
-                    <Section>
-                        <Smsplaza/>
-                    </Section>
 
                     <Section>
                         <Linkful/>
                     </Section>
 
                     <Section>
-                        <CompareIp preloader={this.props.preloader.preloader}/>
+                        <CompareIp/>
+                    </Section>
+
+
+                    <Section>
+                        <Smsplaza/>
                     </Section>
 
                     <Section>
                         <C2Corner/>
                     </Section>
-                    {/*<Section>*/}
-                        {/*<CherryPick/>*/}
-                    {/*</Section>*/}
-                    {/*<Section>*/}
-                        {/*<Houses/>*/}
-                    {/*</Section>*/}
-                    <Section>
-                        <Arcbazar/>
-                    </Section>
+
+
                     <Section>
                         <Factoringvergelijken/>
                     </Section>
+
+
+                    <Section>
+                        <Abirix/>
+                    </Section>
+
+
+                    <Section>
+                        <Arcbazar/>
+                    </Section>
+
                     <Section>
                         <Yandex/>
                     </Section>
+
+                    <Section>
+                        <Houses/>
+                    </Section>
+
                     <Section>
                         <Smoke_Zone/>
                     </Section>
+
                     <Section>
                         <History24/>
                     </Section>
+
                     <Section>
                         <WellHome/>
                     </Section>
-                </SectionsContainer>
+
+                    </SectionsContainer>
                 <ScrollButton/>
             </div>
 

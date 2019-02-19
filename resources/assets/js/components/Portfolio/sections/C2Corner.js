@@ -3,47 +3,16 @@ import ParallaxMousemove from 'react-parallax-mousemove';
 import Constants from '../../../constants/constants'
 import Pattern from './../parts/Pattern'
 
-const style = {
-    History24__outter: {
-        backgroundPosition: 'center',
-        width: '100%',
-        position: 'relative',
-        overflow: 'hidden',
-        height: '100vh',
-    },
-    History24__bgLayerStyle: {
-
-        width: '120vw',
-        position: 'absolute',
-        overflow: 'hidden',
-        minHeight: '110vh',
-        marginLeft: '-5%',
-        marginBottom: '-2%',
-
-    }
-}
-
 class C2Corner extends Component {
 
     render() {
         return (
 
-            <ParallaxMousemove containerStyle={style.History24__outter}>
-                <ParallaxMousemove.Layer layerStyle={style.History24__bgLayerStyle} config={{
-                    xFactor: 0.05,
-                    yFactor: 0.05,
-                    springSettings: {
-                        stiffness: 50,
-                        damping: 30
-                    }
-                }}>
-
-                </ParallaxMousemove.Layer>
-
                 <Pattern
 
                     classname="C2Corner"
-                    logo='../imgs/logo_c2corner.png'
+                    logo={null}
+                    logoText={'C2CORNER'}
                     url={Constants.c2corner}
                     effectClassIn='zoomIn'
                     effectClassOut='zoomOut'
@@ -90,7 +59,6 @@ class C2Corner extends Component {
 
                 />
 
-            </ParallaxMousemove>
         )
     }
 }

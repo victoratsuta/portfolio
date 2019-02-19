@@ -34,11 +34,11 @@ class Houses extends Component {
 
             <ParallaxMousemove containerStyle={style.Houses__outter}>
                 <ParallaxMousemove.Layer layerStyle={style.Houses__bgLayerStyle} config={{
-                    xFactor: 0.02,
-                    yFactor: 0.02,
+                    xFactor: 0.1,
+                    yFactor: 0.1,
                     springSettings: {
-                        stiffness: 50,
-                        damping: 30
+                        stiffness: 30,
+                        damping: 15
                     }
                 }}>
 
@@ -47,9 +47,10 @@ class Houses extends Component {
                 <Pattern
 
                     classname="Houses"
-                    logo='../imgs/house_logo.png'
+                    logo={null}
+                    logoText={'HOOMES'}
                     url={''}
-                    effectClassIn='rotateIn'
+                    effectClassIn='zoomIn'
                     effectClassOut='zoomOut'
                     technologies={_ => (
 

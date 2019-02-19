@@ -1,17 +1,13 @@
+$mainColor : #003399;
+
 
 .C2Corner {
 
-  background: #373B44;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #3399FF;
 
   .technologies-container {
 
     .technologies {
-
-      div div{
-        filter: drop-shadow( 0px 0px 15px rgba(0,0,0,0.5) );
-      }
 
       div:nth-child(1) {
         div:nth-child(1) {
@@ -46,15 +42,14 @@
     .description {
 
       p {
-        filter: drop-shadow( 0px 0px 15px rgba(0,0,0,1) );
-        font-family: 'Roboto';
+        color: $mainColor;
+        font-family: 'Alfa Slab One', cursive;
         max-width: 600px;
         font-size: 20px;
         margin-top: 50px;
         margin-bottom: 50px;
         padding-left: 20px;
         padding-right: 20px;
-        color: white;
         text-align: center;
 
       }
@@ -65,15 +60,15 @@
 
         span {
 
-          border: 5px solid white;;
+          border: 5px solid $mainColor;
 
         }
         span:nth-child(1) {
-          color: white;;
+          color: $mainColor;;
         }
         span:nth-child(2) {
-          color: white;
-          background: #597BDF;
+          color: $mainColor;
+          background: transparent;
         }
 
       }
@@ -87,10 +82,15 @@
     align-items: center;
     justify-content: center;
 
-    img {
-      width: 300px;
-      -webkit-filter: drop-shadow(0px 0px 15px black);
-      filter: drop-shadow(0px 0px 15px black);
+    .logoText{
+
+      color: $mainColor;
+      text-shadow: #3366CC 4px 4px 0px;
+      font-family: 'Alfa Slab One', cursive;
+      z-index: 100;
+      font-size: 65px;
+      line-height: 0;
+
     }
 
     .header{
@@ -103,9 +103,11 @@
       text-align: center;
     }
     .paragraph{
-      font-family: 'Roboto';
+
+
+      color: $mainColor;
+      font-family: 'Alfa Slab One', cursive;
       font-size: 20px;
-      color: white;
       letter-spacing: 0.62px;
       line-height: 30px;
       font-weight: 300;
@@ -116,20 +118,19 @@
   }
   .arrow {
     display: block;
-    background-image: url(#{$img-path}/down-arrow_white.svg);
+    background-image: url(#{$img-path}/c2corner/arrow-down.svg);
     background-position: center;
     background-size: 80px;
     width: 80px;
     height: 80px;
     margin: auto;
+    margin-top: 30px;
     cursor: pointer;
-    -webkit-filter: drop-shadow(0px 0px 15px black);
-    filter: drop-shadow(0px 0px 15px black);
   }
   .show{
-    background-image: url(#{$img-path}/down-arrow_white.svg);
+    background-image: url(#{$img-path}/c2corner/arrow-down.svg);
   }
   .hide{
-    background-image: url(#{$img-path}/cancel_white.svg);
+    background-image: url(#{$img-path}/c2corner/arrow-up.svg);
   }
 }
