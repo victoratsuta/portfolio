@@ -16,41 +16,48 @@ let styleClasses = {}
 styleClasses[URLS.main] = 'effects-normal'
 styleClasses[URLS.contacts] = 'effects-normal'
 styleClasses[URLS.skills] = 'effects-normal'
-styleClasses[URLS.welhome] = 'effects-welhome'
-styleClasses[URLS.history24] = 'effects-history24'
-styleClasses[URLS.smokezone] = 'effects-smoke-zone'
-styleClasses[URLS.yandex] = 'effects-yandex'
 
+
+styleClasses[URLS.portfolio] = styleClasses[URLS.first_slide] = styleClasses[URLS.linkful]
+
+styleClasses[URLS.linkful] = 'effects-linkful'
 styleClasses[URLS.compareip] = 'effects-compareIp'
-styleClasses[URLS.first_slide] = 'effects-compareIp'
-styleClasses[URLS.portfolio] = 'effects-compareIp'
-
 styleClasses[URLS.c2corner] = 'effects-c2corner'
-styleClasses[URLS.cherryPick] = 'effects-cherry'
-styleClasses[URLS.houses] = 'effects-house'
-
-styleClasses[URLS.arcbazar] = 'effects-arcbazar'
+styleClasses[URLS.smsplaza] = 'effects-smsplaza'
 styleClasses[URLS.factoringvergelijken] = 'effects-factoringvergelijken'
+styleClasses[URLS.abirix] = 'effects-abirix'
+styleClasses[URLS.arcbazar] = 'effects-arcbazar'
+styleClasses[URLS.yandex] = 'effects-yandex'
+styleClasses[URLS.houses] = 'effects-houses'
+styleClasses[URLS.smokezone] = 'effects-smoke-zone'
+styleClasses[URLS.history24] = 'effects-history24'
+styleClasses[URLS.welhome] = 'effects-welhome'
+
+styleClasses[URLS.cherryPick] = 'effects-cherry'
 
 const styleStroke = {}
 
 styleStroke[URLS.main] = 'stroke-normal'
 styleStroke[URLS.contacts] = 'stroke-normal'
 styleStroke[URLS.skills] = 'stroke-normal'
-styleStroke[URLS.welhome] = 'stroke-welhome'
-styleStroke[URLS.history24] = 'stroke-history24'
-styleStroke[URLS.smokezone] = 'stroke-smoke-zone'
-styleStroke[URLS.yandex] = 'stroke-yandex'
 
-styleStroke[URLS.c2corner] = 'stroke-c2corner'
-styleStroke[URLS.cherryPick] = 'stroke-cherry'
 
+styleStroke[URLS.first_slide] = styleStroke[URLS.portfolio] = styleStroke[URLS.linkful]
+
+styleStroke[URLS.linkful] = 'stroke-linkful'
 styleStroke[URLS.compareip] = 'stroke-compareIp'
-styleStroke[URLS.first_slide] = 'stroke-compareIp'
-styleStroke[URLS.portfolio] = 'stroke-compareIp'
-
-styleStroke[URLS.arcbazar] = 'stroke-arcbazar'
+styleStroke[URLS.c2corner] = 'stroke-c2corner'
+styleStroke[URLS.smsplaza] = 'stroke-smsplaza'
 styleStroke[URLS.factoringvergelijken] = 'stroke-factoringvergelijken'
+styleStroke[URLS.abirix] = 'stroke-abirix'
+styleStroke[URLS.arcbazar] = 'stroke-arcbazar'
+styleStroke[URLS.yandex] = 'stroke-yandex'
+styleStroke[URLS.houses] = 'stroke-houses'
+styleStroke[URLS.smokezone] = 'stroke-smoke-zone'
+styleStroke[URLS.history24] = 'stroke-history24'
+styleStroke[URLS.welhome] = 'stroke-welhome'
+
+styleStroke[URLS.cherryPick] = 'stroke-cherry'
 
 function mapStateToProps(state) {
     return {

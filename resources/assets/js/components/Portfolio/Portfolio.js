@@ -12,7 +12,7 @@ import Arcbazar from './sections/Arcbazar';
 import Factoringvergelijken from './sections/Factoringvergelijken';
 
 import ScrollButton from './parts/ScrollButton';
-import {ScrollToTopOnMount, SectionsContainer, Section} from 'react-fullpage';
+import {ScrollToTopOnMount, Section, SectionsContainer} from 'react-fullpage';
 
 import './scss/Portfolio.scss'
 import {URLS} from './../../constants/urls'
@@ -27,14 +27,14 @@ import Houses from "./sections/Houses";
 
 function mapStateToProps(state) {
     return {
-        page : state.page,
+        page: state.page,
         preloader: state.preloader,
     }
 }
 
 function matchDispatchToProps(dispatch) {
 
-    return bindActionCreators({setPage : setPage}, dispatch)
+    return bindActionCreators({setPage: setPage}, dispatch)
 
 }
 
@@ -48,8 +48,8 @@ class Portfolio extends Component {
 
                 URLS.linkful,
                 URLS.compareip,
-                URLS.c2corner,
                 URLS.smsplaza,
+                URLS.c2corner,
                 URLS.factoringvergelijken,
                 URLS.abirix,
                 URLS.arcbazar,
@@ -66,11 +66,22 @@ class Portfolio extends Component {
             sectionPaddingTop: '0px',
             sectionPaddingBottom: '0px',
             arrowNavigation: true,
-            scrollCallback : (slide) => {this.setSlide(slide)}
+            scrollCallback: (slide) => {
+                this.setSlide(slide)
+            }
         };
     }
 
-    setSlide(){
+    componentWillMount() {
+
+        history.pushState("", document.title, window.location.pathname
+            + window.location.search);
+
+        this.props.setPage(URLS.linkful);
+
+    }
+
+    setSlide() {
         const path = window.location.href.split('/')[3].split('#')
         let page = path[1] ? path[1] : 'first-slide'
 
@@ -140,7 +151,7 @@ class Portfolio extends Component {
                         <WellHome/>
                     </Section>
 
-                    </SectionsContainer>
+                </SectionsContainer>
                 <ScrollButton/>
             </div>
 
