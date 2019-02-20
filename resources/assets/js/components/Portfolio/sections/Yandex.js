@@ -34,13 +34,13 @@ class Yandex extends Component {
 
                     <div className={'description'}>
                         <p>
-                            <b>D</b>evelopment of SPA on jquery and <b>w</b>ebpack
+                            <b>I</b> have build the game. This is SPA on jquery and <b>w</b>ebpack
 
                             <br/>
-                            Ada<b>p</b>tive <b>L</b>ayout
+                            with Ada<b>p</b>tive <b>I</b>nterface
 
                             <br/>
-                            <b>O</b>ptimization of prod<b>u</b>ctivity
+                            and <b>o</b>ptimization of perform<b>a</b>nce
                         </p>
                     </div>
                 )}
@@ -55,11 +55,11 @@ class Yandex extends Component {
 
                 logoDescription={_ => (
                     <p>
-                        <b>L</b>ight and relaxing game
+                        <b>S</b>imple and relaxing game
                         <br/>
-                        in honor of the holiday on <b>F</b>ebruary 23
+                        In honor of <b>F</b>ebruary 23
                         <br/>
-                        for <b>Y</b>andex maps
+                        For <b>Y</b>andex maps
                     </p>
                 )}
 

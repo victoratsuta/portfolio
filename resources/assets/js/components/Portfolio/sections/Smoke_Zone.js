@@ -64,11 +64,11 @@ class Smoke_Zone extends Component {
 
                         <div className={'description'}>
                             <p>
-                                Full development of an online store, the sale of tobacco products based on a unique MVC
-                                core.
+                                I have developed the online store, based on the unique MVC
+                                core;
                                <span>
-                                    Promotion and Support. Development of a flexible administrative system and a subsystem
-                                of content management
+                                    promotion and support;
+                                   development of a flexible administration panel with content management features
                                </span>
                             </p>
                         </div>
@@ -84,7 +84,7 @@ class Smoke_Zone extends Component {
                     logoDescription={_ => (
                         <p>
                             <h1 className={'header'}>SMOKE-ZONE</h1>
-                            <p className={'paragraph'}>online store selling tobacco for shisha</p>
+                            <p className={'paragraph'}>online shop selling tobacco for hookah</p>
                         </p>
                     )}
 

@@ -92,7 +92,7 @@ class Smsplaza extends Component {
 
                             </div>
 
-                            <div className={'arrow' + (this.state.info ? 'arrow-up' : 'arrow-down')} onClick={this.toggle}></div>
+                            <div className={'arrow ' + (this.state.info ? 'arrow-up' : 'arrow-down')} onClick={this.toggle}></div>
 
                             <a
                                 className={'mt-50 description'}

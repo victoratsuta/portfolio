@@ -48,16 +48,15 @@ class Arcbazar extends Component {
 
                         <div className={'description'}>
                             <p className={'first'}>
-                                Development of part of the system functionality in the team.
+                                My team and I have developed new features;
                             </p>
 
                             <p>
-                                Writing backend with Yii, Elasticsearch
-                                and MySQL.
+                                writing backend with Yii, Elasticsearch and MySQL;
                             </p>
 
                             <p className={'last'}>
-                                And working on frontend logic
+                                also working with frontend new features
                             </p>
                         </div>
                     )}
@@ -72,8 +71,7 @@ class Arcbazar extends Component {
 
                     logoDescription={_ => (
 
-                            <p className={'paragraph'}>
-                                System which provide to create design competition</p>
+                            <p className={'paragraph'}>Create unique interie and landscape design</p>
 
                     )}
 

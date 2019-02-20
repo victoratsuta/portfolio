@@ -71,11 +71,11 @@ class History24 extends Component {
 
                         <div className={'description'}>
                             <p>
-                                Full development of the educational platform for the preparation for the USE on history,
-                                based on the PHP framework Laravel.
+                                I have build the educational platform,
+                                based on the PHP framework - Laravel;
                                 <span>
-                                    Designing the architecture of the system, writing the frontend
-                                using Bootstrap, Gulp, Jquery and many different libraries
+                                    designed the architecture of the system, wrote the frontend
+                                using Bootstrap, Gulp, Jquery and other libraries
                                 </span>
                             </p>
                         </div>
@@ -92,8 +92,7 @@ class History24 extends Component {
                     logoDescription={_ => (
                         <p>
                             <h1 className={'header'}>HISTORY.RF</h1>
-                            <p className={'paragraph'}>All-Russian portal of online preparation for the unified
-                                state exam on history</p>
+                            <p className={'paragraph'}>Russian portal for online preparation for exams on history</p>
                         </p>
                     )}
 

@@ -69,11 +69,12 @@ class WellHome extends Component {
 
                         <div className={'description'}>
                             <p>
-                                Development of a closed CRM system for the automation of business processes in the
+                                I have developed CRM system in order
+                                to automate business processes in the
                                 company engaged in the sale of real estate - <b><a href={'http://www.welhome.ru/'}
                                                                                    target={'blank'}>Welhome</a></b>
                                 <span>,
-                                based on SugarCRM. Designing the database and system architecture. Integration with
+                                based on SugarCRM; designed the database and system architecture; integration with
                                 existing enterprise systems</span>
                             </p>
                         </div>
@@ -89,8 +90,7 @@ class WellHome extends Component {
                     logoDescription={_ => (
                         <p>
                             <h1 className={'header'}>WELHOME</h1>
-                            <p className={'paragraph'}>CRM system for auto-business
-                                processes</p>
+                            <p className={'paragraph'}>CRM system for real estate company</p>
                         </p>
                     )}
 

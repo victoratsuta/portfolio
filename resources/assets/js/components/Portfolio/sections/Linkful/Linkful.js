@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 
 import './lib/swirl'
 import Constants from "../../../../constants/constants";
+import setup from "./lib/swirl";
 
 
 class Linkful extends Component {
@@ -16,6 +17,10 @@ class Linkful extends Component {
         this.state = {
             info : false
         }
+    }
+
+    componentDidMount(){
+        setup()
     }
 
     toggle(){

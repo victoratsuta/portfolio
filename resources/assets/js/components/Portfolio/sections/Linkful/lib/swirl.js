@@ -204,5 +204,6 @@ function draw() {
 	window.requestAnimationFrame(draw);
 }
 
-window.addEventListener('load', setup);
 window.addEventListener('resize', resize);
+
+export default setup

@@ -69,7 +69,9 @@ class Factoringvergelijken extends Component {
 
                         <div className={'description'}>
                             <p>
-Development in the team application on Yii2, interface design. Modification of modules in the administration panel
+                                My team and I have developed the application build with Yii2.
+                                Also I have made and designed some parts of the interface;
+                                improvement of modules in the administration panel
                             </p>
                         </div>
                     )}
@@ -85,7 +87,7 @@ Development in the team application on Yii2, interface design. Modification of m
                     logoDescription={_ => (
                         <p>
                             <p className={'paragraph'}>
-                                System for providing factoring services
+                                Online factoring services
                             </p>
                         </p>
                     )}

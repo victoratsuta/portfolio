@@ -56,7 +56,7 @@ class Abirix extends Component {
                                 <div className={'row'}>
                                     <div className={'angular'}></div>
                                     <div className={'rxjs'}></div>
-                                    <div className={'clarity'}></div>
+                                    <div className={'ts'}></div>
                                 </div>
                                 <div className={'row'}>
                                     <div className={'laravel'}></div>

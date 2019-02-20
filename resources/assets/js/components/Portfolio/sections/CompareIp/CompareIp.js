@@ -52,8 +52,9 @@ class CompareIp extends Component {
                             <h2 style={{opacity: this.state.visible}} className={'word word--6'}>CompareIp</h2>
 
                             <div className={'description ' + this.state.animateClass}>
-                                <p className={'word--6'}>Development of a portal for the search of enterprises for the
-                                    establishment of patents for inventions</p>
+                                <p className={'word--6 small-text'}>
+                                    Online service for patenting of inventions
+                                </p>
 
                                 <div className={'img-container'}>
                                     <div></div>
