@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 
 import './lib/pipeline'
 import Constants from "../../../../constants/constants";
+import setup from "../Linkful/lib/swirl";
 
 
 class Smsplaza extends Component {
@@ -16,6 +17,10 @@ class Smsplaza extends Component {
         this.state = {
             info : false
         }
+    }
+
+    componentDidMount(){
+        setup()
     }
 
     toggle(){

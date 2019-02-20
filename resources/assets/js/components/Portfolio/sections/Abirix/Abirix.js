@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 
 import './lib/coalesce'
+import setup from "../Linkful/lib/swirl";
 
 
 class Abirix extends Component {
@@ -15,6 +16,10 @@ class Abirix extends Component {
         this.state = {
             info: false
         }
+    }
+
+    componentDidMount(){
+        setup()
     }
 
     toggle() {
