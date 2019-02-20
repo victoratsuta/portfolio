@@ -49,16 +49,16 @@ class Portfolio extends Component {
                 URLS.linkful,
                 URLS.compareip,
                 URLS.smsplaza,
-                URLS.c2corner,
-                URLS.factoringvergelijken,
+                // URLS.c2corner,
+                // URLS.factoringvergelijken,
                 URLS.abirix,
-                URLS.arcbazar,
-                URLS.yandex,
+                // URLS.arcbazar,
+                // URLS.yandex,
                 // URLS.cherryPick,
-                URLS.houses,
-                URLS.smokezone,
-                URLS.history24,
-                URLS.welhome,
+                // URLS.houses,
+                // URLS.smokezone,
+                // URLS.history24,
+                // URLS.welhome,
             ],
             scrollBar: false,
             navigation: true,
@@ -112,14 +112,14 @@ class Portfolio extends Component {
                         <Smsplaza/>
                     </Section>
 
-                    <Section>
-                        <C2Corner/>
-                    </Section>
+                    {/*<Section>*/}
+                        {/*<C2Corner/>*/}
+                    {/*</Section>*/}
 
 
-                    <Section>
-                        <Factoringvergelijken/>
-                    </Section>
+                    {/*<Section>*/}
+                        {/*<Factoringvergelijken/>*/}
+                    {/*</Section>*/}
 
 
                     <Section>
@@ -127,29 +127,29 @@ class Portfolio extends Component {
                     </Section>
 
 
-                    <Section>
-                        <Arcbazar/>
-                    </Section>
+                    {/*<Section>*/}
+                        {/*<Arcbazar/>*/}
+                    {/*</Section>*/}
 
-                    <Section>
-                        <Yandex/>
-                    </Section>
+                    {/*<Section>*/}
+                        {/*<Yandex/>*/}
+                    {/*</Section>*/}
 
-                    <Section>
-                        <Houses/>
-                    </Section>
+                    {/*<Section>*/}
+                        {/*<Houses/>*/}
+                    {/*</Section>*/}
 
-                    <Section>
-                        <Smoke_Zone/>
-                    </Section>
+                    {/*<Section>*/}
+                        {/*<Smoke_Zone/>*/}
+                    {/*</Section>*/}
 
-                    <Section>
-                        <History24/>
-                    </Section>
+                    {/*<Section>*/}
+                        {/*<History24/>*/}
+                    {/*</Section>*/}
 
-                    <Section>
-                        <WellHome/>
-                    </Section>
+                    {/*<Section>*/}
+                        {/*<WellHome/>*/}
+                    {/*</Section>*/}
 
                 </SectionsContainer>
                 <ScrollButton/>
