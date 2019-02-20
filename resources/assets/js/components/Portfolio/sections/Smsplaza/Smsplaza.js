@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 import './lib/pipeline'
 import Constants from "../../../../constants/constants";
-import setup from "../Linkful/lib/swirl";
+import setup from "./lib/pipeline";
 
 
 class Smsplaza extends Component {

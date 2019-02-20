@@ -37,7 +37,6 @@ let sizes;
 let hues;
 
 function setup() {
-    alert('qwe')
 	createCanvas();
   resize();
   initParticles();

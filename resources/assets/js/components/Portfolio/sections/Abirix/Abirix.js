@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 
 import './lib/coalesce'
-import setup from "../Linkful/lib/swirl";
+import setup from "./lib/coalesce";
 
 
 class Abirix extends Component {
