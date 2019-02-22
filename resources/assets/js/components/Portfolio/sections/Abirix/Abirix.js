@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 
 
 import './lib/coalesce'
-import setup from "./lib/coalesce";
+import {setup, remove} from "./lib/coalesce";
+import Slideshow from "../CompareIp/lib/Slideshow";
+import {URLS} from "../../../../constants/urls";
+import {connect} from "react-redux";
 
 
 class Abirix extends Component {
@@ -18,9 +21,20 @@ class Abirix extends Component {
         }
     }
 
-    componentDidMount(){
-        setup()
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.page.page === URLS.abirix) {
+
+            setup()
+            $('#fp-nav ul li a span').addClass('abirix-bg')
+        } else {
+
+            remove()
+            $('#fp-nav ul li a span').removeClass('abirix-bg')
+        }
+
     }
+
 
     toggle() {
 
@@ -59,14 +73,7 @@ class Abirix extends Component {
 
                             <div className={'tech-container ' + (this.state.info ? 'd-none' : 'd-flex')}>
                                 <div className={'row'}>
-                                    <div className={'angular'}></div>
-                                    <div className={'rxjs'}></div>
-                                    <div className={'ts'}></div>
-                                </div>
-                                <div className={'row'}>
-                                    <div className={'laravel'}></div>
-                                    <div className={'php-unit'}></div>
-                                    <div className={'mysql'}></div>
+                                    <div className={'techs'}></div>
                                 </div>
                             </div>
 
@@ -99,5 +106,11 @@ class Abirix extends Component {
     }
 }
 
-export default Abirix
+function mapStateToProps(state) {
+    return {
+        page: state.page,
+        preloader: state.preloader,
+    }
+}
 
+export default connect(mapStateToProps, {})(Abirix);

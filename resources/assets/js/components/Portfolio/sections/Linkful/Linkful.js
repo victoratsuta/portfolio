@@ -3,7 +3,9 @@ import React, {Component} from 'react';
 
 import './lib/swirl'
 import Constants from "../../../../constants/constants";
-import setup from "./lib/swirl";
+import {remove, setup} from "./lib/swirl";
+import {URLS} from "../../../../constants/urls";
+import {connect} from "react-redux";
 
 
 class Linkful extends Component {
@@ -15,15 +17,29 @@ class Linkful extends Component {
         this.toggle = this.toggle.bind(this)
 
         this.state = {
-            info : false
+            info: false
         }
     }
 
-    componentDidMount(){
-        setup()
+
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.page.page === URLS.first_slide ||
+            nextProps.page.page === URLS.linkful) {
+
+            setup()
+            $('#fp-nav ul li a span').addClass('linkful-bg')
+
+        } else {
+
+            remove()
+            $('#fp-nav ul li a span').removeClass('linkful-bg')
+
+        }
+
     }
 
-    toggle(){
+    toggle() {
 
         this.setState({
             info: !this.state.info
@@ -67,23 +83,7 @@ class Linkful extends Component {
 
                             <div className={'tech-container ' + (this.state.info ? 'd-none' : 'd-flex')}>
                                 <div className={'row'}>
-                                    <div className={'react'}></div>
-                                    <div className={'redux-saga'}></div>
-                                    <div className={'flow'}></div>
-                                    <div className={'webpack'}></div>
-
-                                    <div className={'laravel'}></div>
-                                    <div className={'nova'}></div>
-                                </div>
-                                <div className={'row'}>
-                                    <div className={'vue'}></div>
-                                    <div className={'php-unit'}></div>
-
-                                    <div className={'docker'}></div>
-                                    <div className={'mongo'}></div>
-
-                                    <div className={'mysql'}></div>
-                                    <div className={'apache'}></div>
+                                    <div className={'techs'}></div>
                                 </div>
                             </div>
 
@@ -102,7 +102,8 @@ class Linkful extends Component {
 
                             </div>
 
-                            <div className={'arrow ' + (this.state.info ? 'arrow-up' : 'arrow-down')} onClick={this.toggle}></div>
+                            <div className={'arrow ' + (this.state.info ? 'arrow-up' : 'arrow-down')}
+                                 onClick={this.toggle}></div>
 
                             <a
                                 className={'mt-50 description'}
@@ -117,8 +118,6 @@ class Linkful extends Component {
 
                     </div>
 
-                    {/*<h2 className="content__title">Swirl</h2>*/}
-
                 </main>
 
 
@@ -128,5 +127,11 @@ class Linkful extends Component {
     }
 }
 
-export default Linkful
+function mapStateToProps(state) {
+    return {
+        page: state.page,
+        preloader: state.preloader,
+    }
+}
 
+export default connect(mapStateToProps, {})(Linkful);

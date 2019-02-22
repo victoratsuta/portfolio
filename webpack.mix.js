@@ -20,9 +20,10 @@ let mix = require('laravel-mix');
 // });
 
 mix.react('resources/assets/js/app.js', 'public/js')
-    // .browserSync({
-    //     proxy: 'portfolio'
-    // });
+    .browserSync({
+        proxy: 'portfolio'
+    })
+    .version();
 
 
 const ImageminPlugin = require('imagemin-webpack-plugin').default;

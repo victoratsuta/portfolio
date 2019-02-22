@@ -11,8 +11,9 @@ class CompareIp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: 1,
+            visible: 0,
             animateClass: 'hide',
+            firstTime : true
         };
         this.showDescription = _ => {
 
@@ -25,20 +26,44 @@ class CompareIp extends Component {
         }
     }
 
-    // componentDidUpdate(prevProps){
-    //     if(!this.props.preloader && prevProps.preloader && this.props.page === URLS.compareip){
-    //
-    //     }
-    // }
+    componentDidUpdate(prevProps){
+
+        if(!this.props.preloader.preloader && prevProps.preloader.preloader && this.props.page.page === URLS.compareip && this.state.firstTime){
+
+            this.show()
+
+        }
+    }
 
     componentWillReceiveProps(nextProps){
 
-        if(this.props.page.page !== URLS.compareip && nextProps.page.page === URLS.compareip){
+        if(this.props.page.page !== URLS.compareip && nextProps.page.page === URLS.compareip && this.state.firstTime){
 
-            this.slideshow = new Slideshow(document.querySelector('.slideshow'), this.showDescription)
+            this.show()
 
         }
 
+        if(this.props.page.page !== URLS.compareip && nextProps.page.page === URLS.compareip){
+
+            $('#fp-nav ul li a span').addClass('compareip-bg')
+
+        } else {
+
+            $('#fp-nav ul li a span').removeClass('compareip-bg')
+
+        }
+
+    }
+
+    show(){
+        this.slideshow = new Slideshow(document.querySelector('.slideshow'), this.showDescription)
+
+        this.setState(
+            {
+                firstTime : false,
+                visible : true
+            }
+        )
     }
 
 
@@ -57,10 +82,6 @@ class CompareIp extends Component {
                                 </p>
 
                                 <div className={'img-container'}>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
                                 </div>
                                 <a href={Constants.compareIp} target="_blank">
                                     <button className="draw-border">Live</button>

@@ -3,7 +3,9 @@ import React, {Component} from 'react';
 
 import './lib/pipeline'
 import Constants from "../../../../constants/constants";
-import setup from "./lib/pipeline";
+import {setup, remove} from "./lib/pipeline";
+import {URLS} from "../../../../constants/urls";
+import connect from "react-redux/es/connect/connect";
 
 
 class Smsplaza extends Component {
@@ -19,8 +21,18 @@ class Smsplaza extends Component {
         }
     }
 
-    componentDidMount(){
-        setup()
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.page.page === URLS.smsplaza) {
+
+            setup()
+            $('#fp-nav ul li a span').addClass('smsplaza-bg')
+        } else {
+
+            remove()
+            $('#fp-nav ul li a span').removeClass('smsplaza-bg')
+        }
+
     }
 
     toggle(){
@@ -69,19 +81,7 @@ class Smsplaza extends Component {
 
                             <div className={'tech-container ' + (this.state.info ? 'd-none' : 'd-flex')}>
                                 <div className={'row'}>
-                                    <div className={'vue'}></div>
-                                    <div className={'nuxt'}></div>
-                                    <div className={'vuex'}></div>
-                                </div>
-                                <div className={'row'}>
-                                    <div className={'vuetify'}></div>
-                                    <div className={'webpack'}></div>
-                                    <div className={'laravel'}></div>
-                                </div>
-                                <div className={'row'}>
-                                    <div className={'mysql'}></div>
-                                    <div className={'php-unit'}></div>
-                                    <div className={'nova'}></div>
+                                    <div className={'techs'}></div>
                                 </div>
                             </div>
 
@@ -123,5 +123,13 @@ class Smsplaza extends Component {
     }
 }
 
-export default Smsplaza
+function mapStateToProps(state) {
+    return {
+        page: state.page,
+        preloader: state.preloader,
+    }
+}
+
+export default connect(mapStateToProps, {})(Smsplaza);
+
 

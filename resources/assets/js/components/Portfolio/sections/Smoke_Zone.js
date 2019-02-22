@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import ParallaxMousemove from 'react-parallax-mousemove';
 import Constants from "../../../constants/constants";
 import Pattern from './../parts/Pattern'
 
 const style = {
 
-    Smoke_Zone__outter: {
+    outter: {
         background: 'black',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
@@ -13,7 +12,7 @@ const style = {
         position: 'relative',
         overflow: 'hidden'
     },
-    Smoke_Zone__bgLayerStyle: {
+    bgLayerStyle: {
         position: 'absolute',
         height: '100%',
     }
@@ -25,17 +24,10 @@ class Smoke_Zone extends Component {
 
     render() {
         return (
-            <ParallaxMousemove containerStyle={style.Smoke_Zone__outter}>
-                <ParallaxMousemove.Layer layerStyle={style.Smoke_Zone__bgLayerStyle} config={{
-                    xFactor: 0.05,
-                    yFactor: 0.05,
-                    springSettings: {
-                        stiffness: 50,
-                        damping: 30
-                    }
-                }}>
+            <div style={style.outter}>
+                <div style={style.bgLayerStyle}>
                     <img src={'../imgs/2.png'}></img>
-                </ParallaxMousemove.Layer>
+                </div>
 
                 <Pattern
 
@@ -66,7 +58,7 @@ class Smoke_Zone extends Component {
                             <p>
                                 I have developed the online store, based on the unique MVC
                                 core;
-                               <span>
+                                <span>
                                     promotion and support;
                                    development of a flexible administration panel with content management features
                                </span>
@@ -90,7 +82,7 @@ class Smoke_Zone extends Component {
 
                 />
 
-            </ParallaxMousemove>
+            </div>
         )
     }
 }

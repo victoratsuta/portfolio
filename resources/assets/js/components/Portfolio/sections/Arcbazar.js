@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import ParallaxMousemove from 'react-parallax-mousemove';
 import Pattern from './../parts/Pattern'
 import Constants from '../../../constants/constants'
+import {URLS} from "../../../constants/urls";
+import {connect} from "react-redux";
 
 const style = {
     outter: {
@@ -14,6 +16,18 @@ const style = {
 
 
 class Arcbazar extends Component {
+
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.page.page === URLS.arcbazar) {
+
+            $('#fp-nav ul li a span').addClass('arcbazar-bg')
+        } else {
+
+            $('#fp-nav ul li a span').removeClass('arcbazar-bg')
+        }
+
+    }
 
 
     render() {
@@ -31,16 +45,6 @@ class Arcbazar extends Component {
                     technologies={_ => (
 
                         <div className={'technologies'}>
-                            <div>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
-                            <div>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
                         </div>
                     )}
 
@@ -82,4 +86,12 @@ class Arcbazar extends Component {
     }
 }
 
-export default Arcbazar;
+function mapStateToProps(state) {
+    return {
+        page: state.page,
+        preloader: state.preloader,
+    }
+}
+
+export default connect(mapStateToProps, {})(Arcbazar);
+

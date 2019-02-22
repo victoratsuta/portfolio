@@ -2,45 +2,52 @@ import React, {Component} from 'react';
 import ParallaxMousemove from 'react-parallax-mousemove';
 import Constants from "../../../constants/constants";
 import Pattern from './../parts/Pattern'
+import {connect} from "react-redux";
+import {URLS} from "../../../constants/urls";
 
 const style = {
-    History24__outter: {
+    outter: {
         backgroundPosition: 'center',
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
         height: '100vh',
     },
-    History24__bgLayerStyle: {
+    bgLayerStyle: {
         backgroundImage: 'url(../imgs/history.jpg)',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        width: '120vw',
+        width: '100vw',
         position: 'absolute',
         overflow: 'hidden',
-        minHeight: '110vh',
-        marginLeft: '-5%',
-        marginBottom: '-2%',
+        minHeight: '100vh',
+        bottom : '0px'
 
     }
 }
 
 class History24 extends Component {
 
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.page.page === URLS.history24) {
+
+            $('#fp-nav ul li a span').addClass('history24-bg')
+
+        } else {
+
+            $('#fp-nav ul li a span').removeClass('history24-bg')
+
+        }
+
+    }
+
+
     render() {
         return (
 
-            <ParallaxMousemove containerStyle={style.History24__outter}>
-                <ParallaxMousemove.Layer layerStyle={style.History24__bgLayerStyle} config={{
-                    xFactor: 0.05,
-                    yFactor: 0.05,
-                    springSettings: {
-                        stiffness: 50,
-                        damping: 30
-                    }
-                }}>
-
-                </ParallaxMousemove.Layer>
+            <div style={style.outter}>
+                <div style={style.bgLayerStyle}/>
 
                 <Pattern
 
@@ -52,18 +59,6 @@ class History24 extends Component {
                     technologies={_ => (
 
                         <div className={'technologies'}>
-                            <div>
-                                <div/>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
-                            <div>
-                                <div/>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
                         </div>
                     )}
 
@@ -98,9 +93,17 @@ class History24 extends Component {
 
                 />
 
-            </ParallaxMousemove>
+            </div>
         )
     }
 }
 
-export default History24;
+function mapStateToProps(state) {
+    return {
+        page: state.page,
+        preloader: state.preloader,
+    }
+}
+
+export default connect(mapStateToProps, {})(History24);
+

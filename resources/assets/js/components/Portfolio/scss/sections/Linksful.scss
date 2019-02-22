@@ -117,7 +117,6 @@
         display: flex;
         flex-direction: row;
         width: 550px;
-        height: 100px;
         align-items: center;
         justify-content: space-between;
 
@@ -125,47 +124,9 @@
           background-position: center;
           background-repeat: no-repeat;
           background-size: contain;
-          width: 70px;
-          height: 70px;
-        }
-
-        .react{
-          background-image: url(#{$img-path}/linkful/react.png);
-        }
-        .redux-saga{
-          background-image: url(#{$img-path}/linkful/redux-saga.png);
-        }
-        .flow{
-          background-image: url(#{$img-path}/linkful/flow.png);
-        }
-        .webpack{
-          background-image: url(#{$img-path}/linkful/webpack.png);
-        }
-
-        .laravel{
-          background-image: url(#{$img-path}/linkful/larvel.png);
-        }
-        .nova{
-          background-image: url(#{$img-path}/linkful/nova.png);
-        }
-        .vue{
-          background-image: url(#{$img-path}/linkful/vue.png);
-        }
-        .php-unit{
-          background-image: url(#{$img-path}/linkful/phpunit.png);
-        }
-
-        .docker{
-          background-image: url(#{$img-path}/linkful/docker.png);
-        }
-        .mongo{
-          background-image: url(#{$img-path}/linkful/mongo.png);
-        }
-        .mysql{
-          background-image: url(#{$img-path}/linkful/mysql.png);
-        }
-        .apache{
-          background-image: url(#{$img-path}/linkful/apache.png);
+          width: 100%;
+          height: 200px;
+          background-image: url(#{$img-path}/linkful/linkful.png);
         }
 
       }
@@ -202,12 +163,7 @@
     .row{
 
       width: 400px !important;
-      height: 80px !important;
 
-      div{
-        width: 50px !important;
-        height: 50px !important;
-      }
     }
   }
 }
@@ -218,12 +174,7 @@
     .row{
 
       width: 300px !important;
-      height: 70px !important;
 
-      div{
-        width: 35px !important;
-        height: 35px !important;
-      }
     }
   }
 }
@@ -238,12 +189,7 @@
     .row{
 
       width: 240px !important;
-      height: 60px !important;
 
-      div{
-        width: 28px !important;
-        height: 28px !important;
-      }
     }
   }
 }

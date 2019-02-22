@@ -2,8 +2,22 @@ import React, {Component} from 'react';
 import ParallaxMousemove from 'react-parallax-mousemove';
 import Constants from '../../../constants/constants'
 import Pattern from './../parts/Pattern'
+import {connect} from "react-redux";
+import {URLS} from "../../../constants/urls";
 
 class C2Corner extends Component {
+
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.page.page === URLS.c2corner) {
+
+            $('#fp-nav ul li a span').addClass('c2corner-bg')
+        } else {
+
+            $('#fp-nav ul li a span').removeClass('c2corner-bg')
+        }
+
+    }
 
     render() {
         return (
@@ -19,18 +33,6 @@ class C2Corner extends Component {
                     technologies={_ => (
 
                         <div className={'technologies'}>
-                            <div>
-                                <div/>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
-                            <div>
-                                <div/>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
                         </div>
                     )}
 
@@ -65,4 +67,11 @@ class C2Corner extends Component {
     }
 }
 
-export default C2Corner;
+function mapStateToProps(state) {
+    return {
+        page: state.page,
+        preloader: state.preloader,
+    }
+}
+
+export default connect(mapStateToProps, {})(C2Corner);

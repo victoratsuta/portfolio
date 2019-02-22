@@ -2,48 +2,49 @@ import React, {Component} from 'react';
 import ParallaxMousemove from 'react-parallax-mousemove';
 import Constants from "../../../constants/constants";
 import Pattern from './../parts/Pattern'
+import {connect} from "react-redux";
+import {URLS} from "../../../constants/urls";
 
 const style = {
-    Houses__outter: {
+    outter: {
         backgroundPosition: 'center',
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
         height: '100vh',
     },
-    Houses__bgLayerStyle: {
-        backgroundImage: 'url(../imgs/city.jpg)',
-        filter: 'opacity(50%) brightness(50%)',
+    bgLayerStyle: {
 
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        width: '120vw',
+        width: '100vw',
+        height: '100vh',
         position: 'absolute',
         overflow: 'hidden',
-        minHeight: '110vh',
-        marginLeft: '-5%',
-        marginBottom: '-2%',
+        background: 'rgba(0,0,0, 0.4)'
 
     }
 }
 
 class Houses extends Component {
 
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.page.page === URLS.houses) {
+
+            $('#fp-nav ul li a span').addClass('houses-bg')
+
+        } else {
+
+            $('#fp-nav ul li a span').removeClass('houses-bg')
+
+        }
+
+    }
+
     render() {
         return (
 
-            <ParallaxMousemove containerStyle={style.Houses__outter}>
-                <ParallaxMousemove.Layer layerStyle={style.Houses__bgLayerStyle} config={{
-                    xFactor: 0.1,
-                    yFactor: 0.1,
-                    springSettings: {
-                        stiffness: 30,
-                        damping: 15
-                    }
-                }}>
-
-                </ParallaxMousemove.Layer>
-
+            <div style={style.outter}>
+                <div style={style.bgLayerStyle}/>
                 <Pattern
 
                     classname="Houses"
@@ -55,16 +56,6 @@ class Houses extends Component {
                     technologies={_ => (
 
                         <div className={'technologies'}>
-                            <div>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
-                            <div>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
                         </div>
                     )}
 
@@ -94,9 +85,16 @@ class Houses extends Component {
 
                 />
 
-            </ParallaxMousemove>
+            </div>
         )
     }
 }
 
-export default Houses;
+function mapStateToProps(state) {
+    return {
+        page: state.page,
+        preloader: state.preloader,
+    }
+}
+
+export default connect(mapStateToProps, {})(Houses);

@@ -9,34 +9,15 @@ $mainColor : #003399;
 
     .technologies {
 
-      div:nth-child(1) {
-        div:nth-child(1) {
-          background-image: url(#{$img-path}/c2corner/angularJs.png);
-        }
-        div:nth-child(2) {
-          background-image: url(#{$img-path}/skills/frontend/js1.png);
-        }
-        div:nth-child(3) {
-          background-image: url(#{$img-path}/c2corner/stripe.png);
-        }
-        div:nth-child(4) {
-          background-image: url(#{$img-path}/c2corner/bower.png)
-        }
-      }
-      div:nth-child(2) {
-        div:nth-child(1) {
-          background-image: url(#{$img-path}/c2corner/laravel.png);
-        }
-        div:nth-child(2) {
-          background-image: url(#{$img-path}/c2corner/api.png);
-        }
-        div:nth-child(3) {
-          background-image: url(#{$img-path}/c2corner/gulp.jpg);
-        }
-        div:nth-child(4) {
-          background-image: url(#{$img-path}/c2corner/npm.png);
-        }
-      }
+      width: 900px;
+      height: 100px;
+      background-image: url(#{$img-path}/c2corner/c2corner-desktop.png);
+
+      display: block;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+
     }
 
     .description {
@@ -134,5 +115,27 @@ $mainColor : #003399;
   }
   .hide{
     background-image: url(#{$img-path}/c2corner/arrow-up.svg);
+  }
+
+  @media (max-width: 850px) {
+    .technologies {
+
+      width: 350px !important;
+      height: 220px !important;
+      background-image: url(#{$img-path}/c2corner/c2corner-mobile.png) !important;
+
+    }
+  }
+
+  @media (max-width: 500px) {
+
+    .technologies {
+
+      width: 250px !important;
+      height: 150px !important;
+      background-image: url(#{$img-path}/c2corner/c2corner-mobile.png) !important;
+
+    }
+
   }
 }

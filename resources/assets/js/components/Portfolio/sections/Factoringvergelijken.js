@@ -20,6 +20,7 @@ const style = {
         minHeight: '40vh',
         marginLeft: '-5%',
         marginBottom: '-2%',
+        bottom : '0px'
 
     }
 }
@@ -30,17 +31,8 @@ class Factoringvergelijken extends Component {
 
     render() {
         return (
-            <ParallaxMousemove containerStyle={style.outter}>
-                <ParallaxMousemove.Layer layerStyle={style.bgLayerStyle} config={{
-                    xFactor: 0.05,
-                    yFactor: 0.05,
-                    springSettings: {
-                        stiffness: 50,
-                        damping: 30
-                    }
-                }}>
-
-                </ParallaxMousemove.Layer>
+            <div style={style.outter}>
+                <div style={style.bgLayerStyle}/>
 
                 <Pattern
 
@@ -52,16 +44,7 @@ class Factoringvergelijken extends Component {
                     technologies={_ => (
 
                         <div className={'technologies'}>
-                            <div>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
-                            <div>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
+
                         </div>
                     )}
 
@@ -94,7 +77,7 @@ class Factoringvergelijken extends Component {
 
                 />
 
-            </ParallaxMousemove>
+            </div>
         )
     }
 }

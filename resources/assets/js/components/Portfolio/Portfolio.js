@@ -24,6 +24,7 @@ import Linkful from "./sections/Linkful/Linkful";
 import Smsplaza from "./sections/Smsplaza/Smsplaza";
 import Abirix from "./sections/Abirix/Abirix";
 import Houses from "./sections/Houses";
+import ReactFullpage from '@fullpage/react-fullpage';
 
 function mapStateToProps(state) {
     return {
@@ -42,48 +43,49 @@ class Portfolio extends Component {
 
     constructor(props) {
         super(props);
-        this.options = {
-            sectionClassName: 'section',
-            anchors: [
-
-                URLS.linkful,
-                URLS.compareip,
-                URLS.smsplaza,
-                // URLS.c2corner,
-                // URLS.factoringvergelijken,
-                URLS.abirix,
-                // URLS.arcbazar,
-                // URLS.yandex,
-                // URLS.cherryPick,
-                // URLS.houses,
-                // URLS.smokezone,
-                // URLS.history24,
-                // URLS.welhome,
-            ],
-            scrollBar: false,
-            navigation: true,
-            verticalAlign: false,
-            sectionPaddingTop: '0px',
-            sectionPaddingBottom: '0px',
-            arrowNavigation: true,
-            scrollCallback: (slide) => {
-                this.setSlide(slide)
-            }
-        };
+        this.setSlide = this.setSlide.bind(this)
+        // this.options = {
+        //     sectionClassName: 'section',
+        //     anchors: [
+        //
+        //         URLS.linkful,
+        //         URLS.compareip,
+        //         URLS.smsplaza,
+        //         URLS.c2corner,
+        //         URLS.factoringvergelijken,
+        //         URLS.abirix,
+        //         URLS.arcbazar,
+        //         URLS.yandex,
+        //         // URLS.cherryPick,
+        //         URLS.houses,
+        //         // URLS.smokezone,
+        //         URLS.history24,
+        //         URLS.welhome,
+        //     ],
+        //     scrollBar: false,
+        //     navigation: true,
+        //     verticalAlign: false,
+        //     sectionPaddingTop: '0px',
+        //     sectionPaddingBottom: '0px',
+        //     arrowNavigation: true,
+        //     scrollCallback: (slide) => {
+        //         this.setSlide(slide)
+        //     }
+        // };
     }
 
     componentWillMount() {
 
-        history.pushState("", document.title, window.location.pathname
-            + window.location.search);
-
-        this.props.setPage(URLS.linkful);
+        // history.pushState("", document.title, window.location.pathname
+        //     + window.location.search);
+        //
+        // this.props.setPage(URLS.linkful);
 
     }
 
-    setSlide() {
-        const path = window.location.href.split('/')[3].split('#')
-        let page = path[1] ? path[1] : 'first-slide'
+    setSlide(page) {
+        // const path = window.location.href.split('/')[3].split('#')
+        //     let page = path[1] ? path[1] : URLS.first_slide
 
         this.props.setPage(page);
 
@@ -95,64 +97,74 @@ class Portfolio extends Component {
         return (
 
             <div>
-                <ScrollToTopOnMount/>
-                <SectionsContainer className="container" {...this.options}>
+
+                <ReactFullpage
+                    navigation={true}
+                    keyboardScrolling={true}
+                    anchors={
+
+                       [
+                           URLS.linkful,
+                           URLS.compareip,
+                           URLS.smsplaza,
+                           URLS.c2corner,
+                           URLS.factoringvergelijken,
+                           URLS.abirix,
+                           URLS.arcbazar,
+                           URLS.yandex,
+                           URLS.houses,
+                           URLS.history24,
+                           URLS.welhome,
+                       ]
+                    }
+                    onLeave={(origin, destination, direction) => {
+
+                        this.setSlide(destination.anchor)
+                    }}
+
+                    render={({ state, fullpageApi }) => {
+                        return (
+                            <ReactFullpage.Wrapper>
+                                <div className="section">
+                                    <Linkful/>
+                                </div>
+                                <div className="section">
+                                    <CompareIp/>
+                                </div>
+                                <div className="section">
+                                    <Smsplaza/>
+                                </div>
+                                <div className="section">
+                                    <C2Corner/>
+                                </div>
+                                <div className="section">
+                                    <Factoringvergelijken/>
+                                </div>
+                                <div className="section">
+                                    <Abirix/>
+                                </div>
+                                <div className="section">
+                                    <Arcbazar/>
+                                </div>
+                                <div className="section">
+                                    <Yandex/>
+                                </div>
+                                <div className="section">
+                                    <Houses/>
+                                </div>
+                                <div className="section">
+                                    <History24/>
+                                </div>
+                                <div className="section">
+                                    <WellHome/>
+                                </div>
+
+                            </ReactFullpage.Wrapper>
+                        );
+                    }}
+                />
 
 
-                    <Section>
-                        <Linkful/>
-                    </Section>
-
-                    <Section>
-                        <CompareIp/>
-                    </Section>
-
-
-                    <Section>
-                        <Smsplaza/>
-                    </Section>
-
-                    {/*<Section>*/}
-                        {/*<C2Corner/>*/}
-                    {/*</Section>*/}
-
-
-                    {/*<Section>*/}
-                        {/*<Factoringvergelijken/>*/}
-                    {/*</Section>*/}
-
-
-                    <Section>
-                        <Abirix/>
-                    </Section>
-
-
-                    {/*<Section>*/}
-                        {/*<Arcbazar/>*/}
-                    {/*</Section>*/}
-
-                    {/*<Section>*/}
-                        {/*<Yandex/>*/}
-                    {/*</Section>*/}
-
-                    {/*<Section>*/}
-                        {/*<Houses/>*/}
-                    {/*</Section>*/}
-
-                    {/*<Section>*/}
-                        {/*<Smoke_Zone/>*/}
-                    {/*</Section>*/}
-
-                    {/*<Section>*/}
-                        {/*<History24/>*/}
-                    {/*</Section>*/}
-
-                    {/*<Section>*/}
-                        {/*<WellHome/>*/}
-                    {/*</Section>*/}
-
-                </SectionsContainer>
-                <ScrollButton/>
             </div>
 
 

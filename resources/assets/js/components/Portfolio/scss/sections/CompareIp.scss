@@ -100,44 +100,22 @@
     pointer-events: none;
     opacity: 0;
     z-index: 1;
+
+    div div{
+      flex-direction: column !important;
+    }
     .description{
       height: auto;
       .img-container{
 
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
+        width:300px;
+        display: block;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(#{$img-path}/compareip/compare.png);
 
-        div{
-          display: block;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: contain;
-          width: 50px;
-          height: 50px;
-          margin-left: 20px;
-          margin-right: 20px;
-          margin-top: 20px;
-        }
 
-        div:nth-child(1){
-          background-image: url(#{$img-path}/skills/backand/laravel3.png);
-          width: 80px !important;
-          height: 80px !important;
-          background-size: contain;
-        }
-        div:nth-child(2){
-          background-image: url(#{$img-path}/skills/frontend/js1.png)
-        }
-        div:nth-child(3){
-          background-image: url(#{$img-path}/history/mysql.svg);
-        }
-        div:nth-child(4){
-        background-image: url(#{$img-path}/welhome/spreadsheet.svg);
-          background-size: contain;
-          width: 150px !important;
-        }
       }
     }
 
@@ -327,6 +305,13 @@
 
 @media (max-width: 500px) {
   .CompareIp{
+
+    .img-container{
+
+      width:220px !important;
+
+    }
+
     .word--6{
 
       max-width: 300px;

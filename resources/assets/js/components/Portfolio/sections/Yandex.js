@@ -18,15 +18,6 @@ class Yandex extends Component {
                 technologies={_ => (
 
                     <div className={'technologies'}>
-                        <div>
-                            <div/>
-                            <div/>
-                            <div/>
-                        </div>
-                        <div>
-                            <div/>
-                            <div/>
-                        </div>
                     </div>
                 )}
 

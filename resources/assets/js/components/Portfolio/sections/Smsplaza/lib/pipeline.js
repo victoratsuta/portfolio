@@ -27,12 +27,7 @@ let center;
 let tick;
 let pipeProps;
 
-function setup() {
-    createCanvas();
-    resize();
-    initPipes();
-    draw();
-}
+
 
 function initPipes() {
     pipeProps = new Float32Array(pipePropsLength);
@@ -180,4 +175,26 @@ function draw() {
 
 window.addEventListener('resize', resize);
 
-export default setup
+export function setup() {
+
+    if (document.querySelector('.content--canvas--smsplaza canvas')) {
+
+        return
+
+    }
+
+    createCanvas();
+    resize();
+    initPipes();
+    draw();
+}
+
+export function remove() {
+
+    if (document.querySelector('.content--canvas--smsplaza canvas')) {
+
+        document.querySelector('.content--canvas--smsplaza canvas').remove();
+
+    }
+
+}
