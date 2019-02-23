@@ -24,7 +24,9 @@ class Linkful extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (nextProps.page.page === URLS.first_slide ||
+
+        if (nextProps.page.page === URLS.portfolio ||
+            nextProps.page.page === URLS.first_slide ||
             nextProps.page.page === URLS.linkful) {
 
             setup()
