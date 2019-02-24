@@ -184,7 +184,7 @@ class Form extends Component {
                                   onInput={this._onKeyUp}/>
                     </div>
                     <div>
-                        <input type="submit" defaultValue="Send"/>
+                        <input type="submit" value="Send"/>
                     </div>
                 </form>
                 <Alert stack={{limit: 3}}/>
