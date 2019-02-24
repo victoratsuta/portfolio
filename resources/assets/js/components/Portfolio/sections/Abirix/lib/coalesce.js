@@ -1,6 +1,7 @@
 'use strict';
 
 import {angle, cos, fadeInOut, HALF_PI, lerp, rand, sin} from "../../common/util";
+import {DetectBrowser} from "../../../../../services/DetectBrowser";
 
 const particleCount = 700;
 const particlePropCount = 9;
@@ -154,13 +155,19 @@ function resize() {
 
 function renderGlow() {
     ctx.b.save();
-    ctx.b.filter = 'blur(8px) brightness(200%)';
+
+    if (!DetectBrowser.isFirefox()) {
+        ctx.b.filter = 'blur(8px) brightness(200%)';
+    }
+
     ctx.b.globalCompositeOperation = 'lighter';
     ctx.b.drawImage(canvas.a, 0, 0);
     ctx.b.restore();
 
     ctx.b.save();
-    ctx.b.filter = 'blur(4px) brightness(200%)';
+    if (!DetectBrowser.isFirefox()) {
+        ctx.b.filter = 'blur(4px) brightness(200%)';
+    }
     ctx.b.globalCompositeOperation = 'lighter';
     ctx.b.drawImage(canvas.a, 0, 0);
     ctx.b.restore();

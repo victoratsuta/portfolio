@@ -3,6 +3,7 @@
 
 import SimplexNoise from 'simplex-noise'
 import {cos, fadeInOut, HALF_PI, rand, round, sin, TAU, TO_RAD} from "../../common/util";
+import {DetectBrowser} from "../../../../../services/DetectBrowser";
 
 const pipeCount = 30;
 const pipePropCount = 8;
@@ -156,7 +157,9 @@ function render() {
     ctx.b.restore();
 
     ctx.b.save();
-    ctx.b.filter = 'blur(12px)'
+    if (!DetectBrowser.isFirefox()) {
+        ctx.b.filter = 'blur(12px)'
+    }
     ctx.b.drawImage(canvas.a, 0, 0);
     ctx.b.restore();
 

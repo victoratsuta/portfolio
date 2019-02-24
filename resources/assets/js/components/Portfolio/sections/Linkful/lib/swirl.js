@@ -2,6 +2,7 @@
 
 import SimplexNoise from 'simplex-noise'
 import {cos, fadeInOut, lerp, rand, randRange, sin, TAU} from "../../common/util";
+import {DetectBrowser} from "../../../../../services/DetectBrowser";
 
 const particleCount = 700;
 const particlePropCount = 9;
@@ -165,13 +166,17 @@ function resize() {
 
 function renderGlow() {
     ctx.b.save();
-    ctx.b.filter = 'blur(8px) brightness(200%)';
+    if (!DetectBrowser.isFirefox()) {
+        ctx.b.filter = 'blur(8px) brightness(200%)';
+    }
     ctx.b.globalCompositeOperation = 'lighter';
     ctx.b.drawImage(canvas.a, 0, 0);
     ctx.b.restore();
 
     ctx.b.save();
-    ctx.b.filter = 'blur(4px) brightness(200%)';
+    if (!DetectBrowser.isFirefox()) {
+        ctx.b.filter = 'blur(4px) brightness(200%)';
+    }
     ctx.b.globalCompositeOperation = 'lighter';
     ctx.b.drawImage(canvas.a, 0, 0);
     ctx.b.restore();
@@ -201,7 +206,7 @@ function draw() {
 
 export function remove() {
 
-    if(document.querySelector('.content--canvas-linkful canvas')){
+    if (document.querySelector('.content--canvas-linkful canvas')) {
 
         document.querySelector('.content--canvas-linkful canvas').remove();
 
@@ -211,7 +216,7 @@ export function remove() {
 
 export function setup() {
 
-    if(document.querySelector('.content--canvas-linkful canvas')){
+    if (document.querySelector('.content--canvas-linkful canvas')) {
 
         return
 
