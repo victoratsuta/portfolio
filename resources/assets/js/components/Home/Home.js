@@ -40,8 +40,8 @@ class Home extends Component {
                     <div className="Preivew__info">&lt; Senior Software Engineer /&gt;</div>
                     <div className="Preivew__info Preivew__label_tech">
 
-                        <p>Working with technologies such as {this.drawReactRotatingText()}
-                        </p>
+                        <p>Working with technologies such as {this.drawReactRotatingText()}</p>
+
                     </div>
                 </div>
 

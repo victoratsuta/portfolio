@@ -19,7 +19,12 @@
   pointer-events: none;
 
 }
-@media (max-height: 500px) {
+@media (max-height: 800px) {
+  #img_loader{
+    width: 15% !important;
+  }
+}
+@media (max-height: 600px) {
   #img_loader{
     display: none;
   }
