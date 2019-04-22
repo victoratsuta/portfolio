@@ -96870,7 +96870,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   enterModule && enterModule(module);
 })();
 
-var particleCount = 700;
+var particleCount = 400;
 var particlePropCount = 9;
 var particlePropsLength = particleCount * particlePropCount;
 var rangeY = 100;
@@ -97451,7 +97451,7 @@ var _DetectBrowser = __webpack_require__("./resources/assets/js/services/DetectB
   enterModule && enterModule(module);
 })();
 
-var pipeCount = 30;
+var pipeCount = 15;
 var pipePropCount = 8;
 var pipePropsLength = pipeCount * pipePropCount;
 var turnCount = 8;

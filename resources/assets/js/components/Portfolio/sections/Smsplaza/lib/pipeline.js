@@ -3,7 +3,7 @@
 import { cos, fadeInOut, HALF_PI, rand, round, sin, TAU, TO_RAD } from '../../common/util';
 import { DetectBrowser } from '../../../../../services/DetectBrowser';
 
-const pipeCount = 30;
+const pipeCount = 15;
 const pipePropCount = 8;
 const pipePropsLength = pipeCount * pipePropCount;
 const turnCount = 8;
