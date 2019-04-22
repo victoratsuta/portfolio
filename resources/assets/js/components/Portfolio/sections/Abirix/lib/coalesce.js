@@ -4,7 +4,7 @@
 import { angle, cos, fadeInOut, HALF_PI, lerp, rand, sin } from '../../common/util';
 import { DetectBrowser } from '../../../../../services/DetectBrowser';
 
-const particleCount = 700;
+const particleCount = 75;
 const particlePropCount = 9;
 const particlePropsLength = particleCount * particlePropCount;
 const baseTTL = 100;

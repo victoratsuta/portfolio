@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { remove, setup } from './lib/coalesce';
-
 import { URLS } from '../../../../constants/urls';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';

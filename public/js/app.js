@@ -93484,7 +93484,7 @@ sections[_urls.URLS.compareip] = _react2.default.createElement(_CompareIp2.defau
 sections[_urls.URLS.smsplaza] = _react2.default.createElement(_Smsplaza2.default, null);
 sections[_urls.URLS.c2corner] = _react2.default.createElement(_C2Corner2.default, null);
 sections[_urls.URLS.factoringvergelijken] = _react2.default.createElement(_Factoringvergelijken.Factoringvergelijken, null);
-// sections[URLS.abirix] = <Abirix/>;
+sections[_urls.URLS.abirix] = _react2.default.createElement(_Abirix2.default, null);
 sections[_urls.URLS.arcbazar] = _react2.default.createElement(_Arcbazar2.default, null);
 sections[_urls.URLS.yandex] = _react2.default.createElement(_Yandex.Yandex, null);
 sections[_urls.URLS.houses] = _react2.default.createElement(_Houses2.default, null);
@@ -94049,7 +94049,7 @@ var _DetectBrowser = __webpack_require__("./resources/assets/js/services/DetectB
   enterModule && enterModule(module);
 })();
 
-var particleCount = 700;
+var particleCount = 75;
 var particlePropCount = 9;
 var particlePropsLength = particleCount * particlePropCount;
 var baseTTL = 100;
