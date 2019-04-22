@@ -1,86 +1,73 @@
-import React, {Component} from 'react';
-import ParallaxMousemove from 'react-parallax-mousemove';
-import Pattern from './../parts/Pattern'
+import React from 'react';
+import Pattern from './../parts/Pattern';
 
 const style = {
-    outter: {
-        background: 'white',
-        width: '100%',
-        position: 'relative',
-        overflow: 'hidden'
-    },
-    bgLayerStyle: {
-        backgroundImage: 'url(../imgs/Skyline.png)',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        width: '110%',
-        position: 'absolute',
-        overflow: 'hidden',
-        minHeight: '40vh',
-        marginLeft: '-5%',
-        marginBottom: '-2%',
-        bottom : '0px'
+  outter: {
+    background: 'white',
+    width: '100%',
+    position: 'relative',
+    overflow: 'hidden'
+  },
+  bgLayerStyle: {
+    backgroundImage: 'url(../imgs/Skyline.png)',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    width: '110%',
+    position: 'absolute',
+    overflow: 'hidden',
+    minHeight: '40vh',
+    bottom: '-50px'
+  }
+};
 
-    }
-}
+export const WellHome = () => {
+  return (
+    <div style={style.outter}>
+      <div style={style.bgLayerStyle}/>
 
+      <Pattern
 
-class WellHome extends Component {
+        classname="WellHome"
+        logo='../imgs/wh.jpg'
+        url={''}
+        effectClassIn='lightSpeedIn'
+        effectClassOut='lightSpeedOut'
+        technologies={_ => (
 
+          <div className={'technologies'}>
+          </div>
+        )}
 
-    render() {
-        return (
-            <div style={style.outter}>
-                <div style={style.bgLayerStyle}/>
+        description={() => (
 
-
-                <Pattern
-
-                    classname="WellHome"
-                    logo='../imgs/wh.jpg'
-                    url={''}
-                    effectClassIn='lightSpeedIn'
-                    effectClassOut='lightSpeedOut'
-                    technologies={_ => (
-
-                        <div className={'technologies'}>
-                        </div>
-                    )}
-
-                    description={_ => (
-
-                        <div className={'description'}>
-                            <p>
-                                I have developed CRM system in order
-                                to automate business processes in the
-                                company engaged in the sale of real estate - <b><a href={'http://www.welhome.ru/'}
-                                                                                   target={'blank'}>Welhome</a></b>
-                                <span>,
+          <div className={'description'}>
+            <p>
+                            I have developed CRM system in order
+                            to automate business processes in the
+                            company engaged in the sale of real estate - <b><a href={'http://www.welhome.ru/'}
+                target={'blank'}>Welhome</a></b>
+              <span>,
                                 based on SugarCRM; designed the database and system architecture; integration with
                                 existing enterprise systems</span>
-                            </p>
-                        </div>
-                    )}
+            </p>
+          </div>
+        )}
 
-                    figure={_ => (
+        figure={() => (
 
-                        <div>
+          <div>
 
-                        </div>
-                    )}
+          </div>
+        )}
 
-                    logoDescription={_ => (
-                        <p>
-                            <h1 className={'header'}>WELHOME</h1>
-                            <p className={'paragraph'}>CRM system for real estate company</p>
-                        </p>
-                    )}
+        logoDescription={() => (
+          <p className="header-container">
+            <span className={'paragraph'}>CRM system for real estate company</span>
+          </p>
+        )}
 
-                />
+      />
 
-            </div>
-        )
-    }
-}
-
-export default WellHome;
+    </div>
+  );
+};

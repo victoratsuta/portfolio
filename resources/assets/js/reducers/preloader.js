@@ -1,22 +1,17 @@
-import {ACTION_SET_PRELOADER_STATUS} from './../actions/preloader'
+import { ACTION_SET_PRELOADER_STATUS } from '../constants/actionTypes';
 
 const initialState = {
-    preloader: false,
-}
+  preloader: false
+};
 
-function preloaderReducer(state = initialState, action) {
-    switch (action.type) {
-        case ACTION_SET_PRELOADER_STATUS : {
-
-            // console.log(action)
-
-            return {preloader: action.preloader}
-        }
-            break
-
-        default:
-            return state
+function preloaderReducer (state = initialState, action) {
+  switch (action.type) {
+    case ACTION_SET_PRELOADER_STATUS : {
+      return { preloader: action.preloader };
     }
+    default:
+      return state;
+  }
 }
 
-export default preloaderReducer
+export default preloaderReducer;

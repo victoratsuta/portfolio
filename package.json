@@ -8,11 +8,13 @@
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "lint": "./node_modules/.bin/eslint ."
+        "lint": "./node_modules/.bin/eslint .",
+        "eslint": "./node_modules/eslint/bin/eslint.js resources/assets/js --fix"
     },
     "devDependencies": {
         "@babel/preset-react": "^7.0.0",
         "axios": "^0.16.2",
+        "babel-eslint": "^10.0.1",
         "babel-jest": "^23.6.0",
         "babel-preset-react": "^6.23.0",
         "bootstrap-sass": "^3.4.1",
@@ -20,6 +22,13 @@
         "browser-sync-webpack-plugin": "^2.2.2",
         "copy-webpack-plugin": "^4.6.0",
         "cross-env": "^5.2.0",
+        "eslint": "^5.16.0",
+        "eslint-config-standard": "^12.0.0",
+        "eslint-plugin-import": "^2.17.2",
+        "eslint-plugin-node": "^8.0.1",
+        "eslint-plugin-promise": "^4.1.1",
+        "eslint-plugin-react": "^7.12.4",
+        "eslint-plugin-standard": "^4.0.0",
         "file-loader": "^1.1.11",
         "image-webpack-loader": "^3.6.0",
         "imagemin-mozjpeg": "^6.0.0",

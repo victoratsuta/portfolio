@@ -1,85 +1,75 @@
-import React, {Component} from 'react';
-import ParallaxMousemove from 'react-parallax-mousemove';
-import Pattern from './../parts/Pattern'
-import Constants from '../../../constants/constants'
+import React from 'react';
+import Pattern from './../parts/Pattern';
+import Constants from '../../../constants/constants';
 
 const style = {
-    outter: {
-        background: 'white',
-        width: '100%',
-        position: 'relative',
-        overflow: 'hidden'
-    },
-    bgLayerStyle: {
-        backgroundImage: 'url(../imgs/profil_city.png)',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        width: '110%',
-        position: 'absolute',
-        overflow: 'hidden',
-        minHeight: '40vh',
-        marginLeft: '-5%',
-        marginBottom: '-2%',
-        bottom : '0px'
+  outter: {
+    background: 'white',
+    width: '100%',
+    position: 'relative',
+    overflow: 'hidden'
+  },
+  bgLayerStyle: {
+    backgroundImage: 'url(../imgs/profil_city.png)',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    width: '110%',
+    position: 'absolute',
+    overflow: 'hidden',
+    minHeight: '40vh',
+    bottom: '0px'
 
-    }
-}
+  }
+};
 
+export const Factoringvergelijken = () => {
+  return (
+    <div style={style.outter}>
+      <div style={style.bgLayerStyle}/>
 
-class Factoringvergelijken extends Component {
+      <Pattern
 
+        classname="Factoringvergelijken"
+        logo='../imgs/logo_f.png'
+        url={Constants.factoringvergelijken}
+        effectClassIn='slideInDown'
+        effectClassOut='zoomOutUp'
+        technologies={() => (
 
-    render() {
-        return (
-            <div style={style.outter}>
-                <div style={style.bgLayerStyle}/>
+          <div className={'technologies'}>
 
-                <Pattern
+          </div>
+        )}
 
-                    classname="Factoringvergelijken"
-                    logo='../imgs/logo_f.png'
-                    url={Constants.factoringvergelijken}
-                    effectClassIn='slideInDown'
-                    effectClassOut='zoomOutUp'
-                    technologies={_ => (
+        description={() => (
 
-                        <div className={'technologies'}>
+          <div className={'description'}>
+            <p>
+                            My team and I have developed the application build with Yii2.
+                            Also I have made and designed some parts of the interface;
+                            improvement of modules in the administration panel
+            </p>
+          </div>
+        )}
 
-                        </div>
-                    )}
+        figure={() => (
 
-                    description={_ => (
+          <div>
+            <span>View</span>
+            <span>factoring</span>
+          </div>
+        )}
 
-                        <div className={'description'}>
-                            <p>
-                                My team and I have developed the application build with Yii2.
-                                Also I have made and designed some parts of the interface;
-                                improvement of modules in the administration panel
-                            </p>
-                        </div>
-                    )}
+        logoDescription={() => (
+          <p className="header-container">
+            <span className={'paragraph'}>
+                            Online factoring services
+            </span>
+          </p>
+        )}
 
-                    figure={_ => (
+      />
 
-                        <div>
-                            <span>View</span>
-                            <span>factoring</span>
-                        </div>
-                    )}
-
-                    logoDescription={_ => (
-                        <p>
-                            <p className={'paragraph'}>
-                                Online factoring services
-                            </p>
-                        </p>
-                    )}
-
-                />
-
-            </div>
-        )
-    }
-}
-
-export default Factoringvergelijken;
+    </div>
+  );
+};

@@ -1,127 +1,105 @@
 import React, {Component} from 'react';
 import SVGMenu from './lib/SVGMenu';
-import {URLS} from './../../constants/urls'
-import {connect} from "react-redux";
-import {setPage, reloadPage} from "../../actions/page";
-import {bindActionCreators} from "redux";
+import {URLS} from './../../constants/urls';
+import {connect} from 'react-redux';
+import {reloadPage, setPage} from '../../actions/page';
+import {bindActionCreators} from 'redux';
+import './scss/Menu.scss';
+import PropTypes from 'prop-types';
 
-import './scss/Menu.scss'
+const ESC = 27;
 
-const UP = 38
-const DOWN = 40
-const ESC = 27
+let styleClasses = {};
 
-let styleClasses = {}
+styleClasses[URLS.main] = 'effects-normal';
+styleClasses[URLS.contacts] = 'effects-normal';
+styleClasses[URLS.skills] = 'effects-normal';
 
-styleClasses[URLS.main] = 'effects-normal'
-styleClasses[URLS.contacts] = 'effects-normal'
-styleClasses[URLS.skills] = 'effects-normal'
+styleClasses[URLS.portfolio] = styleClasses[URLS.first_slide] = styleClasses[URLS.linkful] = 'effects-linkful';
 
+styleClasses[URLS.compareip] = 'effects-compareIp';
+styleClasses[URLS.c2corner] = 'effects-c2corner';
+styleClasses[URLS.smsplaza] = 'effects-smsplaza';
+styleClasses[URLS.factoringvergelijken] = 'effects-factoringvergelijken';
+styleClasses[URLS.abirix] = 'effects-abirix';
+styleClasses[URLS.arcbazar] = 'effects-arcbazar';
+styleClasses[URLS.yandex] = 'effects-yandex';
+styleClasses[URLS.houses] = 'effects-houses';
+styleClasses[URLS.smokezone] = 'effects-smoke-zone';
+styleClasses[URLS.history24] = 'effects-history24';
+styleClasses[URLS.welhome] = 'effects-welhome';
 
-styleClasses[URLS.portfolio] = styleClasses[URLS.first_slide] = styleClasses[URLS.linkful]
+styleClasses[URLS.cherryPick] = 'effects-cherry';
 
-styleClasses[URLS.linkful] = 'effects-linkful'
-styleClasses[URLS.compareip] = 'effects-compareIp'
-styleClasses[URLS.c2corner] = 'effects-c2corner'
-styleClasses[URLS.smsplaza] = 'effects-smsplaza'
-styleClasses[URLS.factoringvergelijken] = 'effects-factoringvergelijken'
-styleClasses[URLS.abirix] = 'effects-abirix'
-styleClasses[URLS.arcbazar] = 'effects-arcbazar'
-styleClasses[URLS.yandex] = 'effects-yandex'
-styleClasses[URLS.houses] = 'effects-houses'
-styleClasses[URLS.smokezone] = 'effects-smoke-zone'
-styleClasses[URLS.history24] = 'effects-history24'
-styleClasses[URLS.welhome] = 'effects-welhome'
+const styleStroke = {};
 
-styleClasses[URLS.cherryPick] = 'effects-cherry'
+styleStroke[URLS.main] = 'stroke-normal';
+styleStroke[URLS.contacts] = 'stroke-normal';
+styleStroke[URLS.skills] = 'stroke-normal';
 
-const styleStroke = {}
+styleStroke[URLS.first_slide] = styleStroke[URLS.portfolio] = styleStroke[URLS.linkful] = 'stroke-linkful';
 
-styleStroke[URLS.main] = 'stroke-normal'
-styleStroke[URLS.contacts] = 'stroke-normal'
-styleStroke[URLS.skills] = 'stroke-normal'
+styleStroke[URLS.compareip] = 'stroke-compareIp';
+styleStroke[URLS.c2corner] = 'stroke-c2corner';
+styleStroke[URLS.smsplaza] = 'stroke-smsplaza';
+styleStroke[URLS.factoringvergelijken] = 'stroke-factoringvergelijken';
+styleStroke[URLS.abirix] = 'stroke-abirix';
+styleStroke[URLS.arcbazar] = 'stroke-arcbazar';
+styleStroke[URLS.yandex] = 'stroke-yandex';
+styleStroke[URLS.houses] = 'stroke-houses';
+styleStroke[URLS.smokezone] = 'stroke-smoke-zone';
+styleStroke[URLS.history24] = 'stroke-history24';
+styleStroke[URLS.welhome] = 'stroke-welhome';
 
-
-styleStroke[URLS.first_slide] = styleStroke[URLS.portfolio] = styleStroke[URLS.linkful]
-
-styleStroke[URLS.linkful] = 'stroke-linkful'
-styleStroke[URLS.compareip] = 'stroke-compareIp'
-styleStroke[URLS.c2corner] = 'stroke-c2corner'
-styleStroke[URLS.smsplaza] = 'stroke-smsplaza'
-styleStroke[URLS.factoringvergelijken] = 'stroke-factoringvergelijken'
-styleStroke[URLS.abirix] = 'stroke-abirix'
-styleStroke[URLS.arcbazar] = 'stroke-arcbazar'
-styleStroke[URLS.yandex] = 'stroke-yandex'
-styleStroke[URLS.houses] = 'stroke-houses'
-styleStroke[URLS.smokezone] = 'stroke-smoke-zone'
-styleStroke[URLS.history24] = 'stroke-history24'
-styleStroke[URLS.welhome] = 'stroke-welhome'
-
-styleStroke[URLS.cherryPick] = 'stroke-cherry'
+styleStroke[URLS.cherryPick] = 'stroke-cherry';
 
 function mapStateToProps(state) {
     return {
         menu: state.menu,
         page: state.page,
-        preloader: state.preloader,
-    }
+        preloader: state.preloader
+    };
 }
 
 function matchDispatchToProps(dispatch) {
-
-    return bindActionCreators({setPage: setPage, reloadPage: reloadPage}, dispatch)
-
+    return bindActionCreators({setPage: setPage, reloadPage: reloadPage}, dispatch);
 }
 
 class Menu extends Component {
-
     constructor(props) {
         super(props);
 
         this.state = {
-            effectStyle : styleClasses[this.props.page.page],
-            styleStroke : styleStroke[this.props.page.page]
+            effectStyle: styleClasses[this.props.page.page],
+            styleStroke: styleStroke[this.props.page.page]
+        };
+    }
+
+    componentDidMount() {
+        document.addEventListener('keydown', this.escFunction, false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.escFunction, false);
+    }
+
+    clickHandler = page => {
+        this.props.setPage(page);
+        this.props.reloadPage(true);
+    };
+
+    escFunction = event => {
+        if (event.keyCode === ESC) {
+            this.menuStyleHandler();
         }
+    };
 
-        this.clickHandler = this.clickHandler.bind(this)
-        this.menuStyleHandler = this.menuStyleHandler.bind(this)
-        this.escFunction = this.escFunction.bind(this)
-
-    }
-
-    clickHandler(page) {
-        this.props.setPage(page)
-        this.props.reloadPage(true)
-    }
-
-    componentDidMount(){
-
-        document.addEventListener("keydown", this.escFunction, false);
-    }
-    componentWillUnmount(){
-
-        document.removeEventListener("keydown", this.escFunction, false);
-    }
-
-    escFunction(event){
-
-
-        if(event.keyCode === ESC) {
-
-            this.menuStyleHandler()
-
-        }
-
-    }
-
-    menuStyleHandler(){
-
+    menuStyleHandler = () => {
         this.setState({
-            effectStyle : styleClasses[this.props.page.page],
-            styleStroke : styleStroke[this.props.page.page]
-        })
-
-    }
+            effectStyle: styleClasses[this.props.page.page],
+            styleStroke: styleStroke[this.props.page.page]
+        });
+    };
 
     render() {
         return (
@@ -171,9 +149,15 @@ class Menu extends Component {
                 <SVGMenu/>
 
             </nav>
-        )
+        );
     }
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(Menu);
+Menu.propTypes = {
+    page: PropTypes.object,
+    setPage: PropTypes.func,
+    reloadPage: PropTypes.func,
+    menu: PropTypes.object
+};
 
+export default connect(mapStateToProps, matchDispatchToProps)(Menu);

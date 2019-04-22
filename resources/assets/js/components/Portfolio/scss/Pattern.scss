@@ -122,7 +122,12 @@
         width: 120px !important;
       }
     }
-
+    .header-container{
+      text-align: center !important;
+      .header{
+        display: block;
+      }
+    }
   }
 }
 
@@ -152,6 +157,7 @@
       }
     }
     .logo-container {
+
       img {
         width: 150px;
       }

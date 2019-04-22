@@ -1,83 +1,67 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { remove, setup } from './lib/coalesce';
 
-
-import './lib/coalesce'
-import {setup, remove} from "./lib/coalesce";
-import Slideshow from "../CompareIp/lib/Slideshow";
-import {URLS} from "../../../../constants/urls";
-import {connect} from "react-redux";
-
+import { URLS } from '../../../../constants/urls';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Abirix extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      info: false
+    };
+  }
 
-    constructor(props) {
-
-        super(props)
-
-        this.toggle = this.toggle.bind(this)
-
-        this.state = {
-            info: false
-        }
+  UNSAFE_componentWillReceiveProps (nextProps) {
+    if (nextProps.page.page === URLS.abirix) {
+      setup();
+      $('#fp-nav ul li a span').addClass('abirix-bg');
+    } else {
+      remove();
+      $('#fp-nav ul li a span').removeClass('abirix-bg');
     }
+  }
 
-    componentWillReceiveProps(nextProps) {
+    toggle= () => {
+      this.setState({
+        info: !this.state.info
+      });
+    };
 
-        if (nextProps.page.page === URLS.abirix) {
+    render () {
+      return (
+        <div className="demo-4 abirix">
 
-            setup()
-            $('#fp-nav ul li a span').addClass('abirix-bg')
-        } else {
+          <main>
+            <div className="frame">
+            </div>
 
-            remove()
-            $('#fp-nav ul li a span').removeClass('abirix-bg')
-        }
+            <div className="content content--canvas-abirix">
 
-    }
+              <div className={'abirix-container'}>
 
+                <div className={'header'}>
 
-    toggle() {
-
-        this.setState({
-            info: !this.state.info
-        })
-
-    }
-
-    render() {
-
-        return (
-            <div className="demo-4 abirix">
-
-                <main>
-                    <div className="frame">
-                    </div>
-
-                    <div className="content content--canvas-abirix">
-
-                        <div className={'abirix-container'}>
-
-                            <div className={'header'}>
-
-                                <div className={'logo'}>
+                  <div className={'logo'}>
                                     ABIRIX CRM
-                                </div>
+                  </div>
 
-                                <div className={'description'}>
+                  <div className={'description'}>
 
                                     crm system for sales company
 
-                                </div>
+                  </div>
 
-                            </div>
+                </div>
 
-                            <div className={'tech-container ' + (this.state.info ? 'd-none' : 'd-flex')}>
-                                <div className={'row'}>
-                                    <div className={'techs'}></div>
-                                </div>
-                            </div>
+                <div className={'tech-container ' + (this.state.info ? 'd-none' : 'd-flex')}>
+                  <div className={'row'}>
+                    <div className={'techs'}></div>
+                  </div>
+                </div>
 
-                            <div className={'info-container tzie-small '  + (this.state.info ? 'd-flex' : 'd-none')}>
+                <div className={'info-container tzie-small ' + (this.state.info ? 'd-flex' : 'd-none')}>
 
                                 I have completed writing the crm system in a team as senior developer,
                                 designed and wrote the main system components, developed the database.
@@ -86,31 +70,31 @@ class Abirix extends Component {
                                 Development with strict flow based on Agile princes;
                                 Transfer data from legacy systems.
 
-                            </div>
+                </div>
 
-                            <div className={'arrow ' + (this.state.info ? 'arrow-up' : 'arrow-down')} onClick={this.toggle}></div>
+                <div className={'arrow ' + (this.state.info ? 'arrow-up' : 'arrow-down')} onClick={this.toggle}/>
 
-
-                        </div>
-
-
-                    </div>
-
-
-                </main>
-
+              </div>
 
             </div>
-        )
 
+          </main>
+
+        </div>
+      );
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        page: state.page,
-        preloader: state.preloader,
-    }
+function mapStateToProps (state) {
+  return {
+    page: state.page,
+    preloader: state.preloader
+  };
 }
+
+Abirix.propTypes = {
+  page: PropTypes.object,
+  preloader: PropTypes.object
+};
 
 export default connect(mapStateToProps, {})(Abirix);

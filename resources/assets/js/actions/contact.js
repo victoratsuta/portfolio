@@ -1,14 +1,7 @@
-const ACTION_UPDATE_CONTACT = 'ACTION_UPDATE_CONTACT'
+import { ACTION_UPDATE_CONTACT } from '../constants/actionTypes';
 
-export default function getAction(fieldName, value) {
-    return {
-        type: ACTION_UPDATE_CONTACT,
-        fieldName: fieldName,
-        value: value
-    }
-}
-
-export {
-    ACTION_UPDATE_CONTACT
-}
-
+export default (fieldName, value) => ({
+  type: ACTION_UPDATE_CONTACT,
+  fieldName,
+  value
+});
