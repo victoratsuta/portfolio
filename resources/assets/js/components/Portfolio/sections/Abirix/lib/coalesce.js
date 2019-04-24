@@ -24,6 +24,7 @@ let center;
 let tick;
 let particleProps;
 
+
 function initParticles () {
   tick = 0;
   particleProps = new Float32Array(particlePropsLength);
@@ -201,6 +202,12 @@ export function remove () {
   if (document.querySelector('.content--canvas-abirix canvas')) {
     document.querySelector('.content--canvas-abirix canvas').remove();
   }
+    container = null;
+    canvas = null;
+    ctx = null;
+    center = null;
+    tick = null;
+    particleProps = null;
 }
 
 export default setup;

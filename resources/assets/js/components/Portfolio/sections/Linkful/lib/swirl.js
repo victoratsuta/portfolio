@@ -198,6 +198,13 @@ export function remove () {
   if (document.querySelector('.content--canvas-linkful canvas')) {
     document.querySelector('.content--canvas-linkful canvas').remove();
   }
+    container = null;
+    canvas = null;
+    ctx = null;
+    center = null;
+    tick = null;
+    simplex = null;
+    particleProps = null;
 }
 
 export function setup () {

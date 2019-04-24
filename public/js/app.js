@@ -94265,6 +94265,12 @@ function remove() {
   if (document.querySelector('.content--canvas-abirix canvas')) {
     document.querySelector('.content--canvas-abirix canvas').remove();
   }
+  container = null;
+  canvas = null;
+  ctx = null;
+  center = null;
+  tick = null;
+  particleProps = null;
 }
 
 var _default = setup;
@@ -97077,6 +97083,13 @@ function remove() {
   if (document.querySelector('.content--canvas-linkful canvas')) {
     document.querySelector('.content--canvas-linkful canvas').remove();
   }
+  container = null;
+  canvas = null;
+  ctx = null;
+  center = null;
+  tick = null;
+  simplex = null;
+  particleProps = null;
 }
 
 function setup() {
@@ -97635,9 +97648,7 @@ function render() {
 
 function draw() {
   updatePipes();
-
   render();
-
   window.requestAnimationFrame(draw);
 }
 
@@ -97658,6 +97669,13 @@ function remove() {
   if (document.querySelector('.content--canvas--smsplaza canvas')) {
     document.querySelector('.content--canvas--smsplaza canvas').remove();
   }
+
+  container = null;
+  canvas = null;
+  ctx = null;
+  center = null;
+  tick = null;
+  pipeProps = null;
 }
 ;
 

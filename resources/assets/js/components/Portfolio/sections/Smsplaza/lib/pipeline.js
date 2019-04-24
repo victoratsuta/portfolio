@@ -172,9 +172,7 @@ function render () {
 
 function draw () {
   updatePipes();
-
   render();
-
   window.requestAnimationFrame(draw);
 }
 
@@ -195,4 +193,12 @@ export function remove () {
   if (document.querySelector('.content--canvas--smsplaza canvas')) {
     document.querySelector('.content--canvas--smsplaza canvas').remove();
   }
+
+    container = null;
+    canvas = null;
+    ctx = null;
+    center = null;
+    tick = null;
+    pipeProps = null;
+
 }
