@@ -12,48 +12,47 @@ function mapStateToProps (state) {
 }
 
 class Home extends Component {
-    // drawReactRotatingText = () => {
-    //   return this.props.preloader.preloader
-    //     ? ''
-    //     : <ReactRotatingText
-    //       typingInterval={100}
-    //       items={['Laravel', 'React', 'Angular', 'VueJs', 'NodeJs']}
-    //     />;
-    // }
+    drawReactRotatingText = () => {
+      return this.props.preloader.preloader
+        ? ''
+        : <ReactRotatingText
+          typingInterval={100}
+          items={['Laravel', 'React', 'Angular', 'VueJs', 'NodeJs']}
+        />;
+    }
 
     render () {
       return (
-          <div>VIKTOR ATSUTA</div>
-        // <div className="ip-main for_fade">
-        //
-        //   <div className={'Preivew'}>
-        //     <div className="Preivew__neon">VIKTOR ATSUTA</div>
-        //     <div className="Preivew__info">&lt; Senior Software Engineer /&gt;</div>
-        //     <div className="Preivew__info Preivew__label_tech">
-        //
-        //       <p>Working with technologies such as {this.drawReactRotatingText()}</p>
-        //
-        //     </div>
-        //   </div>
-        //
-        //   <div className="Icons__icon_container">
-        //
-        //     <a href={Constants.instagramm} target="_blank" rel="noopener noreferrer">
-        //       <div
-        //       />
-        //     </a>
-        //     <a href={Constants.linkedin} target="_blank" rel="noopener noreferrer">
-        //       <div
-        //       />
-        //     </a>
-        //     <a href={Constants.linksful} target="_blank" rel="noopener noreferrer">
-        //       <div
-        //       />
-        //     </a>
-        //
-        //   </div>
-        //
-        // </div>
+        <div className="ip-main for_fade">
+
+          <div className={'Preivew'}>
+            {/*<div className="Preivew__neon">VIKTOR ATSUTA</div>*/}
+            {/*<div className="Preivew__info">&lt; Senior Software Engineer /&gt;</div>*/}
+            {/*<div className="Preivew__info Preivew__label_tech">*/}
+
+              {/*<p>Working with technologies such as {this.drawReactRotatingText()}</p>*/}
+
+            {/*</div>*/}
+          </div>
+
+          <div className="Icons__icon_container">
+
+            <a href={Constants.instagramm} target="_blank" rel="noopener noreferrer">
+              <div
+              />
+            </a>
+            <a href={Constants.linkedin} target="_blank" rel="noopener noreferrer">
+              <div
+              />
+            </a>
+            <a href={Constants.linksful} target="_blank" rel="noopener noreferrer">
+              <div
+              />
+            </a>
+
+          </div>
+
+        </div>
       );
     }
 }
