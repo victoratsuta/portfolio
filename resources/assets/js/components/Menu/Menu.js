@@ -17,6 +17,7 @@ styleClasses[URLS.skills] = 'effects-normal';
 
 styleClasses[URLS.portfolio] = styleClasses[URLS.first_slide] = styleClasses[URLS.linkful] = 'effects-linkful';
 
+styleClasses[URLS.neocore] = 'effects-neocore';
 styleClasses[URLS.compareip] = 'effects-compareIp';
 styleClasses[URLS.c2corner] = 'effects-c2corner';
 styleClasses[URLS.smsplaza] = 'effects-smsplaza';
@@ -39,6 +40,7 @@ styleStroke[URLS.skills] = 'stroke-normal';
 
 styleStroke[URLS.first_slide] = styleStroke[URLS.portfolio] = styleStroke[URLS.linkful] = 'stroke-linkful';
 
+styleStroke[URLS.neocore] = 'stroke-neocore';
 styleStroke[URLS.compareip] = 'stroke-compareIp';
 styleStroke[URLS.c2corner] = 'stroke-c2corner';
 styleStroke[URLS.smsplaza] = 'stroke-smsplaza';

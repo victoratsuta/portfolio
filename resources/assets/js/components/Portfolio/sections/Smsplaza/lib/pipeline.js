@@ -52,6 +52,11 @@ function initPipe (i) {
 }
 
 function updatePipes () {
+
+  if(!pipeProps){
+    return
+  }
+
   tick++;
 
   let i;
@@ -153,6 +158,9 @@ function resize () {
 }
 
 function render () {
+  if(!ctx){
+    return
+  }
   ctx.b.save();
   ctx.b.fillStyle = backgroundColor;
   ctx.b.fillRect(0, 0, canvas.b.width, canvas.b.height);

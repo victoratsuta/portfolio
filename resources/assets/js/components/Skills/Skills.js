@@ -32,7 +32,7 @@ class Skills extends Component {
                   <img src={imgPathBack + 'graphql .jpeg'}/>
                   <img src={imgPathBack + 'mongo.png'}/>
                   <img src={imgPathBack + 'mysql1.png'}/>
-                  <img src={imgPathBack + 'bash.png'}/>
+                  <img src={imgPathBack + 'symfony.png'}/>
                 </div>
                 <div>
                   <img src={imgPathBack + 'laravel3.png'}/>
