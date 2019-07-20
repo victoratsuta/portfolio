@@ -26,8 +26,8 @@ class Home extends Component {
         <div className="ip-main for_fade">
 
           <div className={'Preivew'}>
-            {/*<div className="Preivew__neon">VIKTOR ATSUTA</div>*/}
-            {/*<div className="Preivew__info">&lt; Senior Software Engineer /&gt;</div>*/}
+            <div className="Preivew__neon">VIKTOR ATSUTA</div>
+            <div className="Preivew__info">&lt; Senior Software Engineer /&gt;</div>
             <div className="Preivew__info Preivew__label_tech">
 
               <p>Working with technologies such as {this.drawReactRotatingText()}</p>
