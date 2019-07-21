@@ -22,12 +22,12 @@ import Neocore from "./sections/Neocore/Neocore";
 const sections = {};
 
 sections[URLS.linkful] = <Linkful/>;
-sections[URLS.neocore] = <Neocore/>;
 sections[URLS.compareip] = <CompareIp/>;
 sections[URLS.smsplaza] = <Smsplaza/>;
-sections[URLS.c2corner] = <C2Corner/>;
 sections[URLS.factoringvergelijken] = <Factoringvergelijken/>;
 sections[URLS.abirix] = <Abirix/>;
+sections[URLS.c2corner] = <C2Corner/>;
+sections[URLS.neocore] = <Neocore/>;
 sections[URLS.arcbazar] = <Arcbazar/>;
 sections[URLS.yandex] = <Yandex/>;
 sections[URLS.houses] = <Houses/>;
