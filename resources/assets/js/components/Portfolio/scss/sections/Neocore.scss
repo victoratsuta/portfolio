@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
 
-$baseColor : #eec60a;
-$secondColor : black;
+$baseColor: #eec60a;
+$secondColor: black;
 
 .neocore {
 
@@ -53,7 +53,7 @@ $secondColor : black;
       z-index: 100;
 
       color: $baseColor;
-      text-shadow:  $secondColor 4px 4px 0px;
+      text-shadow: $secondColor 4px 4px 0px;
       font-size: 40px;
       font-family: 'Luckiest Guy', cursive;
       line-height: 1;
@@ -160,6 +160,12 @@ $secondColor : black;
       width: 400px !important;
 
     }
+
+    .logo {
+      width: 140px !important;
+      height: 140px !important;
+    }
+
   }
 }
 
@@ -177,7 +183,8 @@ $secondColor : black;
 
     .row {
 
-      width: 350px !important;
+      width: 30px !important;
+
       div {
         background-image: url(#{$img-path}/neocore/neocore_skills_sm.png) !important;
       }
@@ -194,7 +201,7 @@ $secondColor : black;
 
     .row {
 
-      width: 240px !important;
+      width: 200px !important;
 
     }
   }
