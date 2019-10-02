@@ -9,9 +9,9 @@ const Constants = {
   'mapUrl': 'https://api.tiles.mapbox.com/v4/mapbox.dark/{z}/{x}/{y}.png',
   'accessToken': '?access_token=pk.eyJ1IjoidmljdG9yYXRzdXRhIiwiYSI6ImNqOW9iNnJjczJnaW8zM3MyeDdrcXBuN3oifQ.gIWOmeqEuCRHKmWb_AMXFQ',
 
-  'yandex': 'https://yandex.atsuta.ru',
-  'smokeZone': 'http://smoke-zone.atsuta.ru',
-  'history24': 'http://history24.atsuta.ru/',
+  'yandex': 'https://yandex.https://viktoratsuta.com',
+  'smokeZone': '',
+  'history24': '',
   'compareIp': 'https://compareip.com/',
   'c2corner': 'https://c2corner.com/',
   'arcbazr': 'https://www.arcbazar.com/',
