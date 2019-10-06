@@ -16,6 +16,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+    {{--  SEO  --}}
+    <meta name="yandex-verification" content="8bbc3711b424bf7e" />
+    {{----}}
+
     {{--THEME--}}
 
     <!-- Chrome, Firefox OS and Opera -->
