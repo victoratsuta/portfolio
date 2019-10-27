@@ -9,7 +9,7 @@ const Constants = {
   'mapUrl': 'https://api.tiles.mapbox.com/v4/mapbox.dark/{z}/{x}/{y}.png',
   'accessToken': '?access_token=pk.eyJ1IjoidmljdG9yYXRzdXRhIiwiYSI6ImNqOW9iNnJjczJnaW8zM3MyeDdrcXBuN3oifQ.gIWOmeqEuCRHKmWb_AMXFQ',
 
-  'yandex': 'https://yandex.https://viktoratsuta.com',
+  'yandex': 'https://yandex.viktoratsuta.com',
   'smokeZone': '',
   'history24': '',
   'compareIp': 'https://compareip.com/',
