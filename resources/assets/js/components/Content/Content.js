@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
-import Home from './../Home/Home';
-import Skills from './../Skills/Skills';
-import Contact from './../Contact/Contact';
-import Portfolio from './../Portfolio/Portfolio';
-import { URLS } from './../../constants/urls';
-import { Route } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, {Component, Suspense} from 'react';
+import {URLS} from './../../constants/urls';
+import {Route} from 'react-router-dom';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import '../../../../../node_modules/leaflet/dist/leaflet.css';
 import './scss/Content.scss';
+
+
+const Skills = React.lazy(() => import('./../Skills/Skills'));
+const Contact = React.lazy(() => import('./../Contact/Contact'));
+const Portfolio = React.lazy(() => import('./../Portfolio/Portfolio'));
+const Home = React.lazy(() => import('./../Home/Home'));
 
 function mapStateToProps (state) {
   return {
@@ -20,10 +22,14 @@ class Content extends Component {
   render () {
     return (
       <div id="main_container" className={this.props.menu.status ? 'main-light' : 'main-dark'}>
-        <Route exact path={URLS.url_skills} component={Skills}/>
-        <Route exact path={URLS.url_contacts} component={Contact}/>
-        <Route exact path={URLS.url_portfolio} component={Portfolio}/>
-        <Route exact path={URLS.url_home} component={Home}/>
+
+          <Suspense fallback={<p>Loading...</p>}>
+              <Route exact path={URLS.url_skills} component={Skills}/>
+              <Route exact path={URLS.url_contacts} component={Contact}/>
+              <Route exact path={URLS.url_portfolio} component={Portfolio}/>
+              <Route exact path={URLS.url_home} component={Home}/>
+          </Suspense>
+
       </div>
     );
   }

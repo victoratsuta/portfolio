@@ -2,23 +2,9 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_ANALYTIC') }}"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', '{{ env('GOOGLE_ANALYTIC') }}');
-        </script>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    {{--  SEO  --}}
-    <meta name="yandex-verification" content="8bbc3711b424bf7e" />
-    {{----}}
 
     {{--THEME--}}
 
@@ -46,6 +32,8 @@
 
     {{--SEO--}}
 
+    <meta name="yandex-verification" content="8bbc3711b424bf7e" />
+
     <meta name="author" content="Victor Atsuta">
     <meta name="robots" content="all" />
     <meta name="description" content="{{ $meta['description'] }}">
@@ -67,8 +55,8 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Wire+One" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Wire+One&display=swap" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -86,6 +74,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/classie/1.0.1/classie.min.js" integrity="sha256-6O5DljdGA6AiaEVC/Zn8pNLNbQGparYTI9091fGX64k=" crossorigin="anonymous"></script>
 
 <script src="{{mix('js/app.js')}}"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_ANALYTIC') }}"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{ env('GOOGLE_ANALYTIC') }}');
+</script>
 
 </body>
 
