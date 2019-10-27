@@ -3,8 +3,8 @@ import { Map, Marker, TileLayer } from 'react-leaflet';
 import Constants from '../../../constants/constants';
 
 const coordinates = {
-  lat: -8.697561,
-  lng: 115.162402,
+  lat: 55.751244,
+  lng: 37.618423,
   zoom: 12
 };
 const position = [coordinates.lat, coordinates.lng];

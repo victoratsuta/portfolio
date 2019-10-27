@@ -11,14 +11,39 @@
 }
 
 #img_loader{
-  //filter: drop-shadow(-2px 6px 0px deepskyblue);
   filter: drop-shadow(0px 0px 10px deepskyblue);
   max-width: 380px;
   min-width: 90px;
   width: 30%;
   pointer-events: none;
-
+  -webkit-animation: img_loader 10s linear infinite;
+  animation: img_loader 10s linear infinite;
 }
+
+@-webkit-keyframes img_loader {
+  0% {
+    filter: drop-shadow(0px 0px 10px deepskyblue)
+  }
+  50% {
+    filter: drop-shadow(0px 0px 2px deepskyblue)
+  }
+  100% {
+    filter: drop-shadow(0px 0px 10px deepskyblue)
+  }
+}
+
+@keyframes img_loader {
+  0% {
+    filter: drop-shadow(0px 0px 10px deepskyblue)
+  }
+  50% {
+    filter: drop-shadow(0px 0px 2px deepskyblue)
+  }
+  100% {
+    filter: drop-shadow(0px 0px 10px deepskyblue)
+  }
+}
+
 @media (max-height: 800px) {
   #img_loader{
     width: 50% !important;
