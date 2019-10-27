@@ -17,6 +17,10 @@
     <meta name=apple-mobile-web-app-status-bar-style content=#0E0D10>
     <meta name="theme-color" content="#ffffff">
 
+    {{--  PRELOAD  --}}
+    
+    <link rel=“preload” href=“https://fonts.googleapis.com/css?family=Raleway” as=“font”>
+    <link rel=“preload” href=“https://fonts.googleapis.com/css?family=Wire+One” as=“font”>
 
     {{----}}
 
@@ -55,8 +59,8 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Wire+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Wire+One" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
