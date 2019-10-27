@@ -17,6 +17,8 @@
     <meta name=apple-mobile-web-app-status-bar-style content=#0E0D10>
     <meta name="theme-color" content="#ffffff">
 
+    <link rel="preload" href="{{mix('js/app.js')}}" as="script">
+
     {{--ICONS--}}
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('/favicons/apple-touch-icon.png')}}">
