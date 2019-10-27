@@ -17,13 +17,6 @@
     <meta name=apple-mobile-web-app-status-bar-style content=#0E0D10>
     <meta name="theme-color" content="#ffffff">
 
-    {{--  PRELOAD  --}}
-    
-    <link rel=“preload” href=“https://fonts.googleapis.com/css?family=Raleway” as=“font”>
-    <link rel=“preload” href=“https://fonts.googleapis.com/css?family=Wire+One” as=“font”>
-
-    {{----}}
-
     {{--ICONS--}}
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('/favicons/apple-touch-icon.png')}}">
@@ -59,8 +52,27 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Wire+One" rel="stylesheet">
+    <link rel="preload" href="/fonts/raleway.woff2" as="font" crossorigin>
+    <link rel="preload" href="/fonts/wire_one.woff2" as="font" crossorigin>
+    <style>
+        /* latin */
+        @font-face {
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Raleway'), local('Raleway-Regular'), url(/fonts/raleway.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        /* latin */
+        @font-face {
+            font-family: 'Wire One';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Wire One'), local('WireOne'), url(/fonts/wire_one.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+    </style>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
