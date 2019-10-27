@@ -10,7 +10,13 @@ import './scss/Content.scss';
 
 const Skills = React.lazy(() => import('./../Skills/Skills'));
 const Contact = React.lazy(() => import('./../Contact/Contact'));
-const Portfolio = React.lazy(() => import("./../Portfolio/Portfolio"));
+const Portfolio = React.lazy(() => {
+
+    return new Promise(resolve => {
+        setTimeout(() => resolve(import("./../Portfolio/Portfolio")), 3000);
+    });
+
+});
 const Home = React.lazy(() => import('./../Home/Home'));
 
 function mapStateToProps (state) {
